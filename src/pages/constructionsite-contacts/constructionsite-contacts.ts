@@ -28,7 +28,7 @@ export class ConstructionsiteContactsPage {
     console.log('ionViewDidLoad ConstructionsiteContactsPage');
   }
 
-	itemselected(contact){
+	itemSelected(contact){
 
 	}
 

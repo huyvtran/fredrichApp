@@ -15,6 +15,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConstructionsiteEquipmentPage {
 
+	equipmentArr:any;
+
   constructor(public navCtrl: NavController, public navParams: NavParams) {
 		this.equipmentArr= [{id: 0, name: "CX123", status: "operabel"},
 			{id: 1, name: "LH456", status: "defekt"},
