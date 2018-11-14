@@ -1,0 +1,25 @@
+<!--
+  Generated template for the ConstructionsiteTimerecordingPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<!--
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>constructionsite-timerecording</ion-title>
+  </ion-navbar>
+
+</ion-header>
+-->
+
+<ion-content padding>
+	<ion-list>
+		<button ion-item *ngFor="let worker of workers"
+				  (click)="itemSelected(worker)">
+			<p>{{worker.id}}: {{ worker.name }}, {{worker.firstName}}</p>
+		</button>  
+	</ion-list>
+
+</ion-content>

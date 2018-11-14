@@ -1,5 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ConstructionsiteOverviewPage } from '../constructionsite-overview/constructionsite-overview';
+import { ConstructionsiteTimerecordingPage} from '../constructionsite-timerecording/constructionsite-timerecording';
+import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
+import { ConstructionsiteEquipmentPage } from '../constructionsite-equipment/constructionsite-equipment';
+import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
 
 /**
  * Generated class for the ConstructionsitePage page.
@@ -15,7 +20,16 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConstructionsitePage {
 
+	tab1Root = ConstructionsiteOverviewPage;
+	tab2Root = ConstructionsiteTimerecordingPage;
+	tab3Root = ConstructionsiteDailyreportPage;
+	tab4Root = ConstructionsiteEquipmentPage;
+	tab5Root = ConstructionsiteContactsPage;
+	
+	constructionsite:any;
   constructor(public navCtrl: NavController, public navParams: NavParams) {
+	  this.constructionsite = this.navParams.get('constructionsite');
+	  console.log(this.constructionsite);
   }
 
   ionViewDidLoad() {

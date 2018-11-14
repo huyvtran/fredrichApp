@@ -1,0 +1,37 @@
+<!--
+  Generated template for the SelectConstructionsitePage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Auswahl Baustelle</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<ion-list>
+		<ion-list-header>
+			Favoriten
+	  </ion-list-header>
+		<button ion-item *ngFor="let constructionsite of favoriteConstructionsites"
+			(click)="itemSelected(constructionsite)">
+			<p>{{ constructionsite.name }}</p>
+			<p>{{ constructionsite.location }}</p>
+		</button>  
+
+		<ion-list-header>
+			Baustellen 
+	  </ion-list-header>
+		<button ion-item *ngFor="let constructionsite of constructionsites"
+			(click)="itemSelected(constructionsite)">
+			<p>{{ constructionsite.name }}</p>
+			<p>{{ constructionsite.location }}</p>
+		</button>  
+	</ion-list>
+
+</ion-content>

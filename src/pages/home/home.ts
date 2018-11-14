@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { ConstructionsitePage } from '../constructionsite/constructionsite';
+import { SelectConstructionsitePage } from '../select-constructionsite/select-constructionsite';
 import { RepairshopPage } from '../repairshop/repairshop';
 import { StorehousePage } from '../storehouse/storehouse';
 import { SettingsPage } from '../settings/settings';
@@ -15,8 +15,8 @@ export class HomePage {
 
   }
 
-	openConstructionsitePage(){
-		this.navCtrl.push(ConstructionsitePage);
+	openSelectConstructionsitePage(){
+		this.navCtrl.push(SelectConstructionsitePage);
 	}
 
 	openRepairshopPage(){
