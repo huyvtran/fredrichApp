@@ -19,39 +19,113 @@
 	<ion-list>
 		<ion-list-header>
 			Bauherr	
-	  </ion-list-header>
-		<button ion-item (click)="itemSelected(contacts.builder)">
-			<p>{{ contacts.builder.name }}</p>
-			<p>{{ contacts.builder.telephone}}</p>
-			<p>{{ contacts.builder.email}}</p>
-		</button>  
+		</ion-list-header>
+		<ion-item-sliding>
+			<button ion-item (click)="itemSelected(contacts.builder)">
+				<p>{{ contacts.builder.name }}</p>
+				<p>{{ contacts.builder.telephone}}</p>
+				<p>{{ contacts.builder.email}}</p>
+			</button>  
+			<ion-item-options side="left">
+				<button ion-button color="primary">
+					<ion-icon name="text"></ion-icon>
+					Text
+				</button>
+				<button ion-button color="secondary">
+					<ion-icon name="call"></ion-icon>
+					Call
+				</button>
+			</ion-item-options>
+			<ion-item-options side="right">
+				<button ion-button color="primary">
+				<ion-icon name="mail"></ion-icon>
+				Email
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
 
 		<ion-list-header>
 			Bauleiter
-	  </ion-list-header>
-		<button ion-item (click)="itemSelected(contacts.constructionSupervisor)">
-			<p>{{ contacts.constructionSupervisor.name }}</p>
-			<p>{{ contacts.constructionSupervisor.telephone}}</p>
-			<p>{{ contacts.constructionSupervisor.email}}</p>
-		</button>  
+		</ion-list-header>
+		<ion-item-sliding>
+			<button ion-item (click)="itemSelected(contacts.constructionSupervisor)">
+				<p>{{ contacts.constructionSupervisor.name }}</p>
+				<p>{{ contacts.constructionSupervisor.telephone}}</p>
+				<p>{{ contacts.constructionSupervisor.email}}</p>
+			</button>  
+			<ion-item-options side="left">
+				<button ion-button color="primary">
+					<ion-icon name="text"></ion-icon>
+					Text
+				</button>
+				<button ion-button color="secondary">
+					<ion-icon name="call"></ion-icon>
+					Call
+				</button>
+			</ion-item-options>
+			<ion-item-options side="right">
+				<button ion-button color="primary">
+				<ion-icon name="mail"></ion-icon>
+				Email
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
 
 		<ion-list-header>
 			Vermesser	
 	  </ion-list-header>
-		<button ion-item (click)="itemSelected(contacts.surveyor)">
-			<p>{{ contacts.surveyor.name }}</p>
-			<p>{{ contacts.surveyor.telephone}}</p>
-			<p>{{ contacts.surveyor.email}}</p>
-		</button>  
+		<ion-item-sliding>
+			<button ion-item (click)="itemSelected(contacts.surveyor)">
+				<p>{{ contacts.surveyor.name }}</p>
+				<p>{{ contacts.surveyor.telephone}}</p>
+				<p>{{ contacts.surveyor.email}}</p>
+			</button>  
+			<ion-item-options side="left">
+				<button ion-button color="primary">
+					<ion-icon name="text"></ion-icon>
+					Text
+				</button>
+				<button ion-button color="secondary">
+					<ion-icon name="call"></ion-icon>
+					Call
+				</button>
+			</ion-item-options>
+			<ion-item-options side="right">
+				<button ion-button color="primary">
+				<ion-icon name="mail"></ion-icon>
+				Email
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
+
 
 		<ion-list-header>
 			Statiker	
 	  </ion-list-header>
-		<button ion-item (click)="itemSelected(contacts.structuralEngineer)">
-			<p>{{ contacts.structuralEngineer.name }}</p>
-			<p>{{ contacts.structuralEngineer.telephone}}</p>
-			<p>{{ contacts.structuralEngineer.email}}</p>
-		</button>  
+
+		<ion-item-sliding>
+			<button ion-item (click)="itemSelected(contacts.structuralEngineer)">
+				<p>{{ contacts.structuralEngineer.name }}</p>
+				<p>{{ contacts.structuralEngineer.telephone}}</p>
+				<p>{{ contacts.structuralEngineer.email}}</p>
+			</button>  
+			<ion-item-options side="left">
+				<button ion-button color="primary">
+					<ion-icon name="text"></ion-icon>
+					Text
+				</button>
+				<button ion-button color="secondary">
+					<ion-icon name="call"></ion-icon>
+					Call
+				</button>
+			</ion-item-options>
+			<ion-item-options side="right">
+				<button ion-button color="primary">
+				<ion-icon name="mail"></ion-icon>
+				Email
+				</button>
+			</ion-item-options>
+		</ion-item-sliding>
 
 	</ion-list>
 
