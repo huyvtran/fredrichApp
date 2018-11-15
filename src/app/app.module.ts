@@ -14,7 +14,13 @@ import { ConstructionsiteDailyreportPage } from '../pages/constructionsite-daily
 import { ConstructionsiteEquipmentPage } from '../pages/constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteContactsPage } from '../pages/constructionsite-contacts/constructionsite-contacts';
 import { RepairshopPage} from '../pages/repairshop/repairshop';
+import { RepairshopOverviewPage} from '../pages/repairshop-overview/repairshop-overview';
+import { RepairshopJobsPage} from '../pages/repairshop-jobs/repairshop-jobs';
+import { RepairshopEquipmentPage} from '../pages/repairshop-equipment/repairshop-equipment';
 import { StorehousePage } from '../pages/storehouse/storehouse';
+import { StorehouseOverviewPage} from '../pages/storehouse-overview/storehouse-overview';
+import { StorehouseInventoryPage} from '../pages/storehouse-inventory/storehouse-inventory';
+import { StorehouseLogisticsPage} from '../pages/storehouse-logistics/storehouse-logistics';
 import { SettingsPage } from '../pages/settings/settings';
 
 
@@ -29,7 +35,13 @@ import { SettingsPage } from '../pages/settings/settings';
 	ConstructionsiteEquipmentPage,
 	ConstructionsiteContactsPage,
 	RepairshopPage,
+	RepairshopOverviewPage,
+	RepairshopJobsPage,
+	RepairshopEquipmentPage,
 	StorehousePage,
+	StorehouseOverviewPage,
+	StorehouseInventoryPage,
+	StorehouseLogisticsPage,
 	SettingsPage,
     HomePage
   ],
@@ -48,7 +60,13 @@ import { SettingsPage } from '../pages/settings/settings';
 	ConstructionsiteEquipmentPage,
 	ConstructionsiteContactsPage,
 	RepairshopPage,
+	RepairshopOverviewPage,
+	RepairshopJobsPage,
+	RepairshopEquipmentPage,
 	StorehousePage,
+	StorehouseOverviewPage,
+	StorehouseInventoryPage,
+	StorehouseLogisticsPage,
 	SettingsPage,
     HomePage
   ],

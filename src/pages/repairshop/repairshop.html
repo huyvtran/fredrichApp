@@ -7,12 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>repairshop</ion-title>
+    <ion-title>Werkstatt</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+	<ion-tabs>
+		<ion-tab [root]="tab1Root" tabTitle="&Uuml;bersicht"></ion-tab>
+		<ion-tab [root]="tab2Root" tabTitle="Auftr&auml;ge"></ion-tab>
+		<ion-tab [root]="tab3Root" tabTitle="Ger&auml;te"></ion-tab>
+	</ion-tabs>
 </ion-content>

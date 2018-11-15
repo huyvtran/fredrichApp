@@ -7,12 +7,16 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>storehouse</ion-title>
+    <ion-title>Lager</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-
+	<ion-tabs>
+		<ion-tab [root]="tab1Root" tabTitle="&Uuml;bersicht"></ion-tab>
+		<ion-tab [root]="tab2Root" tabTitle="Inventar"></ion-tab>
+		<ion-tab [root]="tab3Root" tabTitle="Versand"></ion-tab>
+	</ion-tabs>
 </ion-content>

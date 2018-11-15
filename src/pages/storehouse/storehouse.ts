@@ -1,5 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { StorehouseOverviewPage} from '../storehouse-overview/storehouse-overview';
+import { StorehouseInventoryPage} from '../storehouse-inventory/storehouse-inventory';
+import { StorehouseLogisticsPage} from '../storehouse-logistics/storehouse-logistics';
+
 
 /**
  * Generated class for the StorehousePage page.
@@ -14,6 +18,10 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
   templateUrl: 'storehouse.html',
 })
 export class StorehousePage {
+
+	tab1Root = StorehouseOverviewPage;
+	tab2Root = StorehouseInventoryPage;
+	tab3Root = StorehouseLogisticsPage;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }

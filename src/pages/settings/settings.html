@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>settings</ion-title>
+    <ion-title>Einstellung</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -15,4 +15,22 @@
 
 <ion-content padding>
 
+	<ion-list>
+		<ion-item>
+				<ion-label>Mobile Daten nutzen</ion-label>
+				<ion-toggle (ionChange)="isDisabled = !isDisabled"></ion-toggle>
+		</ion-item>
+		<ion-item>
+				<ion-label>Noch eine wichtige Einstellung</ion-label>
+				<ion-toggle (ionChange)="isDisabled = !isDisabled"></ion-toggle>
+		</ion-item>
+		<ion-item>
+				<ion-label>Noch eine wichtige Einstellung</ion-label>
+				<ion-toggle (ionChange)="isDisabled = !isDisabled"></ion-toggle>
+		</ion-item>
+
+	</ion-list>
+	<button ion-button color="danger">
+		Ausloggen
+	</button>
 </ion-content>
