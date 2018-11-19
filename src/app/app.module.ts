@@ -4,6 +4,8 @@ import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 
+import { HttpClientModule } from '@angular/common/http';
+
 import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { SelectConstructionsitePage } from '../pages/select-constructionsite/select-constructionsite';
@@ -22,6 +24,11 @@ import { StorehouseOverviewPage} from '../pages/storehouse-overview/storehouse-o
 import { StorehouseInventoryPage} from '../pages/storehouse-inventory/storehouse-inventory';
 import { StorehouseLogisticsPage} from '../pages/storehouse-logistics/storehouse-logistics';
 import { SettingsPage } from '../pages/settings/settings';
+import { LoginPage } from '../pages/login/login';
+
+import { LoginPageModule } from '../pages/login/login.module';
+
+import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 
 
 @NgModule({
@@ -43,10 +50,13 @@ import { SettingsPage } from '../pages/settings/settings';
 	StorehouseInventoryPage,
 	StorehouseLogisticsPage,
 	SettingsPage,
+// 	LoginPage,
     HomePage
   ],
   imports: [
     BrowserModule,
+	HttpClientModule,
+	  LoginPageModule,
     IonicModule.forRoot(MyApp)
   ],
   bootstrap: [IonicApp],
@@ -68,12 +78,14 @@ import { SettingsPage } from '../pages/settings/settings';
 	StorehouseInventoryPage,
 	StorehouseLogisticsPage,
 	SettingsPage,
+	LoginPage,
     HomePage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    {provide: ErrorHandler, useClass: IonicErrorHandler}
+    {provide: ErrorHandler, useClass: IonicErrorHandler},
+    AuthServiceProvider
   ]
 })
 export class AppModule {}
