@@ -5,6 +5,7 @@ import { ConstructionsiteTimerecordingPage} from '../constructionsite-timerecord
 import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
+import { ConstructionsitePhotoPage } from '../constructionsite-photo/constructionsite-photo';
 
 /**
  * Generated class for the ConstructionsitePage page.
@@ -21,7 +22,7 @@ import { ConstructionsiteContactsPage } from '../constructionsite-contacts/const
 export class ConstructionsitePage {
 
 	tab1Root = ConstructionsiteOverviewPage;
-	tab2Root = ConstructionsiteTimerecordingPage;
+	tab2Root = ConstructionsitePhotoPage;
 	tab3Root = ConstructionsiteDailyreportPage;
 	tab4Root = ConstructionsiteEquipmentPage;
 	tab5Root = ConstructionsiteContactsPage;

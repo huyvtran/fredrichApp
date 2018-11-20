@@ -13,11 +13,21 @@ export class User {
 	name: string;
 	email: string;
 	token: string;
+	role: string;
+	constructionsite: any;
 
-	constructor(name: string, email: string, token: string) {
-		this.name = name;
-		this.email = email;
+	constructor(token: string) {
+		console.log("Creating new User");
+		this.setUserData(token);
+	}
+
+	setUserData(token: string) {
 		this.token = token;
+		//TODO: download user data for token here
+		this.name = "Heinz Mueller";
+		this.email = "schreib@me.com";
+		this.role = "polier";
+		this.constructionsite = {id: 1, name: "Baustelle 2", location: "Wismar, DE"};
 	}
 }
 
@@ -36,8 +46,9 @@ export class AuthServiceProvider {
 		} else {
 			return Observable.create(observer => {
 				// At this point make a request to your backend to make a real check!
-				let access = (credentials.password === "pass" && credentials.email === "email");
-				this.currentUser = new User('Simon', 'saimon@devdactic.com', 'testtoken');
+// 				let access = (credentials.password === "pass" && credentials.email === "email");
+				let access = (credentials.token=== "testToken");
+				this.currentUser = new User('testToken');
 				observer.next(access);
 				observer.complete();
 			});

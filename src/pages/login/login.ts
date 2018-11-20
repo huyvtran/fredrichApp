@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, AlertController, LoadingController, Loading } from 'ionic-angular';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 import { HomePage } from '../home/home';
+import { ConstructionsitePage } from '../constructionsite/constructionsite';
 
 /**
  * Generated class for the LoginPage page.
@@ -17,7 +19,8 @@ import { HomePage } from '../home/home';
 })
 export class LoginPage {
 	loading: Loading;
-	registerCredentials = { email: '', password: '' };
+// 	registerCredentials = { email: '', password: '' };
+	registerCredentials = { token: '' };
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
 	}
@@ -32,10 +35,25 @@ export class LoginPage {
 
 	public login() {
 		this.showLoading();
+		if(1){ // auto login XXX
+// 			this.registerCredentials.email = "email";
+// 			this.registerCredentials.password= "pass";
+			this.registerCredentials.token= "testToken";
+		}
 		this.auth.login(this.registerCredentials)
 			.subscribe(allowed => {
 				if (allowed) {
-					this.navCtrl.setRoot(HomePage);
+					switch(this.auth.getUserInfo().role) {
+						case "polier": {
+							console.log("ROLE: POLIER");
+							this.navCtrl.setRoot(ConstructionsitePage, {constructionsite: this.auth.getUserInfo().constructionsite});
+							break;
+						}
+						default: {
+							this.navCtrl.setRoot(HomePage);
+							break;
+						}
+					}
 				} else {
 					this.showError("Access Denied");
 				}
