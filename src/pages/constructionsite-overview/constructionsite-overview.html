@@ -16,40 +16,136 @@
 
 
 <ion-content padding>
-	<ion-card>
-		<ion-card-header>
-			Mitarbeiter
-		</ion-card-header>
-		<ion-card-content>
-			Auflistung der Mitarbeiter
-		</ion-card-content>
-	</ion-card>
+	<ion-grid>
+		<ion-row>
+			<ion-col>
+			<ion-card (click)="openWorkersPage()"> <!--CARD: PERSONAL{{{-->
+				<ion-card-header>
+					Personal	
+				</ion-card-header>
+				<ion-card-content>
+					<ion-grid>
+						<ion-row nowrap>
+							<ion-col>
+								Polier:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.getPolierCount()}}
+							</ion-col>
+						</ion-row>
 
-	<ion-card>
-		<ion-card-header>
-			Ger&auml;te	
-		</ion-card-header>
-		<ion-card-content>
-			Auflistung der Ger&auml;te 
-		</ion-card-content>
-	</ion-card>
+						<ion-row nowrap>
+							<ion-col>
+								Maschinist:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.getMaschinistCount()}}
+							</ion-col>
+						</ion-row>
 
-	<ion-card>
-		<ion-card-header>
-			Wetterbericht	
-		</ion-card-header>
-		<ion-card-content>
-			Wetterbericht und -prognose fuer die naechsten 2 Tage. Sturmwarnungen. 
-		</ion-card-content>
-	</ion-card>
+						<ion-row nowrap>
+							<ion-col>
+								Facharbeiter:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.getFacharbeiterCount()}}
+							</ion-col>
+						</ion-row>
 
-	<ion-card>
-		<ion-card-header>
-			Informationen zur Baustelle	
-		</ion-card-header>
-		<ion-card-content>
-			Ort, Bauherr, ...
-		</ion-card-content>
-	</ion-card>
+						<ion-row nowrap>
+							<ion-col>
+								Hilfsarbeiter:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.getHilfsarbeiterCount()}}
+							</ion-col>
+						</ion-row>
+
+						<ion-row nowrap>
+							<ion-col>
+								Gesamt:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.getAllWorkersCount()}}
+							</ion-col>
+						</ion-row>
+
+					</ion-grid>
+				</ion-card-content>
+			</ion-card>
+		</ion-col> <!--}}}-->
+
+		<ion-col> <!--CARD: GERAETE{{{-->
+
+			<ion-card (click)="openEquipmentPage()">
+				<ion-card-header>
+					Ger&auml;te	
+				</ion-card-header>
+				<ion-card-content>
+
+					<ion-row nowrap>
+						<ion-col>
+							Rammen:
+						</ion-col>
+						<ion-col>
+							{{consiteProv.getRamCount()}}
+						</ion-col>
+					</ion-row>
+
+					<ion-row nowrap>
+						<ion-col>
+							Kr&auml;ne:
+						</ion-col>
+						<ion-col>
+							{{consiteProv.getCraneCount()}}
+						</ion-col>
+					</ion-row>
+
+					<ion-row nowrap>
+						<ion-col>
+							Pumpen:
+						</ion-col>
+						<ion-col>
+							{{consiteProv.getPumpCount()}}
+						</ion-col>
+					</ion-row>
+
+					<ion-row nowrap>
+						<ion-col>
+							Andere:
+						</ion-col>
+						<ion-col>
+							{{consiteProv.getOtherCount()}}
+						</ion-col>
+					</ion-row>
+
+				</ion-card-content>
+			</ion-card> <!--}}}-->
+		</ion-col>
+	</ion-row>
+
+	<ion-row>
+		<ion-col>
+			<ion-card (click)="openWeatherPage()"> <!--CARD: WEATHER{{{-->
+				<ion-card-header>
+					Wetter
+				</ion-card-header>
+				<ion-card-content>
+					Wetterbericht und -prognose fuer die naechsten 2 Tage. Sturmwarnungen. 
+				</ion-card-content>
+			</ion-card> <!--}}}-->
+		</ion-col>
+		<ion-col>
+			<ion-card (click)="openConstructionsiteRemarkPage()"> <!--CARD: COMMENTS{{{-->
+				<ion-card-header>
+					Besondere Vorkommnisse
+				</ion-card-header>
+				<ion-card-content>
+					Klicken
+				</ion-card-content>
+			</ion-card> <!--}}}-->
+		</ion-col>
+	</ion-row>
+</ion-grid>
 
 </ion-content>

@@ -1,9 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Diagnostic } from '@ionic-native/diagnostic';
-import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
+// import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
+import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
-import { ToastController } from 'ionic-angular';
+import { FilePath } from '@ionic-native/file-path';
+import { Transfer, TransferObject } from '@ionic-native/transfer';
+import { ActionSheetController, ToastController, Platform, LoadingController, Loading } from 'ionic-angular';
 
 declare var cordova: any; // global variable for paths
 
@@ -16,44 +19,32 @@ declare var cordova: any; // global variable for paths
 @Injectable()
 export class CameraProvider {
 
-	picture: any;
-	// camera options (Size and location). In the following example, the preview uses the rear camera and display the preview in the back of the webview{{{
-	cameraPreviewOpts: CameraPreviewOptions = {
-		x: 0,
-		y: 0,
-		width: window.screen.width,
-		height: window.screen.height,
-		camera: 'rear',
-		tapPhoto: true,
-		previewDrag: true,
-		toBack: true,
-		alpha: 1
-	};// }}}
-
-	pictureOpts: CameraPreviewPictureOptions = {// {{{
-		width: 320,
-		height: 320,
-		quality: 85
-	}// }}}
+	lastImage: string = null;
+	loading: Loading;
 
 	constructor(public http: HttpClient, // {{{
-		private cameraPreview: CameraPreview, 
-		public toastCtrl: ToastController, 
+		public camera: Camera,
 		private diagnostic: Diagnostic,
-		private file: File) {
+		private transfer: Transfer, 
+		private file: File, 
+		private filePath: FilePath, 
+		public actionSheetCtrl: ActionSheetController, 
+		public toastCtrl: ToastController, 
+		public platform: Platform, 
+		public loadingCtrl: LoadingController) {
 			console.log('Hello CameraProvider Provider');
 			this.checkPermissions();
   }// }}}
 
 	checkPermissions(){// {{{
 		this.diagnostic.isCameraAuthorized().then((authorized) => {
-			if(authorized)
-				this.initializePreview();
-			else {
+			if(authorized){
+// 				this.initializePreview();
+			} else {
 				this.diagnostic.requestCameraAuthorization().then((status) => {
-					if(status == this.diagnostic.permissionStatus.GRANTED)
-						this.initializePreview();
-					else {
+					if(status == this.diagnostic.permissionStatus.GRANTED) {
+// 						this.initializePreview();
+					} else {
 						// Permissions not granted
 						// Therefore, create and present toast
 						this.toastCtrl.create(
@@ -69,63 +60,80 @@ export class CameraProvider {
 		});
 	}// }}}
 
-	initializePreview() {// {{{
-		//set background color to transparent
-		(window.document.querySelector('ion-app') as HTMLElement).classList.add('cameraView');
-		// start camera
-		this.cameraPreview.startCamera(this.cameraPreviewOpts)
-			.then(
-				(res) => {
-					console.log(res)
-				},
-				(err) => {
-					console.log(err)
+	public takePicture(sourceType) {
+		// Create options for the Camera Dialog
+		var options = {
+			quality: 100,
+			sourceType: sourceType,
+			saveToPhotoAlbum: true,
+			correctOrientation: true
+		};
+
+		// Get the data of an image
+		this.camera.getPicture(options).then((imagePath) => {
+		// Special handling for Android library
+		if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+			console.log("DEALING WITH ANDROID PHOTOLIBRARY");
+			this.filePath.resolveNativePath(imagePath)
+			.then(filePath => {
+				let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+				let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+				this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+
+				console.log("correct Path:");
+				console.log(correctPath);
+				console.log("current Name:")
+				console.log(currentName);
 			});
+		} else {
+			console.log("TAKING PICTURE");
+			var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+			var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
+			this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
 
-// 		this.cameraPreview.setOnPictureTakenHandler()
-// 			.subscribe((result) => {
-// // 				this.moveFileToExternalStorage(result[0]); // Move picture only
-// 				console.log(result);
-// 		});
-
-
-	}// }}}
-
-	takePicture(){// {{{
-		this.cameraPreview.takePicture(this.pictureOpts)
-			.then((imageData) => {
-				console.log(imageData);
-				this.picture = 'data:image/jpeg;base64,' + imageData;
-				console.log(this.picture);
-			}, (err) => {
-				console.log(err);
-				this.picture = 'assets/img/test.jpg';
+			console.log("correct Path:");
+			console.log(correctPath);
+			console.log("current Name:")
+			console.log(currentName);
+		}
+		}, (err) => {
+			this.presentToast('Error while selecting image.');
 		});
-	}// }}}
+	}	
 
-	moveFileToExternalStorage(fileName: string) {// {{{
-		// Determine paths
-		let externalStoragePath: string = cordova.file.externalApplicationStorageDirectory;
-		let currentPath: string = cordova.file.applicationStorageDirectory + "files/";
+	// Create a new name for the image
+	private createFileName() {
+		var d = new Date(),
+		n = d.getTime(),
+		newFileName =  n + ".jpg";
+		return newFileName;
+	}
 
-		// Extract filename
-		fileName = fileName.split("/").pop();
-
-		// Move the file
-		this.file.moveFile(currentPath, fileName, externalStoragePath, fileName)
-		.then(_ => {
-			this.toastCtrl.create({
-				 message: "Saved one photo",
-				 position: "bottom",
-				 duration: 2000
-			}).present();
+	// Copy the image to a local folder
+	private copyFileToLocalDir(namePath, currentName, newFileName) {
+		this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+			this.lastImage = newFileName;
+		}, error => {
+			this.presentToast('Error while storing file.');
 		});
-	}// }}}
+	}
 
-	stopCamera(){// {{{
-		//make background non-transporent
-		(window.document.querySelector('ion-app') as HTMLElement).classList.remove('cameraView');
-		this.cameraPreview.stopCamera();
-	}// }}}
+	private presentToast(text) {
+		let toast = this.toastCtrl.create({
+			message: text,
+			duration: 3000,
+			position: 'top'
+		});
+		toast.present();
+	}
+
+	// Always get the accurate path to your apps folder
+	public pathForImage(img) {
+		if (img === null) {
+			return '';
+		} else {
+			return cordova.file.dataDirectory + img;
+		}
+	}
 
 }

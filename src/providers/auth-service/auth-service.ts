@@ -14,7 +14,8 @@ export class User {
 	email: string;
 	token: string;
 	role: string;
-	constructionsite: any;
+	constructionsiteIds: any;
+	currentConstructionsiteId: any;
 
 	constructor(token: string) {
 		console.log("Creating new User");
@@ -27,7 +28,11 @@ export class User {
 		this.name = "Heinz Mueller";
 		this.email = "schreib@me.com";
 		this.role = "polier";
-		this.constructionsite = {id: 1, name: "Baustelle 2", location: "Wismar, DE"};
+		this.constructionsiteIds = [3380, 3388, 3392];
+		this.currentConstructionsiteId = this.constructionsiteIds[1];
+			
+// 			[{id: 0, name: "Baustelle Bremerhaven", location: "Bremerhaven, DE"}, 
+// 			{id: 1, name: "Baustelle Wismar", location: "Wismar, DE"}];
 	}
 }
 
@@ -47,8 +52,8 @@ export class AuthServiceProvider {
 			return Observable.create(observer => {
 				// At this point make a request to your backend to make a real check!
 // 				let access = (credentials.password === "pass" && credentials.email === "email");
-				let access = (credentials.token=== "testToken");
-				this.currentUser = new User('testToken');
+				let access = (credentials.token=== "456abc");
+				this.currentUser = new User('456abc');
 				observer.next(access);
 				observer.complete();
 			});

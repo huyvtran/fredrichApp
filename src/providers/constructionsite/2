@@ -1,0 +1,47 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable } from '@angular/core';
+
+/*
+  Generated class for the ConstructionsiteProvider provider.
+
+  See https://angular.io/guide/dependency-injection for more info on providers
+  and Angular DI.
+*/
+
+class Worker {
+	name: string;
+	surname: string;
+	phoneNr: string;
+	email: string;
+
+	constructor(){
+		this.setDefaultValues();	
+	}
+
+	private setDefaultValues() {
+		this.name = "--";
+		this.surname = "--";
+		this.phoneNr = "--";
+		this.email = "--";
+	}
+
+}
+
+class Workers {
+	
+    greeting: string;
+    constructor(message: string) {
+        this.greeting = message;
+    }
+    greet() {
+        return "Hello, " + this.greeting;
+    }
+}
+@Injectable()
+export class ConstructionsiteProvider {
+
+  constructor(public http: HttpClient) {
+    console.log('Hello ConstructionsiteProvider Provider');
+  }
+
+}

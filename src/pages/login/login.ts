@@ -19,7 +19,6 @@ import { ConstructionsitePage } from '../constructionsite/constructionsite';
 })
 export class LoginPage {
 	loading: Loading;
-// 	registerCredentials = { email: '', password: '' };
 	registerCredentials = { token: '' };
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, private alertCtrl: AlertController, private loadingCtrl: LoadingController) {
@@ -38,7 +37,7 @@ export class LoginPage {
 		if(1){ // auto login XXX
 // 			this.registerCredentials.email = "email";
 // 			this.registerCredentials.password= "pass";
-			this.registerCredentials.token= "testToken";
+			this.registerCredentials.token= "456abc";
 		}
 		this.auth.login(this.registerCredentials)
 			.subscribe(allowed => {
@@ -46,7 +45,7 @@ export class LoginPage {
 					switch(this.auth.getUserInfo().role) {
 						case "polier": {
 							console.log("ROLE: POLIER");
-							this.navCtrl.setRoot(ConstructionsitePage, {constructionsite: this.auth.getUserInfo().constructionsite});
+							this.navCtrl.setRoot(ConstructionsitePage, {constructionsite: this.auth.getUserInfo().currentConstructionsiteId});
 							break;
 						}
 						default: {

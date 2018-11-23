@@ -5,8 +5,11 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Diagnostic } from '@ionic-native/diagnostic';
 import { Geolocation } from '@ionic-native/geolocation';
-import { File } from '@ionic-native/file';
 import { CameraPreview } from '@ionic-native/camera-preview';
+import { Camera } from '@ionic-native/camera';
+import { File } from '@ionic-native/file';
+import { Transfer } from '@ionic-native/transfer';
+import { FilePath } from '@ionic-native/file-path';
 // import { CameraPreviewRect } from '@ionic-native';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -21,6 +24,7 @@ import { ConstructionsiteTimerecordingPage } from '../pages/constructionsite-tim
 import { ConstructionsiteDailyreportPage } from '../pages/constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../pages/constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteContactsPage } from '../pages/constructionsite-contacts/constructionsite-contacts';
+import { ConstructionsiteMorePage } from '../pages/constructionsite-more/constructionsite-more';
 import { ConstructionsitePhotoPage } from '../pages/constructionsite-photo/constructionsite-photo';
 import { ConstructionsitePhotoEquipmentPage} from '../pages/constructionsite-photo-equipment/constructionsite-photo-equipment';
 import { ConstructionsitePhotoSitePage} from '../pages/constructionsite-photo-site/constructionsite-photo-site';
@@ -43,6 +47,7 @@ import { LoginPageModule } from '../pages/login/login.module';
 //PROVIDERS
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { CameraProvider } from '../providers/camera/camera';
+import { ConstructionsiteProvider } from '../providers/constructionsite/constructionsite';
 
 
 @NgModule({
@@ -55,6 +60,7 @@ import { CameraProvider } from '../providers/camera/camera';
 		ConstructionsiteTimerecordingPage,
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
+		ConstructionsiteMorePage,
 		ConstructionsiteContactsPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
@@ -88,6 +94,7 @@ import { CameraProvider } from '../providers/camera/camera';
 		ConstructionsiteTimerecordingPage,
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
+		ConstructionsiteMorePage,
 		ConstructionsiteContactsPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
@@ -112,9 +119,13 @@ import { CameraProvider } from '../providers/camera/camera';
 		Diagnostic,
 		Geolocation,
 		File,
+		Transfer,
+		FilePath,
 		AuthServiceProvider,
 		CameraPreview,
-		CameraProvider
+		Camera,
+		CameraProvider,
+    ConstructionsiteProvider
   ]
 })
 export class AppModule {}

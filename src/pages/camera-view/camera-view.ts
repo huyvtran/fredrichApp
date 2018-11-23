@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, ToastController, LoadingController, Loading } from 'ionic-angular';
 import { CameraProvider } from '../../providers/camera/camera';
 
 
@@ -17,7 +17,7 @@ import { CameraProvider } from '../../providers/camera/camera';
 })
 export class CameraViewPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public camera: CameraProvider) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public cameraProvider: CameraProvider, private actionSheetCtrl: ActionSheetController) {
   }
 
   ionViewDidLoad() {
@@ -25,12 +25,35 @@ export class CameraViewPage {
   }
 
 	ionViewDidEnter() {
-	  this.camera.initializePreview();
+
 	}
 
 	ionViewDidLeave() {
-		this.camera.stopCamera();
-		this.navCtrl.pop();
+	}
+
+	public presentActionSheet() {
+		let actionSheet = this.actionSheetCtrl.create({
+			title: 'Select Image Source',
+			buttons: [
+				{
+					text: 'Load from Library',
+					handler: () => {
+					this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.PHOTOLIBRARY);
+					}
+				},
+				{
+					text: 'Use Camera',
+					handler: () => {
+					this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.CAMERA);
+					}
+				},
+				{
+					text: 'Cancel',
+					role: 'cancel'
+				}
+			]
+		});
+		actionSheet.present();
 	}
 
 }

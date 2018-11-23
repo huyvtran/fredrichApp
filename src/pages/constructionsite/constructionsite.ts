@@ -1,11 +1,16 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+
 import { ConstructionsiteOverviewPage } from '../constructionsite-overview/constructionsite-overview';
 import { ConstructionsiteTimerecordingPage} from '../constructionsite-timerecording/constructionsite-timerecording';
 import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../constructionsite-equipment/constructionsite-equipment';
-import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
+// import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
+import { ConstructionsiteMorePage } from '../constructionsite-more/constructionsite-more';
 import { ConstructionsitePhotoPage } from '../constructionsite-photo/constructionsite-photo';
+
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 
 /**
  * Generated class for the ConstructionsitePage page.
@@ -24,13 +29,14 @@ export class ConstructionsitePage {
 	tab1Root = ConstructionsiteOverviewPage;
 	tab2Root = ConstructionsitePhotoPage;
 	tab3Root = ConstructionsiteDailyreportPage;
-	tab4Root = ConstructionsiteEquipmentPage;
-	tab5Root = ConstructionsiteContactsPage;
+	tab5Root = ConstructionsiteMorePage;
 	
-	constructionsite:any;
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-	  this.constructionsite = this.navParams.get('constructionsite');
-	  console.log(this.constructionsite);
+	constructionsiteId:any;
+
+  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider) {
+	  this.constructionsiteId = this.navParams.get('constructionsiteId');
+	  console.log(this.constructionsiteId);
+	  this.consiteProv.initialize(this.constructionsiteId);
   }
 
   ionViewDidLoad() {
