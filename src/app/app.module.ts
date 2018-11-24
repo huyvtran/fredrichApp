@@ -48,6 +48,8 @@ import { LoginPageModule } from '../pages/login/login.module';
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
 import { CameraProvider } from '../providers/camera/camera';
 import { ConstructionsiteProvider } from '../providers/constructionsite/constructionsite';
+import { GlobalsProvider } from '../providers/globals/globals';
+import { WeatherProvider } from '../providers/weather/weather';
 
 
 @NgModule({
@@ -125,7 +127,9 @@ import { ConstructionsiteProvider } from '../providers/constructionsite/construc
 		CameraPreview,
 		Camera,
 		CameraProvider,
-    ConstructionsiteProvider
+    ConstructionsiteProvider,
+    GlobalsProvider,
+    WeatherProvider
   ]
 })
 export class AppModule {}

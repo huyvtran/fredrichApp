@@ -131,7 +131,51 @@
 					Wetter
 				</ion-card-header>
 				<ion-card-content>
-					Wetterbericht und -prognose fuer die naechsten 2 Tage. Sturmwarnungen. 
+					<ion-grid>
+						<ion-row nowrap>
+							<ion-col>
+								Bericht fuer {{consiteProv.weather.date}} um {{consiteProv.weather.time}}:
+							</ion-col>
+						</ion-row>
+
+						<ion-row nowrap>
+							<ion-col>
+								Temperatur:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.weather.getTemperature()}}
+							</ion-col>
+						</ion-row>
+
+						<ion-row nowrap>
+							<ion-col>
+								Niederschlag:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.weather.getPrecipitation()}}
+							</ion-col>
+						</ion-row>
+
+						<ion-row nowrap>
+							<ion-col>
+								Wolkenbedeckung:
+							</ion-col>
+							<ion-col>
+								{{consiteProv.weather.getCloudcover()}}
+							</ion-col>
+						</ion-row>
+
+						<ion-row nowrap>
+							<ion-col>
+								Wind (mittel/max, km/h):
+							</ion-col>
+							<ion-col>
+								{{consiteProv.weather.getWindSpeedAvg()}} / {{consiteProv.weather.getWindSpeedMax()}}
+							</ion-col>
+						</ion-row>
+
+
+					</ion-grid>
 				</ion-card-content>
 			</ion-card> <!--}}}-->
 		</ion-col>

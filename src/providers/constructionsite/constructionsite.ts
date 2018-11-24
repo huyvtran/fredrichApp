@@ -1,6 +1,9 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
+import { GlobalsProvider } from '../globals/globals'
+import { WeatherProvider } from '../weather/weather'
+
 /*
   Generated class for the ConstructionsiteProvider provider.
 
@@ -109,7 +112,8 @@ class WorkerTeam {// {{{
 	public getNumWorkers(){// {{{
 		return this.members.length;
 	}// }}}
-	
+
+
 	//PRIVATE
 	private clearTeam(){// {{{
 		 this.members = [];
@@ -233,24 +237,52 @@ class EquipmentItemList {// {{{
 
 }// }}}
 
+class Location {// {{{
+	
+	street: string;
+	streetNr: string;
+	zipcode: string;
+	town: string;
+	country: string;
+	lat: number;
+	lon: number;
+
+	constructor(data){
+		this.street = data.street;
+		this.streetNr = data.streetNr;
+		this.zipcode = data.zipcode;
+		this.town = data.town;
+		this.country = data.country;
+		this.lat = data.lat;
+		this.lon = data.lon;
+	}
+}// }}}
+
 class Constructionsite {// {{{
 
 	id: string;
 	teamworkerData: any;
 	workerTeam: WorkerTeam;
 	equipmentItemList: EquipmentItemList;
+	location: Location;
 
 	constructor(id: string){
 		this.id = id;
 		this.workerTeam = null;
 		this.equipmentItemList = null;
+		this.location = null;
 	}
 	
 	refresh(){
 		this.loadConstructionsiteData();
 	}
 
-	loadConstructionsiteData(){
+	loadConstructionsiteData(){// {{{
+		this.loadWorkerTeamData();
+		this.loadEquipmentItemListData();
+		this.loadLocationData();
+	}// }}}
+	loadWorkerTeamData(){// {{{
 		let teamworkerData = [{id: "0", name: "Mueller", surname: "Franz", phoneNr: "0157999", email: "schreib@mirnemail.com", role: "polier"},
 			{id: "1", name: "Beckenbauer", surname: "Franz", phoneNr: "0157999", email: "schreib@mirnemail.com", role: "maschinist"},
 			{id: "2", name: "Ferdinand", surname: "Franz", phoneNr: "0157999", email: "schreib@mirnemail.com", role: "facharbeiter"},
@@ -259,13 +291,22 @@ class Constructionsite {// {{{
 		];
 		this.workerTeam = new WorkerTeam(teamworkerData, this.id);
 		console.log(this.workerTeam);
-
+	}// }}}
+	loadEquipmentItemListData(){// {{{
 		let equipmentData = [{id: '1', name: "CX 900", category: "ram"}, 
 			{id: '17', name: "CX 500", category: "crane"}, 
 			{id: '20', name: "Betonpumpe 1", category: "pump"},
 			{id: '26', name: "S 613", category: "other"}];
 		this.equipmentItemList = new EquipmentItemList(equipmentData, this.id);
 		console.log(this.equipmentItemList);
+	}// }}}
+	loadLocationData(){// {{{
+		let locationData = {street: "strasse", streetNr: "23", zipcode: "26789", town: "Wismar", country: "DE", lat: "52.5162696", lon: "13.4062872"};
+		this.location = new Location(locationData);
+		console.log(this.location);
+	}// }}}
+	loadWeatherData(weather: WeatherProvider) {
+		weather.loadWeatherData(this.location.lat, this.location.lon);
 	}
 
 }// }}}
@@ -275,7 +316,7 @@ export class ConstructionsiteProvider {// {{{
 
 	private constructionsite: Constructionsite;
 
-	constructor(public http: HttpClient) {
+	constructor(public http: HttpClient, public weather: WeatherProvider) {
 		console.log('Hello ConstructionsiteProvider Provider');
 	}
 
@@ -286,6 +327,7 @@ export class ConstructionsiteProvider {// {{{
 	private update(id){// {{{
 		this.constructionsite.id = id;
 		this.constructionsite.refresh();
+		this.constructionsite.loadWeatherData(this.weather);
 	}// }}}
 
 	public getPolierCount(){// {{{
