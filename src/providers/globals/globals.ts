@@ -20,7 +20,7 @@ export class GlobalsProvider {
 
 	setGlobalVars(){
 		this.serverUrl = "http://www.opendimensions.de/fredrich_projekte/";
-		this.serverPhpScriptsUrl = this.serverUrl + "app/";
+		this.serverPhpScriptsUrl = this.serverUrl + "app/johannes/";
 	}
 
 }

@@ -42,10 +42,11 @@ export class LoginPage {
 		this.auth.login(this.registerCredentials)
 			.subscribe(allowed => {
 				if (allowed) {
+					console.log("user Info: ", this.auth.getUserInfo());
 					switch(this.auth.getUserInfo().role) {
 						case "polier": {
 							console.log("ROLE: POLIER");
-							this.navCtrl.setRoot(ConstructionsitePage, {constructionsite: this.auth.getUserInfo().currentConstructionsiteId});
+							this.navCtrl.setRoot(ConstructionsitePage);
 							break;
 						}
 						default: {

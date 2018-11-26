@@ -27,10 +27,10 @@ export class WeatherProvider {
 
 	loadWeatherData(lat, lon){
 		let url = this.globals.serverPhpScriptsUrl + 'wetter/get.php?breite=' + lat + '&laenge=' + lon;
-		console.log(url);
+		console.log("WEATHER URL:", url);
 		this.http.get(url)
 			.subscribe(data => {
-				console.log(data);
+// 				console.log(data);
 				this.date= data['datum'];
 				this.time= data['uhrzeit'];
 				this.cloudCoverPercent= data['wolkenbedeckung'];

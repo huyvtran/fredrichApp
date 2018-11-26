@@ -33,10 +33,9 @@ export class ConstructionsitePage {
 	
 	constructionsiteId:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider) {
-	  this.constructionsiteId = this.navParams.get('constructionsiteId');
-	  console.log(this.constructionsiteId);
-	  this.consiteProv.initialize(this.constructionsiteId);
+	constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, public auth: AuthServiceProvider) {
+	  console.log("CONSTR.SITE.ID:", this.constructionsiteId);
+	  this.consiteProv.initialize(this.auth.getUserInfo().currentConstructionsiteId);
   }
 
   ionViewDidLoad() {

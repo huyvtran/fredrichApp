@@ -21,12 +21,12 @@ page-login {
 		}
 
 		ion-item {
-			border-radius: 30px !important;
+// 			border-radius: 30px !important;
 			padding-left: 30px !important;
 			font-size: 0.9em;
 			margin-bottom: 10px;
-			border: 2px solid #000000;
-			border-bottom: 2px !important;
+// 			border: 2px solid #000000;
+// 			border-bottom: 2px !important;
 			box-shadow: none !important;
 		}
 
@@ -37,12 +37,13 @@ page-login {
 
 		.item-inner {
 			border-bottom-color: #000 !important;
+// 			border: 2px solid #000000;
 			box-shadow: none !important;
 		}
 
 		.submit-btn {
-			background: color($colors, secondary);;
-			border-radius: 30px !important;
+			background: color($colors, secondary);
+// 			border-radius: 30px !important;
 			border: 1px solid #000;
 		}
 

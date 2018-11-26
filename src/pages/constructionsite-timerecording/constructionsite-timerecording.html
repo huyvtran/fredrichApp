@@ -8,7 +8,7 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Personal</ion-title>
+	  <ion-title>Personal Baustelle {{consiteProv.constructionsite.name}}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -16,11 +16,12 @@
 <ion-content padding>
 	<ion-list>
 		<ion-list-header>
-			Mitarbeiter	
+			Personal	
 	  </ion-list-header>
-		<button ion-item *ngFor="let worker of workers"
+		<button ion-item *ngFor="let worker of consiteProv.constructionsite.workerTeam.getMembers()"
 				  (click)="itemSelected(worker)">
-			<p>{{worker.id}}: {{ worker.name }}, {{worker.firstName}}</p>
+			<p>{{worker.id}}: <b>{{ worker.name }}</b>, {{worker.surname}}, <b>{{worker.role}}</b>: </p>
+			<p>Tel: {{ worker.phoneNr}}, Email: {{worker.email}}</p>
 		</button>  
 	</ion-list>
 

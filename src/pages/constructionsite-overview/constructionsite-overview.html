@@ -19,6 +19,23 @@
 	<ion-grid>
 		<ion-row>
 			<ion-col>
+				<ion-card color="primary"> <!--CARD: HEADER{{{-->
+					<ion-card-header>
+						Baustelle {{ consiteProv.constructionsite.description }}, Nr. {{consiteProv.constructionsite.id}}
+					</ion-card-header>
+					<ion-card-content>
+						<p> Ort: {{consiteProv.constructionsite.location.town }}, {{consiteProv.constructionsite.location.country }}</p>
+						<p> eingeloggt als: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
+						<!--
+						<p> Koordinaten (Lat/Lon): {{consiteProv.constructionsite.location.lat}},
+						{{consiteProv.constructionsite.location.lon}} </p>
+						-->
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+		</ion-row>
+		<ion-row>
+			<ion-col>
 			<ion-card (click)="openWorkersPage()"> <!--CARD: PERSONAL{{{-->
 				<ion-card-header>
 					Personal	
@@ -134,7 +151,8 @@
 					<ion-grid>
 						<ion-row nowrap>
 							<ion-col>
-								Bericht fuer {{consiteProv.weather.date}} um {{consiteProv.weather.time}}:
+								Bericht f&uuml;r {{consiteProv.weather.date}} um {{consiteProv.weather.time}}
+								Uhr:
 							</ion-col>
 						</ion-row>
 
@@ -143,7 +161,7 @@
 								Temperatur:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.weather.getTemperature()}}
+								{{consiteProv.weather.getTemperature()}} &deg;C
 							</ion-col>
 						</ion-row>
 
@@ -152,7 +170,7 @@
 								Niederschlag:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.weather.getPrecipitation()}}
+								{{consiteProv.weather.getPrecipitation()}} mm
 							</ion-col>
 						</ion-row>
 
@@ -161,16 +179,17 @@
 								Wolkenbedeckung:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.weather.getCloudcover()}}
+								{{consiteProv.weather.getCloudcover()}} %
 							</ion-col>
 						</ion-row>
 
 						<ion-row nowrap>
 							<ion-col>
-								Wind (mittel/max, km/h):
+								Wind:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.weather.getWindSpeedAvg()}} / {{consiteProv.weather.getWindSpeedMax()}}
+								{{consiteProv.weather.getWindSpeedAvg()}} km/h bis
+								{{consiteProv.weather.getWindSpeedMax()}} km/h (max.)
 							</ion-col>
 						</ion-row>
 

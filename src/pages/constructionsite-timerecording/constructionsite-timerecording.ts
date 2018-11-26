@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 /**
  * Generated class for the ConstructionsiteTimerecordingPage page.
  *
@@ -17,12 +20,8 @@ export class ConstructionsiteTimerecordingPage {
 
 	workers:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-		this.workers = [{id: 0, name: "Meyer", firstName: "Hans"},
-			{id: 1, name: "Schmidt", firstName: "Georg"},
-			{id: 2, name: "Mueller", firstName: "Franz"},
-			{id: 3, name: "Becker", firstName: "Guenther"}
-	  ];
+  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider) {
+
   }
 
   ionViewDidLoad() {

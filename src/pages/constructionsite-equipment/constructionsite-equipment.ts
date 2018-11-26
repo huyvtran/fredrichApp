@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 /**
  * Generated class for the ConstructionsiteEquipmentPage page.
  *
@@ -15,13 +18,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConstructionsiteEquipmentPage {
 
-	equipmentArr:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-		this.equipmentArr= [{id: 0, name: "CX123", status: "operabel"},
-			{id: 1, name: "LH456", status: "defekt"},
-			{id: 2, name: "JB789", status: "operabel"}
-	  ];
   }
 
   ionViewDidLoad() {

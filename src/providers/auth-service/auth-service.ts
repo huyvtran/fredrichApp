@@ -16,48 +16,45 @@ import { GlobalsProvider } from '../globals/globals'
 
 export class User {
 
-	id: string;
+	private id: string;
+	private token: string;
+
 	name: string;
-	email: string;
-	token: string;
+	surname: string;
 	role: string;
 	constructionsiteIds: any;
 	currentConstructionsiteId: any;
 
-	constructor(token: string) {
+	constructor(token: string, data: any) {// {{{
 		console.log("Creating new User");
-		this.setUserData(token);
-	}
+		this.setUserData(token, data);
+	}// }}}
 
-	setUserData(token: string) {
-
+	setUserData(token: string, data:any) {// {{{
 		this.token = token;
-		//TODO: download user data for token here
-		this.getUserData();
-			
-// 			[{id: 0, name: "Baustelle Bremerhaven", location: "Bremerhaven, DE"}, 
-// 			{id: 1, name: "Baustelle Wismar", location: "Wismar, DE"}];
-	}
+		this.name = data['userName'];
+		this.surname = data['userSurname'];
+		this.role = data['userRole'];
+		this.constructionsiteIds = data['conSiteIdArr'];
+		this.currentConstructionsiteId = data['currentConSiteId'];
+	}// }}}
 
-	getUserData(){
-		this.name = "Heinz Mueller";
-		this.email = "schreib@me.com";
-		this.role = "polier";
-		this.constructionsiteIds = [3380, 3388, 3392];
-		this.currentConstructionsiteId = this.constructionsiteIds[1];
-	}
+	getToken(){// {{{
+		return this.token;
+	}// }}}
+
 }
 
 @Injectable()
 export class AuthServiceProvider {
 	currentUser: User;
 
-	constructor(public httpClient: HttpClient, public globals: GlobalsProvider) {
+	constructor(public httpClient: HttpClient, public globals: GlobalsProvider) {// {{{
 		console.log('Hello AuthServiceProvider Provider');
 		this.currentUser = null;
-	}
+	}// }}}
 
-	public login(credentials) {
+	public login(credentials) {// {{{
 		if (credentials.token === null) { //credentials.email === null || credentials.password === null) {
 			return Observable.throw("Please insert credentials");
 		} else {
@@ -66,35 +63,35 @@ export class AuthServiceProvider {
 				let access = this.hasTokenAccess(credentials.token, observer);
 			});
 		}
-	}
+	}// }}}
 
-	public getUserInfo() : User {
+	public getUserInfo() : User {// {{{
 		return this.currentUser;
-	}
+	}// }}}
 
-	public logout() {
+	public logout() {// {{{
 		return Observable.create(observer => {
 			this.currentUser = null;
 			observer.next(true);
 			observer.complete();
 		});
-	}
+	}// }}}
 
-	private hasTokenAccess(token, observer: any) {
+	private hasTokenAccess(token, observer: any) {// {{{
 		let url = this.globals.serverPhpScriptsUrl + "login.php?token=" + token;
 		let access = false;
 		this.httpClient.get(url)
 			.subscribe(data => {
 				console.log(data);
-				if(data[0].hasOwnProperty("fail")){
+				if(data.hasOwnProperty("fail")){
 					access = false;
 				} else {
 					access = true;
-					this.currentUser = new User(token);
+					this.currentUser = new User(token, data);
 				}
 				observer.next(access);
 				observer.complete();
 			});
-	}
+	}// }}}
 
 }
