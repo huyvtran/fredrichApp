@@ -15,12 +15,15 @@
 
 <ion-content padding>
 	<ion-list>
+		<!--
 		<ion-list-header>
 			Personal	
 	  </ion-list-header>
-		<button ion-item *ngFor="let worker of consiteProv.constructionsite.workerTeam.getMembers()"
+		-->
+		<button ion-item *ngFor="let worker of consiteProv.getWorkerTeamMembers()"
 				  (click)="itemSelected(worker)">
-			<p>{{worker.id}}: <b>{{ worker.name }}</b>, {{worker.surname}}, <b>{{worker.role}}</b>: </p>
+			<p> <b>{{worker.getRoleStr()}}</b></p>
+			<p>{{ worker.name }}, {{worker.surname}}
 			<p>Tel: {{ worker.phoneNr}}, Email: {{worker.email}}</p>
 		</button>  
 	</ion-list>

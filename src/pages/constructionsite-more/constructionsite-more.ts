@@ -1,6 +1,8 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { ConstructionsiteContactsPage} from '../constructionsite-contacts/constructionsite-contacts';
+
 /**
  * Generated class for the ConstructionsiteMorePage page.
  *
@@ -21,5 +23,13 @@ export class ConstructionsiteMorePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteMorePage');
   }
+
+	openContactsPage(){
+		this.navCtrl.push(ConstructionsiteContactsPage);
+	}
+
+	openSettingsPage(){
+		// 		this.navCtrl.push(ConstructionsiteSettingsPage); //TODO create settings page
+	}
 
 }

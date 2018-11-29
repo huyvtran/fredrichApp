@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 /**
  * Generated class for the ConstructionsiteContactsPage page.
  *
@@ -15,13 +18,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConstructionsiteContactsPage {
 
-	contacts:any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, public consiteProv: ConstructionsiteProvider) {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
-	  this.contacts = {builder: {name: "Heinz Mueller", telephone: "0471/999999", email: "schreib@mirnemail.de"}, 
-		  constructionSupervisor: {name: "Heinz Mueller", telephone: "0471/999999", email: "schreib@mirnemail.de"},
-		  surveyor: {name: "Heinz Mueller", telephone: "0471/999999", email: "schreib@mirnemail.de"},
-		  structuralEngineer: {name: "Heinz Mueller", telephone: "0471/999999", email: "schreib@mirnemail.de"}};
   }
 
   ionViewDidLoad() {

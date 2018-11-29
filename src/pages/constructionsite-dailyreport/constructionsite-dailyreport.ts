@@ -1,6 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { DailyReport } from '../../providers/constructionsite/constructionsite';
+import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+
 /**
  * Generated class for the ConstructionsiteDailyreportPage page.
  *
@@ -15,7 +19,14 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 })
 export class ConstructionsiteDailyreportPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+	dailyReport: DailyReport;
+	workerRoles: any;
+  constructor(public navCtrl: NavController, public navParams: NavParams, private consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider) {
+	  this.consiteProv.generateDailyReport();
+	  this.dailyReport = this.consiteProv.getDailyReport();
+	  this.workerRoles = ["Polier", "Maschinist", "Facharbeiter", "Hilfsarbeiter"];
+
+	  console.log(this.dailyReport)
   }
 
   ionViewDidLoad() {

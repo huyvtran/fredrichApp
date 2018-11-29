@@ -21,7 +21,8 @@
 			<ion-col>
 				<ion-card color="primary"> <!--CARD: HEADER{{{-->
 					<ion-card-header>
-						Baustelle {{ consiteProv.constructionsite.description }}, Nr. {{consiteProv.constructionsite.id}}
+						Baustelle Nr. {{consiteProv.constructionsite.id}} <br>
+						{{ consiteProv.constructionsite.description }}
 					</ion-card-header>
 					<ion-card-content>
 						<p> Ort: {{consiteProv.constructionsite.location.town }}, {{consiteProv.constructionsite.location.country }}</p>
@@ -34,6 +35,7 @@
 				</ion-card> <!--}}}-->
 			</ion-col>
 		</ion-row>
+
 		<ion-row>
 			<ion-col>
 			<ion-card (click)="openWorkersPage()"> <!--CARD: PERSONAL{{{-->
@@ -139,9 +141,7 @@
 				</ion-card-content>
 			</ion-card> <!--}}}-->
 		</ion-col>
-	</ion-row>
 
-	<ion-row>
 		<ion-col>
 			<ion-card (click)="openWeatherPage()"> <!--CARD: WEATHER{{{-->
 				<ion-card-header>
@@ -151,7 +151,7 @@
 					<ion-grid>
 						<ion-row nowrap>
 							<ion-col>
-								Bericht f&uuml;r {{consiteProv.weather.date}} um {{consiteProv.weather.time}}
+								Bericht f&uuml;r {{consiteProv.weather.date}}, {{consiteProv.weather.time}}
 								Uhr:
 							</ion-col>
 						</ion-row>
@@ -199,9 +199,9 @@
 			</ion-card> <!--}}}-->
 		</ion-col>
 		<ion-col>
-			<ion-card (click)="openConstructionsiteRemarkPage()"> <!--CARD: COMMENTS{{{-->
+			<ion-card (click)="openEventPage()"> <!--CARD: COMMENTS{{{-->
 				<ion-card-header>
-					Besondere Vorkommnisse
+					Vorkommnis melden
 				</ion-card-header>
 				<ion-card-content>
 					Klicken

@@ -24,6 +24,7 @@ import { ConstructionsiteTimerecordingPage } from '../pages/constructionsite-tim
 import { ConstructionsiteDailyreportPage } from '../pages/constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../pages/constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteContactsPage } from '../pages/constructionsite-contacts/constructionsite-contacts';
+import { ConstructionsiteEventPage } from '../pages/constructionsite-event/constructionsite-event';
 import { ConstructionsiteMorePage } from '../pages/constructionsite-more/constructionsite-more';
 import { ConstructionsitePhotoPage } from '../pages/constructionsite-photo/constructionsite-photo';
 import { ConstructionsitePhotoEquipmentPage} from '../pages/constructionsite-photo-equipment/constructionsite-photo-equipment';
@@ -50,6 +51,7 @@ import { CameraProvider } from '../providers/camera/camera';
 import { ConstructionsiteProvider } from '../providers/constructionsite/constructionsite';
 import { GlobalsProvider } from '../providers/globals/globals';
 import { WeatherProvider } from '../providers/weather/weather';
+import { TimeProvider } from '../providers/time/time';
 
 
 @NgModule({
@@ -64,6 +66,7 @@ import { WeatherProvider } from '../providers/weather/weather';
 		ConstructionsiteEquipmentPage,
 		ConstructionsiteMorePage,
 		ConstructionsiteContactsPage,
+		ConstructionsiteEventPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
@@ -98,6 +101,7 @@ import { WeatherProvider } from '../providers/weather/weather';
 		ConstructionsiteEquipmentPage,
 		ConstructionsiteMorePage,
 		ConstructionsiteContactsPage,
+		ConstructionsiteEventPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
@@ -129,7 +133,8 @@ import { WeatherProvider } from '../providers/weather/weather';
 		CameraProvider,
     ConstructionsiteProvider,
     GlobalsProvider,
-    WeatherProvider
+    WeatherProvider,
+    TimeProvider
   ]
 })
 export class AppModule {}

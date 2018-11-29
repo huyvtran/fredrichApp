@@ -8,6 +8,8 @@ import { FilePath } from '@ionic-native/file-path';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
 import { ActionSheetController, ToastController, Platform, LoadingController, Loading } from 'ionic-angular';
 
+import { AuthServiceProvider } from '../auth-service/auth-service';
+
 declare var cordova: any; // global variable for paths
 
 /*
@@ -31,7 +33,8 @@ export class CameraProvider {
 		public actionSheetCtrl: ActionSheetController, 
 		public toastCtrl: ToastController, 
 		public platform: Platform, 
-		public loadingCtrl: LoadingController) {
+		public loadingCtrl: LoadingController,
+		private auth: AuthServiceProvider) {
 			console.log('Hello CameraProvider Provider');
 			this.checkPermissions();
   }// }}}
@@ -60,7 +63,7 @@ export class CameraProvider {
 		});
 	}// }}}
 
-	public takePicture(sourceType) {
+	public takePicture(sourceType) {// {{{
 		// Create options for the Camera Dialog
 		var options = {
 			quality: 100,
@@ -70,70 +73,75 @@ export class CameraProvider {
 		};
 
 		// Get the data of an image
-		this.camera.getPicture(options).then((imagePath) => {
-		// Special handling for Android library
-		if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
-			console.log("DEALING WITH ANDROID PHOTOLIBRARY");
-			this.filePath.resolveNativePath(imagePath)
-			.then(filePath => {
-				let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-				let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+		this.camera.getPicture(options)
+		.then((imagePath) => {
+			// Special handling for Android library
+			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+				console.log("DEALING WITH ANDROID PHOTOLIBRARY");
+				this.filePath.resolveNativePath(imagePath)
+				.then(filePath => {
+					let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+					let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+					this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+
+					console.log("correct Path:");
+					console.log(correctPath);
+					console.log("current Name:")
+					console.log(currentName);
+				});
+			} else {
+				console.log("TAKING PICTURE");
+				var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
+				var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
 				this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
 
 				console.log("correct Path:");
 				console.log(correctPath);
 				console.log("current Name:")
 				console.log(currentName);
-			});
-		} else {
-			console.log("TAKING PICTURE");
-			var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-			var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-			this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-
-			console.log("correct Path:");
-			console.log(correctPath);
-			console.log("current Name:")
-			console.log(currentName);
-		}
-		}, (err) => {
-			this.presentToast('Error while selecting image.');
+			}
+			}, (err) => {
+				this.presentToast('Error while selecting image.');
 		});
-	}	
+	}	// }}}
 
 	// Create a new name for the image
-	private createFileName() {
-		var d = new Date(),
-		n = d.getTime(),
-		newFileName =  n + ".jpg";
+	private createFileName() {// {{{
+		var d = new Date();
+		let dateStr = d.toISOString();
+		dateStr = dateStr.substr(0,dateStr.lastIndexOf('.'));
+		let newFileName =  this.auth.getUserInfo().currentConstructionsiteId + "_" + dateStr + ".jpg";
+		console.log(newFileName);
 		return newFileName;
-	}
+	}// }}}
 
 	// Copy the image to a local folder
-	private copyFileToLocalDir(namePath, currentName, newFileName) {
+	private copyFileToLocalDir(namePath, currentName, newFileName) {// {{{
 		this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+			console.log("NEW FILE NAME:");
+			console.log(newFileName);
 			this.lastImage = newFileName;
 		}, error => {
 			this.presentToast('Error while storing file.');
 		});
-	}
+	}// }}}
 
-	private presentToast(text) {
+	private presentToast(text) {// {{{
 		let toast = this.toastCtrl.create({
 			message: text,
 			duration: 3000,
 			position: 'top'
 		});
 		toast.present();
-	}
+	}// }}}
 
 	// Always get the accurate path to your apps folder
-	public pathForImage(img) {
+	public pathForImage(img) {// {{{
 		if (img === null) {
 			return '';
 		} else {
 			return cordova.file.dataDirectory + img;
 		}
-	}
+	}// }}}
 
 }

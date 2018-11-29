@@ -4,6 +4,7 @@ import { Injectable } from '@angular/core';
 import { AuthServiceProvider } from '../auth-service/auth-service';
 import { GlobalsProvider } from '../globals/globals'
 import { WeatherProvider } from '../weather/weather'
+import { TimeProvider } from '../time/time'
 
 /*
   Generated class for the ConstructionsiteProvider provider.
@@ -20,6 +21,9 @@ class Worker {// {{{
 	phoneNr: string;
 	email: string;
 	role: string;
+	schedule: any;
+	timeWorkStart: string;
+	timeWorkEnd
 
 	constructor(){
 		this.id = "";
@@ -28,6 +32,7 @@ class Worker {// {{{
 		this.phoneNr = "";
 		this.email = "";
 		this.role = "";
+		this.schedule = {timeStart: "07:00", timeEnd: "16:00"};
 	}
 
 	//PUBLIC
@@ -38,6 +43,37 @@ class Worker {// {{{
 		this.phoneNr = data.phoneNr;
 		this.email = data.email;
 		this.role = data.role;
+// 		this.schedule = ...
+	}// }}}
+	getRoleStr(){// {{{
+		let roleStr="";
+		switch (this.role) {
+			case "1Polier": {
+				//statements;
+				roleStr = "Polier";
+				break;
+			}
+			case "2Maschinist": {
+				//statements;
+				roleStr = "Maschinist";
+				break;
+			}
+			case "3Facharbeiter": {
+				//statements;
+				roleStr = "Facharbeiter";
+				break;
+			}
+			case "4Hilfsarbeiter": {
+				//statements;
+				roleStr = "Hilfsarbeiter";
+				break;
+			}
+			default: {
+				roleStr = this.role;
+				break;
+			}
+		}
+		return roleStr;
 	}// }}}
 
 	//PRIVATE
@@ -95,19 +131,19 @@ class WorkerTeam {// {{{
 	}// }}}
 
 	public getPolierCount(){// {{{
-		return this.getRoleCount("polier");
+		return this.getRoleCount("1Polier");
 	}// }}}
 
 	public getMaschinistCount(){// {{{
-		return this.getRoleCount("maschinist");
+		return this.getRoleCount("2Maschinist");
 	}// }}}
 
 	public getFacharbeiterCount(){// {{{
-		return this.getRoleCount("facharbeiter");
+		return this.getRoleCount("3Facharbeiter");
 	}// }}}
 
 	public getHilfsarbeiterCount(){// {{{
-		return this.getRoleCount("hilfsarbeiter");
+		return this.getRoleCount("4Hilfsarbeiter");
 	}// }}}
 
 	public getNumWorkers(){// {{{
@@ -144,6 +180,38 @@ class EquipmentItem {// {{{
 		this.category= data.category;
 		this.name= data.name;
 	} // }}}
+	getCategoryStr(){// {{{
+		let categoryStr="";
+		switch (this.category) {
+			case "1Ramme": {
+				//statements;
+				categoryStr = "Ramme";
+				break;
+			}
+			case "2Kran": {
+				//statements;
+				categoryStr = "Kran";
+				break;
+			}
+			case "3Betonpumpe": {
+				//statements;
+				categoryStr = "Betonpumpe";
+				break;
+			}
+			case "4Andere": {
+				//statements;
+				categoryStr = "Andere";
+				break;
+			}
+			default: {
+				categoryStr = this.category;
+				break;
+			}
+		}
+		return categoryStr;
+	}// }}}
+
+
 
 	//PRIVATE{{{
 	private setDefaultValues(){// {{{
@@ -202,16 +270,16 @@ class EquipmentItemList {// {{{
 		return this.items;
 	}// }}}
 	public getRamCount(){// {{{
-		return this.getCategoryCount("ram");
+		return this.getCategoryCount("1Ramme");
 	}// }}}
 	public getCraneCount(){// {{{
-		return this.getCategoryCount("crane");
+		return this.getCategoryCount("2Kran");
 	}// }}}
 	public getPumpCount(){// {{{
-		return this.getCategoryCount("pump");
+		return this.getCategoryCount("3Betonpumpe");
 	}// }}}
 	public getOtherCount(){// {{{
-		return this.getCategoryCount("other");
+		return this.getCategoryCount("4Andere");
 	}// }}}
 	
 	//PRIVATE
@@ -321,6 +389,31 @@ class Contact {// {{{
 		this.town = "";
 		this.country = "";
 	}// }}}
+	getRoleStr(){
+		let roleStr="";
+		switch (this.role) {
+			case "hotel": {
+				//statements;
+				roleStr = "Hotel";
+				break;
+			}
+			case "subcontractor": {
+				//statements;
+				roleStr = "Nachunternehmer";
+				break;
+			}
+			case "cs_manager": {
+				//statements;
+				roleStr = "Bauleiter";
+				break;
+			}
+			default: {
+				roleStr = this.role;
+				break;
+			}
+		}
+		return roleStr;
+	}
 }// }}}
 
 class ContactList {// {{{
@@ -365,12 +458,48 @@ class Constructionsite {// {{{
 	}// }}}
 }// }}}
 
+class DailyReport {// {{{
+
+	id: string;
+	constructionsite: any;
+	timestamp: any;
+	weatherReport: any;
+	timeReport: any;
+	workDoneArr:any = [];
+	eventArr:any = [];
+
+	constructor(){// {{{
+		this.setDefaults();
+	}// }}}
+
+	setDefaults(){
+		this.id = "-1";
+		this.constructionsite = {id: "", description: ""};
+		this.timestamp = {calendarWeek: "", weekDay: "", date: ""};
+		this.weatherReport = {time: "", temperatureDegC: "", conditions: ""};
+		this.timeReport = {countPolier: -1, countPolierHours: -1, 
+			countMaschinist: -1, countMaschinistHours: -1, 
+			countFacharbeiter: -1, countFacharbeiterHours: -1,
+			countHilfsarbeiter: -1, countHilfsarbeiterHours: -1,
+		};
+
+		this.workDoneArr = [];
+		this.eventArr = [];
+	}
+	
+	setId(id){// {{{
+		this.id=id;
+	}// }}}
+}// }}}
+
+
 @Injectable()
 export class ConstructionsiteProvider {
 
 	private constructionsite: Constructionsite;
+	private dailyReport: DailyReport;
 
-	constructor(public http: HttpClient, public weather: WeatherProvider, public auth: AuthServiceProvider, public globals: GlobalsProvider) {// {{{
+	constructor(public http: HttpClient, public weather: WeatherProvider, private auth: AuthServiceProvider, public globals: GlobalsProvider, public time: TimeProvider) {// {{{
 		console.log('Hello ConstructionsiteProvider Provider');
 	}// }}}
 
@@ -403,9 +532,9 @@ export class ConstructionsiteProvider {
 				this.setContactList(data['contacts_arr']);
 			});
 	}// }}}
-	private setMeta(data){
+	private setMeta(data){// {{{
 		this.constructionsite.description = data.description;
-	}
+	}// }}}
 	private setLocation(data){// {{{
 		this.constructionsite.location.setData(data);
 	}// }}}
@@ -452,4 +581,47 @@ export class ConstructionsiteProvider {
 		return this.constructionsite.equipmentItemList.getOtherCount();
 	}// }}}
 
+	public getWorkerTeamMembers(){// {{{
+		return this.constructionsite.workerTeam.getMembers();
+	}// }}}
+	public getContactList(){// {{{
+		return this.constructionsite.contactList.items;
+	}// }}}
+
+	public generateDailyReport(){
+		this.dailyReport = new DailyReport();
+		this.dailyReport.constructionsite.id= this.constructionsite.id;
+		this.dailyReport.constructionsite.description = this.constructionsite.description;
+
+		this.dailyReport.timestamp.calendarWeek = this.time.getCurrentCalendarWeek();
+		this.dailyReport.timestamp.date= this.time.getDateStr();
+			
+		this.dailyReport.weatherReport = {time: this.weather.time, 
+			temperatureDegC: this.weather.temperatureDegC, 
+			conditions: this.weather.precipitation + "mm, " + this.weather.cloudCoverPercent + "% Bedeckung"
+		};
+
+		this.dailyReport.timeReport = {countPolier: -1, countPolierHours: -1, 
+			countMaschinist: -1, countMaschinistHours: -1, 
+			countFacharbeiter: -1, countFacharbeiterHours: -1,
+			countHilfsarbeiter: -1, countHilfsarbeiterHours: -1,
+		};
+
+		this.dailyReport.workDoneArr = [];
+		for (let i=0; i<3; i++){
+			let job = {id: i+1, title: "Rammen", commentary: "--"};
+			this.dailyReport.workDoneArr.push(job);
+		}
+
+		this.dailyReport.eventArr = [];
+		for (let i=0; i<3; i++){
+			let event = {id: i+1, title: "Besuch Bauleiter", commentary: "--"};
+			this.dailyReport.eventArr.push(event);
+		}
+
+	}
+
+	public getDailyReport(){
+		return this.dailyReport;
+	}
 }

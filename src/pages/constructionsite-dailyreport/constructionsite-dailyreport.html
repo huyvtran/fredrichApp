@@ -4,53 +4,293 @@
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
 -->
-
-<!--
 <ion-header>
 
   <ion-navbar>
-    <ion-title>constructionsite-dailyreport</ion-title>
+	  <ion-title>Bautagebericht: {{dailyReport.constructionsite.description}}</ion-title>
   </ion-navbar>
 
 </ion-header>
--->
+
 
 <ion-content padding>
-	<ion-card>
-		<ion-card-header>
-			Mitarbeiter
-		</ion-card-header>
-		<ion-card-content>
-			Auflistung der Mitarbeiter (aus Zeiterfassung)
-		</ion-card-content>
-	</ion-card>
+	<ion-grid>
+		<ion-row>
 
-	<ion-card>
-		<ion-card-header>
-			Geraete	
-		</ion-card-header>
-		<ion-card-content>
-			Auflistung der Geraete, Schadensmeldungen (aus Geraetuebersicht)
-		</ion-card-content>
-	</ion-card>
+			<ion-col>
+				<ion-card> <!--CARD: Baustelle {{{-->
+					<ion-card-header>
+						Baustelle
+					</ion-card-header>
+					<ion-card-content>
+						<ion-grid>
+							<ion-row nowrap>
+								<ion-col>
+									<div>Bau-Nr.:</div> 
+									<div>{{dailyReport.constructionsite.id}}</div>
+								</ion-col>
+								<ion-col>
+									<div>Berichtsnr.: </div>
+									<div>	{{dailyReport.id}}</div>
+								</ion-col>
+								<ion-col>
+									<div>KW:  </div>
+									<div>{{dailyReport.timestamp.calendarWeek}}</div>
+								</ion-col>
+								<ion-col>
+									<div>Datum: </div>
+									<div>{{dailyReport.timestamp.date}}</div>
+								</ion-col>
+							</ion-row>
 
-	<ion-card>
-		<ion-card-header>
-			Wetterbericht	
-		</ion-card-header>
-		<ion-card-content>
-			Wetterbericht fuer Tagesdatum von Wetterservice. Editierfunktion des Wetterberichts.
-		</ion-card-content>
-	</ion-card>
+							<ion-row nowrap>
+								<ion-col>
+									<div>Zeit:</div> 
+									<div>{{dailyReport.weatherReport.time}} </div>
+								</ion-col>
+								<ion-col>
+									<div>Temp.: </div>
+									<div>{{dailyReport.weatherReport.temperatureDegC}} &deg; C </div>
+								</ion-col>
+								<ion-col col-6>
+									<div>Witterung:</div>  
+									<div>{{dailyReport.weatherReport.conditions}} </div>
+								</ion-col>
+							</ion-row>
+						</ion-grid>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
 
-	<ion-card>
-		<ion-card-header>
-			Besondere Vorkommnisse	
-		</ion-card-header>
-		<ion-card-content>
-			Fotofunktion, Kommentarfunktion	
-		</ion-card-content>
-	</ion-card>
+			<ion-col>
+				<ion-card> <!--CARD: Arbeitszeit Belegschaft{{{-->
+					<ion-card-header>
+						Arbeitszeit	Belegschaft
+					</ion-card-header>
+					<ion-card-content>
+							<ion-item>
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-3>
+											Rolle:
+										</ion-col>
+										<ion-col>
+											von:
+										</ion-col>
+										<ion-col>
+											bis:
+										</ion-col>
+										<ion-col>
+											Anzahl:
+										</ion-col>
+										<ion-col>
+											Std:
+										</ion-col>
+
+									</ion-row>
+								</ion-grid>
+							</ion-item>
 
 
+						<ion-list>
+							<ion-item *ngFor="let role of workerRoles">
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-3>
+											{{role}}
+										</ion-col>
+
+										<ion-col>
+											07:00
+										</ion-col>
+										<ion-col>
+											16:00
+										</ion-col>
+										<ion-col>
+											1
+										</ion-col>
+										<ion-col>
+											8
+										</ion-col>
+
+									</ion-row>
+								</ion-grid>
+							</ion-item>
+
+							<ion-item>
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-3>
+											Gesamt
+										</ion-col>
+
+										<ion-col>
+										</ion-col>
+										<ion-col>
+										</ion-col>
+										<ion-col>
+											4
+										</ion-col>
+										<ion-col>
+											31
+										</ion-col>
+									</ion-row>
+								</ion-grid>
+							</ion-item>
+						</ion-list>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+
+			<ion-col>
+				<ion-card> <!--CARD: Arbeitszeit Nachunternehmer{{{-->
+					<ion-card-header>
+						Arbeitszeit Nachunternehmer	
+					</ion-card-header>
+					<ion-card-content>
+							<ion-item>
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-3>
+											Firma / Arbeiten:
+										</ion-col>
+										<ion-col>
+											von:
+										</ion-col>
+										<ion-col>
+											bis:
+										</ion-col>
+										<ion-col>
+											Anzahl:
+										</ion-col>
+										<ion-col>
+											Std:
+										</ion-col>
+
+									</ion-row>
+								</ion-grid>
+							</ion-item>
+
+
+						<ion-list>
+							<ion-item *ngFor="let role of workerRoles">
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-3>
+										</ion-col>
+
+										<ion-col>
+											07:00
+										</ion-col>
+										<ion-col>
+											16:00
+										</ion-col>
+										<ion-col>
+											1
+										</ion-col>
+										<ion-col>
+											8
+										</ion-col>
+
+									</ion-row>
+								</ion-grid>
+							</ion-item>
+
+							<ion-item>
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-3>
+											Gesamt
+										</ion-col>
+
+										<ion-col>
+										</ion-col>
+										<ion-col>
+										</ion-col>
+										<ion-col>
+											4
+										</ion-col>
+										<ion-col>
+											31
+										</ion-col>
+									</ion-row>
+								</ion-grid>
+							</ion-item>
+						</ion-list>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+
+			<ion-col>
+				<ion-card> <!--CARD: Durchgefuerhte Arbeiten {{{-->
+					<ion-card-header>
+						Durchgef&uuml;hrte Arbeiten:
+					</ion-card-header>
+					<ion-card-content>
+
+						<ion-list>
+							<ion-item *ngFor="let job of dailyReport.workDoneArr">
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-1>
+											{{job.id}}.
+										</ion-col>
+										<ion-col>
+											{{job.title}}
+										</ion-col>
+										<ion-col>
+											Kommentar:
+										</ion-col>
+										<ion-col>
+											{{job.commentary}}
+										</ion-col>
+
+									</ion-row>
+								</ion-grid>
+							</ion-item>
+
+						</ion-list>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+
+
+			<ion-col>
+				<ion-card> <!--CARD: Durchgefuerhte Arbeiten {{{-->
+					<ion-card-header>
+						Besondere Vorkommnisse:
+					</ion-card-header>
+					<ion-card-content>
+
+						<ion-list>
+							<ion-item *ngFor="let event of dailyReport.eventArr">
+								<ion-grid>
+									<ion-row nowrap>
+										<ion-col col-1>
+											{{event.id}}.
+										</ion-col>
+										<ion-col>
+											{{event.title}}
+										</ion-col>
+										<ion-col>
+											Kommentar:
+										</ion-col>
+										<ion-col>
+											{{event.commentary}}
+										</ion-col>
+
+									</ion-row>
+								</ion-grid>
+							</ion-item>
+
+						</ion-list>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+
+
+
+
+		</ion-row>
+	</ion-grid>
 </ion-content>

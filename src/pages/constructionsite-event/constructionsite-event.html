@@ -1,0 +1,53 @@
+<!--
+  Generated template for the ConstructionsiteEventPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Vorkommnis melden</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+
+	<ion-list>
+
+		<ion-item>
+			<ion-label>Typ</ion-label>
+			<ion-select [(ngModel)]="event.type" multiple="true">
+				<ion-option value="planChange">Plan&auml;nderung</ion-option>
+				<ion-option value="visit">Besuch</ion-option>
+				<ion-option value="cAG">Anordnung des AG</ion-option>
+				<ion-option value="extraService">Zus&auml;tzliche Leistungen</ion-option>
+				<ion-option value="handicap">Behinderung</ion-option>
+				<ion-option value="hourlyWageWork">Stundenlohnarbeiten</ion-option>
+				<ion-option value="shipping">Versand</ion-option>
+				<ion-option value="other">Sonstiges</ion-option>
+			</ion-select>
+		</ion-item>
+
+
+		<ion-item>
+			<ion-label color="tertiary" floating>Titel</ion-label>
+			<ion-input type="text" [(ngModel)]="event.title" name="title"></ion-input>
+		</ion-item>
+
+	  <button ion-item (click)="presentCameraActionSheet()">
+		  Photo
+		</button>
+
+		<ion-item>
+			<ion-label color="tertiary" floating>Beschreibung</ion-label>
+			<ion-input type="text" [(ngModel)]="event.description" name="description"></ion-input>
+		</ion-item>
+
+	</ion-list>
+
+	<button ion-button large (click)="submitEvent()">Vorkommnis melden</button>
+
+</ion-content>

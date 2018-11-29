@@ -16,7 +16,8 @@
 <ion-content padding>
 	<ion-list>
 		<button ion-item *ngFor="let item of consiteProv.constructionsite.equipmentItemList.getItems()" (click)="itemSelected(item)">
-			<p>{{item.id}}: {{ item.category}}, {{item.name}}</p>
+			<p> <b>{{ item.getCategoryStr() }}</b></p>
+			<p>{{item.name}}, ID: {{item.id}} </p>
 		</button>  
 	</ion-list>
 

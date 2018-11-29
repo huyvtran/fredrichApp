@@ -29,7 +29,7 @@ export class ConstructionsitePage {
 	tab1Root = ConstructionsiteOverviewPage;
 	tab2Root = ConstructionsitePhotoPage;
 	tab3Root = ConstructionsiteDailyreportPage;
-	tab5Root = ConstructionsiteMorePage;
+	tab4Root = ConstructionsiteMorePage;
 	
 	constructionsiteId:any;
 
