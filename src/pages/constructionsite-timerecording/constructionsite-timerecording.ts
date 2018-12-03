@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
+import { ConstructionsiteWorkerDetailPage } from '../constructionsite-worker-detail/constructionsite-worker-detail';
+
 /**
  * Generated class for the ConstructionsiteTimerecordingPage page.
  *
@@ -29,7 +31,7 @@ export class ConstructionsiteTimerecordingPage {
   }
 
 	itemSelected(worker){
-
+		this.navCtrl.push(ConstructionsiteWorkerDetailPage, {worker: worker});
 	}
 
 }

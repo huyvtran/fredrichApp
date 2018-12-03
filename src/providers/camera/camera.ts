@@ -66,16 +66,19 @@ export class CameraProvider {
 	public takePicture(sourceType) {// {{{
 		// Create options for the Camera Dialog
 		var options = {
-			quality: 100,
+			quality: 80,
 			sourceType: sourceType,
-			saveToPhotoAlbum: true,
+			saveToPhotoAlbum: false,
 			correctOrientation: true
 		};
 
+		console.log("takePicture OPTIONS:");
+		console.log(options);
 		// Get the data of an image
 		this.camera.getPicture(options)
 		.then((imagePath) => {
 			// Special handling for Android library
+			console.log(sourceType);
 			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
 				console.log("DEALING WITH ANDROID PHOTOLIBRARY");
 				this.filePath.resolveNativePath(imagePath)
@@ -84,6 +87,8 @@ export class CameraProvider {
 					let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
 					this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
 
+					console.log("image Path:");
+					console.log(imagePath);
 					console.log("correct Path:");
 					console.log(correctPath);
 					console.log("current Name:")
@@ -93,14 +98,22 @@ export class CameraProvider {
 				console.log("TAKING PICTURE");
 				var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
 				var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-				this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
+				var newFileName =  this.createFileName();
+				this.copyFileToLocalDir(correctPath, currentName, newFileName);
 
+				console.log("image Path:");
+				console.log(imagePath);
 				console.log("correct Path:");
 				console.log(correctPath);
 				console.log("current Name:")
 				console.log(currentName);
+				console.log("new Filename:")
+				console.log(newFileName);
+
 			}
-			}, (err) => {
+		}, (err) => {
+				console.log("ERROR WHILE TAKING PICTURE");
+				console.log(err);
 				this.presentToast('Error while selecting image.');
 		});
 	}	// }}}
@@ -117,12 +130,14 @@ export class CameraProvider {
 
 	// Copy the image to a local folder
 	private copyFileToLocalDir(namePath, currentName, newFileName) {// {{{
-		this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName).then(success => {
+		this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName)
+		.then(success => {
 			console.log("NEW FILE NAME:");
 			console.log(newFileName);
 			this.lastImage = newFileName;
 		}, error => {
 			this.presentToast('Error while storing file.');
+			console.log(error);
 		});
 	}// }}}
 

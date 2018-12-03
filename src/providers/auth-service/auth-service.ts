@@ -80,18 +80,27 @@ export class AuthServiceProvider {
 	private hasTokenAccess(token, observer: any) {// {{{
 		let url = this.globals.serverPhpScriptsUrl + "login.php?token=" + token;
 		let access = false;
-		this.httpClient.get(url)
-			.subscribe(data => {
-				console.log(data);
-				if(data.hasOwnProperty("fail")){
-					access = false;
-				} else {
-					access = true;
-					this.currentUser = new User(token, data);
-				}
-				observer.next(access);
-				observer.complete();
-			});
+		if(0){
+			this.httpClient.get(url)
+				.subscribe(data => {
+					console.log(data);
+					if(data.hasOwnProperty("fail")){
+						access = false;
+					} else {
+						access = true;
+						this.currentUser = new User(token, data);
+					}
+					observer.next(access);
+					observer.complete();
+				});
+		} else {
+			access = true;
+			let data = {token: "456abc", userName: "Plate", userSurname: "Heinz", userRole: "polier", currentConstructionsiteId: "3388"};
+
+			this.currentUser = new User(token, data);
+			observer.next(access);
+			observer.complete();
+		}
 	}// }}}
 
 }

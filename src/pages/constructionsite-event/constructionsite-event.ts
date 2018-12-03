@@ -5,6 +5,8 @@ import { ConstructionsiteProvider } from '../../providers/constructionsite/const
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { CameraProvider } from '../../providers/camera/camera';
 
+import { ConstructionsiteEvent } from '../../classes/constructionsite/constructionsite-event'
+
 /**
  * Generated class for the ConstructionsiteEventPage page.
  *
@@ -19,18 +21,17 @@ import { CameraProvider } from '../../providers/camera/camera';
 })
 export class ConstructionsiteEventPage {
 
-	event: any;
+	event: ConstructionsiteEvent;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, private actionSheetCtrl: ActionSheetController, private auth: AuthServiceProvider, public cameraProvider: CameraProvider) {
-	  this.event = {type: [], title: "", description: "", author: "", imageFiles: []};
-// 
+	  this.event = new ConstructionsiteEvent();// 
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteEventPage');
   }
 
-	public presentCameraActionSheet() {
+	public presentCameraActionSheet() {// {{{
 		let actionSheet = this.actionSheetCtrl.create({
 			title: 'Select Image Source',
 			buttons: [
@@ -55,17 +56,18 @@ export class ConstructionsiteEventPage {
 			]
 		});
 		actionSheet.present();
-	}
+	}// }}}
 
-	submitEvent(){
+	submitEvent(){// {{{
 		this.event.author = this.getAuthorName();
 		console.log(this.event);
-	}
+	}// }}}
 
-	getAuthorName(){
+
+	getAuthorName(){// {{{
 		let user = this.auth.getUserInfo();
 		return user.surname[0] + ". " + user.name;
-	}
+	}// }}}
 // 	openCamera(){
 // 		this.navCtrl.push(CameraViewPage);
 // 	}

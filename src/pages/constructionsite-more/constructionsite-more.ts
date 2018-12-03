@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { ConstructionsiteContactsPage} from '../constructionsite-contacts/constructionsite-contacts';
+import { ConstructionsiteSettingsPage } from '../constructionsite-settings/constructionsite-settings';
 
 /**
  * Generated class for the ConstructionsiteMorePage page.
@@ -29,7 +30,7 @@ export class ConstructionsiteMorePage {
 	}
 
 	openSettingsPage(){
-		// 		this.navCtrl.push(ConstructionsiteSettingsPage); //TODO create settings page
+		this.navCtrl.push(ConstructionsiteSettingsPage); 
 	}
 
 }
