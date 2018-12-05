@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import {Observable} from 'rxjs/Observable';
 
 import { GlobalsProvider } from '../globals/globals'
 
@@ -21,9 +22,15 @@ export class WeatherProvider {
 	maxWindSpeedKmH: string;
 	precipitation: string; //TODO: check unit
 
-  constructor(public http: HttpClient, public globals: GlobalsProvider) {
-    console.log('Hello WeatherProvider Provider');
-  }
+	loadingStatus:any;
+	loadingStatusObserver:any;
+
+	constructor(public http: HttpClient, public globals: GlobalsProvider) {
+		console.log('Hello WeatherProvider Provider');
+		this.loadingStatus = Observable.create(observer => {
+			this.loadingStatusObserver = observer;
+		});
+	}
 
 	loadWeatherData(lat, lon){
 		let url = this.globals.serverPhpScriptsUrl + 'wetter/get.php?breite=' + lat + '&laenge=' + lon;
@@ -38,27 +45,33 @@ export class WeatherProvider {
 				this.maxWindSpeedKmH= data['max_wind'];	
 				this.temperatureDegC = data['temp'];	
 				this.precipitation = data['niederschlag'];
+			},
+			err => {this.loadingStatusObserver.next(false);},
+			() => {
+				this.loadingStatusObserver.next(true);
+				this.loadingStatusObserver.complete();
 			});
 	}
 
-	getTemperature(){
+
+	loadingUpdates(){
+		return this.loadingStatus;
+	}
+
+	getTemperature(){// {{{
 		return this.temperatureDegC;
-	}
-
-	getCloudcover(){
+	}// }}}
+	getCloudcover(){// {{{
 		return this.cloudCoverPercent;
-	}
-
-	getWindSpeedAvg(){
+	}// }}}
+	getWindSpeedAvg(){// {{{
 		return this.windSpeedKmH;
-	}
-
-	getWindSpeedMax(){
+	}// }}}
+	getWindSpeedMax(){// {{{
 		return this.maxWindSpeedKmH;
-	}
-
-	getPrecipitation(){
+	}// }}}
+	getPrecipitation(){// {{{
 		return this.precipitation;
-	}
+	}// }}}
 
 }

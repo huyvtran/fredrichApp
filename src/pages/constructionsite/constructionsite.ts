@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController} from 'ionic-angular';
 
 import { ConstructionsiteOverviewPage } from '../constructionsite-overview/constructionsite-overview';
 import { ConstructionsiteTimerecordingPage} from '../constructionsite-timerecording/constructionsite-timerecording';
@@ -33,13 +33,80 @@ export class ConstructionsitePage {
 	
 	constructionsiteId:any;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, public auth: AuthServiceProvider) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, public auth: AuthServiceProvider, private actionSheetCtrl: ActionSheetController) {
 	  console.log("CONSTR.SITE.ID:", this.constructionsiteId);
-	  this.consiteProv.initialize(this.auth.getUserInfo().currentConstructionsiteId);
+		this.initialize();
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsitePage');
+	  this.loadConsiteData();
   }
+
+	initialize(){// {{{
+	  this.consiteProv.initialize(this.auth.getUserInfo().currentConstructionsiteId);
+	}// }}}
+
+	loadConsiteData(){// {{{ load constructionsite data first, then secondary data like weather etc
+		this.consiteProv.loadConstructionsiteData();
+		this.consiteProv.loadDataUpdates()
+			.subscribe(loadingStatus => {
+				console.log("LOADING STATUS: ", loadingStatus);
+				if(loadingStatus.consiteData && !loadingStatus.weather){
+					this.loadSecondaryData();
+				}
+			},
+			err => {},
+			() => {
+				console.log("CONSITE FILLED:");
+				console.log(this.consiteProv.getConstructionsite())
+			});
+		this.consiteProv.checkLoadDataCompleted();
+	}// }}}
+
+	loadSecondaryData(){// {{{
+		console.log("LOADING SECONDARY DATA");
+		this.consiteProv.loadDataUpdates()
+			.subscribe(loadingStatus => {
+				if(loadingStatus.consiteData){
+					let $check = this.consiteProv.isGeolocationValid()
+						.subscribe(isValid => {
+							if(isValid){
+								this.consiteProv.loadWeatherData();
+// 								$check.unsubscribe();
+							} else {
+								this.presentSetGeolocationActionSheet();
+							}
+						},
+						err => {
+							console.log(err);
+						});
+				}
+			},
+			err => {},
+			() => {
+			});
+
+	}// }}}
+
+	public presentSetGeolocationActionSheet() {// {{{
+		let actionSheet = this.actionSheetCtrl.create({
+			title: 'Geokoordinaten nicht gesetzt - sie werden f&uuml;r den Wetterbericht etc. gebraucht.',
+			buttons: [
+				{
+					text: 'Jetzt setzen:',
+					handler: () => {
+						//do sth
+					}
+				},
+				{
+					text: 'sp√ter setzen',
+					role: 'cancel'
+				}
+			]
+		});
+		actionSheet.present();
+	}// }}}
+
 
 }

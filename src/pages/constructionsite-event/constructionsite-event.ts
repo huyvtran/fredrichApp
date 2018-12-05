@@ -63,7 +63,6 @@ export class ConstructionsiteEventPage {
 		console.log(this.event);
 	}// }}}
 
-
 	getAuthorName(){// {{{
 		let user = this.auth.getUserInfo();
 		return user.surname[0] + ". " + user.name;

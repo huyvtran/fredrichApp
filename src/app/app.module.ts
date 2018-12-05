@@ -20,6 +20,7 @@ import { HomePage } from '../pages/home/home';
 import { SelectConstructionsitePage } from '../pages/select-constructionsite/select-constructionsite';
 import { ConstructionsitePage } from '../pages/constructionsite/constructionsite';
 import { ConstructionsiteOverviewPage } from '../pages/constructionsite-overview/constructionsite-overview';
+import { ConstructionsiteSetGeolocationPage } from '../pages/constructionsite-set-geolocation/constructionsite-set-geolocation';
 import { ConstructionsiteTimerecordingPage } from '../pages/constructionsite-timerecording/constructionsite-timerecording';
 import { ConstructionsiteDailyreportPage } from '../pages/constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../pages/constructionsite-equipment/constructionsite-equipment';
@@ -53,6 +54,7 @@ import { ConstructionsiteProvider } from '../providers/constructionsite/construc
 import { GlobalsProvider } from '../providers/globals/globals';
 import { WeatherProvider } from '../providers/weather/weather';
 import { TimeProvider } from '../providers/time/time';
+import { GeolocationProvider } from '../providers/geolocation/geolocation';
 
 
 @NgModule({
@@ -62,6 +64,7 @@ import { TimeProvider } from '../providers/time/time';
 	SelectConstructionsitePage,
 	ConstructionsitePage,
 		ConstructionsiteOverviewPage,
+			ConstructionsiteSetGeolocationPage,
 		ConstructionsiteTimerecordingPage,
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
@@ -98,6 +101,7 @@ import { TimeProvider } from '../providers/time/time';
 	SelectConstructionsitePage,
 	ConstructionsitePage,
 		ConstructionsiteOverviewPage,
+			ConstructionsiteSetGeolocationPage,
 		ConstructionsiteTimerecordingPage,
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
@@ -137,7 +141,8 @@ import { TimeProvider } from '../providers/time/time';
     ConstructionsiteProvider,
     GlobalsProvider,
     WeatherProvider,
-    TimeProvider
+    TimeProvider,
+    GeolocationProvider
   ]
 })
 export class AppModule {}

@@ -80,7 +80,7 @@ export class AuthServiceProvider {
 	private hasTokenAccess(token, observer: any) {// {{{
 		let url = this.globals.serverPhpScriptsUrl + "login.php?token=" + token;
 		let access = false;
-		if(0){
+		if(1){
 			this.httpClient.get(url)
 				.subscribe(data => {
 					console.log(data);
