@@ -15,7 +15,6 @@ import { Worker } from '../../classes/constructionsite/worker'
 import { WorkerTeam } from '../../classes/constructionsite/worker-team'
 import { EquipmentItem } from '../../classes/constructionsite/equipment-item'
 import { EquipmentItemList } from '../../classes/constructionsite/equipment-item-list'
-import { Location } from '../../classes/constructionsite/location'
 import { Contact } from '../../classes/constructionsite/contact'
 import { ContactList } from '../../classes/constructionsite/contact-list'
 import { Constructionsite } from '../../classes/constructionsite/constructionsite'
@@ -37,7 +36,13 @@ export class ConstructionsiteProvider {
 	loadDataObserver: any;
 	loadDataStatus:any;
 
-	constructor(public http: HttpClient, public weather: WeatherProvider, private auth: AuthServiceProvider, public globals: GlobalsProvider, public time: TimeProvider, public location: GeolocationProvider) {// {{{
+	constructor(public http: HttpClient, 
+		public weather: WeatherProvider, 
+		private auth: AuthServiceProvider, 
+		public globals: GlobalsProvider, 
+		public time: TimeProvider, 
+		public location: GeolocationProvider) 
+	{// {{{
 		console.log('Hello ConstructionsiteProvider Provider');
 		this.loadDataStatus = {consiteData: false, weather: false};
 // 		this.loadData = Observable.create(observer => {
@@ -49,6 +54,11 @@ export class ConstructionsiteProvider {
 	getConstructionsite(){// {{{
 		return this.constructionsite;
 	}// }}}
+
+	getWeather(){// {{{
+		return this.weather;
+	}// }}}
+
 
 	public initialize(id){// {{{
 		this.constructionsite= new Constructionsite();
@@ -129,9 +139,10 @@ export class ConstructionsiteProvider {
 		this.loadDataUpdates().subscribe(
 			loadingStatus => { //{{{
 				if(loadingStatus.consiteData && !loadingStatus.weather){
-					console.log("consite Data has loaded, LOADING WEATHER DATA");
+					console.log("LOADING WEATHER DATA");
 					//here we assume that location has been corectly set previously
-					this.weather.loadWeatherData(this.constructionsite.location.lat, this.constructionsite.location.lon);
+					console.log("WEATHER LOCATION: ", this.location);
+					this.weather.loadWeatherData(this.location.lat, this.location.lon);
 					this.weather.loadingUpdates()
 						.subscribe(hasLoaded => {
 							if(hasLoaded){
@@ -150,33 +161,6 @@ export class ConstructionsiteProvider {
 
 	isGeolocationValid(){
 		return this.location.checkGeolocationValidityUpdates();
-// 		let isValidStream = new Rx.BehaviorSubject();
-// 
-// 		return Observable.create(observer => {
-// 			this.location.checkGeolocationValidityUpdates()
-// 				.subscribe(isValid => {
-// 					observer.next(isValid);
-// 				},
-// 					err => {},
-// 					() => {});
-// 		});
-	}
-
-	checkGeolocation(){
-		console.log("CHECKING GEOLOCATION VALIDITY");
-		console.log("LAT:")
-		console.log(this.location.lat);
-		console.log("LON:")
-		console.log(this.location.lon);
-
-		if(this.location.isGeolocationValid()){
-			console.log("GEOLOCATION IS VALID");
-			//do nothing
-		} else {
-			console.log("GEOLOCATION IS INVALID");
-// 			this.navCtrl.push(ConstructionsiteSetGeolocationPage);
-		}
-
 	}
 
 	public getPolierCount(){// {{{

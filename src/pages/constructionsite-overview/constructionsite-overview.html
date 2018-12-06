@@ -25,12 +25,10 @@
 						{{ consiteProv.constructionsite.description }}
 					</ion-card-header>
 					<ion-card-content>
-						<p> Ort: {{consiteProv.constructionsite.location.town }}, {{consiteProv.constructionsite.location.country }}</p>
+						<p> Ort: {{consiteProv.location.town }}, {{consiteProv.location.country }}</p>
 						<p> eingeloggt als: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
-						<!--
-						<p> Koordinaten (Lat/Lon): {{consiteProv.constructionsite.location.lat}},
-						{{consiteProv.constructionsite.location.lon}} </p>
-						-->
+						<p> Koordinaten: {{consiteProv.location.getLatStr()}},
+						{{consiteProv.location.getLonStr()}} </p>
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>

@@ -7,14 +7,17 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>constructionsite-set-geolocation</ion-title>
+	  <ion-title>Geokoordinaten von "{{consiteProv.getConstructionsite().description}}" neu aufnehmen</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-	<button ion-button (click)="this.location.setGeolocation()">
+	<div>
+		Bitte begeben Sie sich auf die Mitte der Baustelle. Dort bitte folgenden Button dr&uuml;cken.
+	</div>
+	<button ion-button (click)="this.setGeolocation();">
 		Jetzt geo-Koordinaten setzen.
 	</button>
 </ion-content>

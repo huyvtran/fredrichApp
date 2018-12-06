@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ConstructionsiteSetGeolocationPage} from '../constructionsite-set-geolocation/constructionsite-set-geolocation';
 
 /**
  * Generated class for the ConstructionsiteSettingsPage page.
@@ -21,5 +22,9 @@ export class ConstructionsiteSettingsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteSettingsPage');
   }
+
+	openSetGeocoordsPage(){
+		this.navCtrl.push(ConstructionsiteSetGeolocationPage);
+	}
 
 }
