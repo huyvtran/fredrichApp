@@ -32,7 +32,7 @@ export class ConstructionsitePage {
 	tab3Root = ConstructionsiteDailyreportPage;
 	tab4Root = ConstructionsiteMorePage;
 	
-	constructionsiteId:any;
+	constructionsiteId: string;
 
 	constructor(public navCtrl: NavController, // {{{
 		public navParams: NavParams, 
@@ -41,14 +41,14 @@ export class ConstructionsitePage {
 		private actionSheetCtrl: ActionSheetController, 
 		private alertCtrl: AlertController) 
 	{
-		console.log("CONSTR.SITE.ID:", this.constructionsiteId);
-		this.initialize();
 	}// }}}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConstructionsitePage');
-	  this.loadConsiteData();
-  }
+  ionViewDidLoad() {// {{{
+		console.log('ionViewDidLoad ConstructionsitePage');
+		console.log("CONSTR.SITE.ID:", this.constructionsiteId);
+		this.initialize();
+		this.loadConsiteData();
+  }// }}}
 
 	initialize(){// {{{
 	  this.consiteProv.initialize(this.auth.getUserInfo().currentConstructionsiteId);
@@ -78,13 +78,16 @@ export class ConstructionsitePage {
 		this.consiteProv.loadDataUpdates()
 			.subscribe(loadingStatus => {
 				if(loadingStatus.consiteData){
-					let $check = this.consiteProv.isGeolocationValid()
+					let $check = this.consiteProv.isGeolocationValid();
+					console.log($check);
+					$check
 						.subscribe(isValid => {
 							if(isValid){
 								console.log("GEOLOCATION VALID, PROCEEDING");
 								console.log(this.consiteProv.location);
 								this.consiteProv.loadWeatherData();
-// 								$check.unsubscribe();
+								// 								$check.unsubscribe(); //stay subscribed in case
+								// 								user logs out
 							} else {
 								console.log("GEOLOCATION INVALID", isValid);
 								this.presentSetGeolocationActionSheet();

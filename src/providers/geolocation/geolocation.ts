@@ -25,25 +25,24 @@ export class GeolocationProvider {
 	lat: any;
 	lon: any;
 	validity: any;
-	validityObserver:any;
 
 	loadingStatus: any;
 	loadingStatusObserver: any;
 
 	constructor(public http: HttpClient, 
-	private geolocation: Geolocation,
+		private geolocation: Geolocation,
 		private globals: GlobalsProvider,
-		private auth: AuthServiceProvider) {
+		private auth: AuthServiceProvider) 
+	{
 		console.log('Hello GeolocationProvider Provider');
 		this.setDefaults();
 		this.validity = new Rx.BehaviorSubject(this.isGeolocationValid());
 		this.loadingStatus = Observable.create(observer => {
 			this.loadingStatusObserver = observer;
 		});
-
 	}
 
-	setDefaults(){
+	setDefaults(){// {{{
 		this.street = "";
 		this.streetNr = "";
 		this.zipcode = "";
@@ -51,7 +50,7 @@ export class GeolocationProvider {
 		this.country = "";
 		this.lat ="";
 		this.lon = "";
-	}
+	}// }}}
 
 	isLocationSet(){// {{{
 
@@ -98,6 +97,7 @@ export class GeolocationProvider {
 		this.country = data.country;
 		this.lat = data.lat; 
 		this.lon = data.lon;
+		console.log(this.validity);
 		this.validity.next(this.isGeolocationValid());
 	}// }}}
 
@@ -107,25 +107,20 @@ export class GeolocationProvider {
 
 	isGeolocationValid(): boolean {// {{{
 		let latNr = Number(this.lat), lonNr = Number(this.lon);
-// 		console.log("latNr: ", latNr, "; lonNr: ", lonNr);
-// 		console.log("1:",(this.lat.length > 0) && (this.lon.length > 0));
-// 		console.log("1:",this.lat.length, this.lon.length);
-// 		console.log("2:",(latNr >=-90) && (latNr <=90));
-// 		console.log("3:",(lonNr >= -180) && (lonNr <= 180));
 		let isValid = (this.lat.length > 0) && (this.lon.length > 0) 
 			&& (latNr >=-90) && (latNr <=90) 
 			&& (lonNr >= -180) && (lonNr <= 180);
 		return isValid;
 	}// }}}
 
-	postGeolocation(){
+	postGeolocation(){// {{{
 		console.log("POSTING GEOLOCATION TO SERVER");
 		console.log("LAT: " + this.lat + "; LON: " + this.lon);
 		let url = this.globals.serverPhpScriptsUrl + "post_geo_data.php?token=" + this.auth.getUserInfo().getToken() + "&geo_breite=" + this.lat + "&geo_laenge=" + this.lon;
 		this.http.get(url)
 			.subscribe(data => {console.log(data)},
 				err => console.log(err));
-	}
+	}// }}}
 
 	getLatStr(precision?: number){// {{{
 		if(precision){
@@ -152,9 +147,6 @@ export class GeolocationProvider {
 		}
 		return str;
 	}// }}}
-// 	triggerGeolocationValidity(){
-// 		this.validityObserver.next(this.isGeolocationValid());
-// 	}
 	
 
 }

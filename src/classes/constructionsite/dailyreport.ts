@@ -1,5 +1,4 @@
-
-export class DailyReport {// {{{
+export class DailyReport {
 
 	id: string;
 	constructionsite: any;
@@ -31,6 +30,6 @@ export class DailyReport {// {{{
 	setId(id){// {{{
 		this.id=id;
 	}// }}}
-}// }}}
+}
 
 

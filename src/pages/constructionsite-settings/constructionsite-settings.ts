@@ -1,6 +1,11 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, App } from 'ionic-angular';
+
 import { ConstructionsiteSetGeolocationPage} from '../constructionsite-set-geolocation/constructionsite-set-geolocation';
+import { LoginPage } from '../login/login';
+
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 
 /**
  * Generated class for the ConstructionsiteSettingsPage page.
@@ -16,7 +21,7 @@ import { ConstructionsiteSetGeolocationPage} from '../constructionsite-set-geolo
 })
 export class ConstructionsiteSettingsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, public consiteProv: ConstructionsiteProvider, public app: App) {
   }
 
   ionViewDidLoad() {
@@ -26,5 +31,14 @@ export class ConstructionsiteSettingsPage {
 	openSetGeocoordsPage(){
 		this.navCtrl.push(ConstructionsiteSetGeolocationPage);
 	}
+
+	public logout() {
+		this.auth.logout().subscribe(succ => {
+// 			this.navCtrl.setRoot('LoginPage'); // XXX: this keeps tabs
+			this.app.getRootNavs()[0].setRoot(LoginPage); // sets it to the very root of the app
+			console.log("LOGGED OUT");
+		});
+	}
+
 
 }

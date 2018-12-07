@@ -33,64 +33,41 @@ export class ConstructionsiteProvider {
 	private constructionsite: Constructionsite;
 	private dailyReport: DailyReport;
 	loadData: any;
-	loadDataObserver: any;
 	loadDataStatus:any;
 
-	constructor(public http: HttpClient, 
+	constructor(public http: HttpClient,  // {{{
 		public weather: WeatherProvider, 
 		private auth: AuthServiceProvider, 
 		public globals: GlobalsProvider, 
 		public time: TimeProvider, 
 		public location: GeolocationProvider) 
-	{// {{{
+	{
 		console.log('Hello ConstructionsiteProvider Provider');
 		this.loadDataStatus = {consiteData: false, weather: false};
-// 		this.loadData = Observable.create(observer => {
-// 			this.loadDataObserver = observer;
-// 		});
 		this.loadData = new Rx.BehaviorSubject(this.loadDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
+	}// }}}
+
+	public initialize(id){// {{{
+		console.log("INITIALIZING CONSITE PROVIDER FOR ID=" + id);
+		this.constructionsite= new Constructionsite();
+		this.constructionsite.setId(id);
 	}// }}}
 
 	getConstructionsite(){// {{{
 		return this.constructionsite;
 	}// }}}
-
 	getWeather(){// {{{
 		return this.weather;
 	}// }}}
 
-
-	public initialize(id){// {{{
-		this.constructionsite= new Constructionsite();
-		this.constructionsite.setId(id);
-	}// }}}
-
-// 	private updateConstructionsite(id){// {{{
-// 		this.loadConstructionsiteData();
-// 		this.loadDataUpdates()
-// 			.subscribe(isLoaded => {
-// 				if(isLoaded.consiteData){
-// 					this.loadSecondaryData();
-// 				}
-// 			},
-// 			err => {},
-// 			() => {
-// 				console.log("CONSITE FILLED:");
-// 				console.log(this.constructionsite)
-// 			});
-// 		this.checkLoadDataCompleted();
-// 	}// }}}
-
 	loadDataUpdates(){// {{{
 		return this.loadData;
 	}// }}}
-
 	checkLoadDataCompleted(){// {{{
 		this.loadDataUpdates().subscribe(data => {
 			console.log("checking completion for: ", data);
 			if(data.consiteData && data.weather){
 				console.log("LOADING CONSTRUCTIONSITE DATA COMPLETED, closing observable");
-// 				this.loadDataObserver.complete();
 				this.loadData.complete();
 			}
 		},
@@ -99,7 +76,10 @@ export class ConstructionsiteProvider {
 	}// }}}
 
 	loadConstructionsiteData() {// {{{
+		console.log("LOADING CONSITE DATA");
 		let url = this.globals.serverPhpScriptsUrl + "get_consite_info.php?token=" + this.auth.getUserInfo().getToken();
+		console.log("URL: " + url);
+		console.log(this.http);
 		this.http.get(url)
 			.subscribe(data => {
 				console.log("CONSITE INFO DATA:", data);
@@ -115,7 +95,6 @@ export class ConstructionsiteProvider {
 			() => {
 				console.log("consite data loading completed");
 				this.loadDataStatus.consiteData = true;
-// 				this.loadDataObserver.next(this.loadDataStatus);
 				this.loadData.next(this.loadDataStatus);
 			});
 	}// }}}
@@ -147,7 +126,6 @@ export class ConstructionsiteProvider {
 						.subscribe(hasLoaded => {
 							if(hasLoaded){
 								this.loadDataStatus.weather = true;
-// 								this.loadDataObserver.next(this.loadDataStatus);
 								this.loadData.next(this.loadDataStatus);
 							}
 						},
@@ -159,9 +137,9 @@ export class ConstructionsiteProvider {
 			() => {});
 	}// }}}
 
-	isGeolocationValid(){
+	isGeolocationValid(){// {{{
 		return this.location.checkGeolocationValidityUpdates();
-	}
+	}// }}}
 
 	public getPolierCount(){// {{{
 		return this.constructionsite.workerTeam.getPolierCount();
