@@ -127,7 +127,7 @@ export class GeolocationProvider {
 				err => console.log(err));
 	}
 
-	getLatStr(precision?: Number){// {{{
+	getLatStr(precision?: number){// {{{
 		if(precision){
 			//do nothing
 		} else {precision = 3;}
@@ -140,7 +140,7 @@ export class GeolocationProvider {
 		return str;
 	}// }}}
 
-	getLonStr(precision?: Number){// {{{
+	getLonStr(precision?: number){// {{{
 		if(precision){
 			//do nothing
 		} else {precision = 3;}
