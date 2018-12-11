@@ -1,6 +1,7 @@
 
 export class ConstructionsiteEvent {
 
+	id: string;
 	type: any;
 	title: string;
 	description: string;
@@ -11,6 +12,7 @@ export class ConstructionsiteEvent {
 		this.setDefaults();
 	}
 	setDefaults(){
+		this.id = "-1";
 		this.type = [];
 		this.title = "";
 		this.description = "";
@@ -19,7 +21,8 @@ export class ConstructionsiteEvent {
 	}
 
 	isValid(){
-		return (this.type.length>0)
+		return (this.id != "-1")
+			&& (this.type.length>0)
 			&& (this.title.length > 0)
 			&& (this.description.length > 0)
 			&& (this.author.length > 0);

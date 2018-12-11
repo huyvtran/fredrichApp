@@ -16,41 +16,46 @@ import { ConstructionsiteEvent } from '../../classes/constructionsite/constructi
 
 @IonicPage()
 @Component({
-  selector: 'page-constructionsite-event',
-  templateUrl: 'constructionsite-event.html',
+  selector: 'page-constructionsite-report-event',
+  templateUrl: 'constructionsite-report-event.html',
 })
-export class ConstructionsiteEventPage {
+export class ConstructionsiteReportEventPage {
 
 	event: ConstructionsiteEvent;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private actionSheetCtrl: ActionSheetController, private auth: AuthServiceProvider, public cameraProvider: CameraProvider) {
+	constructor(public navCtrl: NavController, public navParams: NavParams, 
+		private actionSheetCtrl: ActionSheetController, 
+		private auth: AuthServiceProvider, 
+		public consiteProv: ConstructionsiteProvider,
+		public cameraProvider: CameraProvider) {
 	  this.event = new ConstructionsiteEvent();// 
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConstructionsiteEventPage');
+    console.log('ionViewDidLoad ConstructionsiteReportEventPage');
   }
 
 	public presentCameraActionSheet() {// {{{
 		let actionSheet = this.actionSheetCtrl.create({
-			title: 'Select Image Source',
+			title: 'Bildquelle ausw&auml;len:',
 			buttons: [
 				{
-					text: 'Load from Library',
+					text: 'Aus Galerie laden',
 					handler: () => {
 						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.PHOTOLIBRARY);
-// 						this.event.imageFiles.push("image" + this.event.imageFiles.length);
+						this.addPictureToEvent();
 					}
 				},
 				{
-					text: 'Use Camera',
+					text: 'Kamera',
 					handler: () => {
 						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.CAMERA);
+						this.addPictureToEvent();
 // 						this.event.imageFiles.push("image" + this.event.imageFiles.length);
 					}
 				},
 				{
-					text: 'Cancel',
+					text: 'Abbrechen',
 					role: 'cancel'
 				}
 			]
@@ -60,15 +65,27 @@ export class ConstructionsiteEventPage {
 
 	submitEvent(){// {{{
 		this.event.author = this.getAuthorName();
+		this.event.id = this.consiteProv.getNumEvents();
 		console.log(this.event);
+		this.consiteProv.addEvent(this.event);
+		this.navCtrl.pop();
 	}// }}}
 
 	getAuthorName(){// {{{
 		let user = this.auth.getUserInfo();
 		return user.surname[0] + ". " + user.name;
 	}// }}}
-// 	openCamera(){
-// 		this.navCtrl.push(CameraViewPage);
-// 	}
+
+	addPictureToEvent(){// {{{
+		let photoStream$ = this.cameraProvider.photoStream
+		.subscribe(imagePath => {
+			this.event.imageFiles.push(imagePath);
+			console.log("IMAGE FILES:");
+			for (let image of this.event.imageFiles) {
+				console.log(image);
+			}
+			photoStream$.unsubscribe();
+		});
+	}// }}}
 
 }

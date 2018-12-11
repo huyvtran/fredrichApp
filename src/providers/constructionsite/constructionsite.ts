@@ -32,6 +32,8 @@ export class ConstructionsiteProvider {
 
 	private constructionsite: Constructionsite;
 	private dailyReport: DailyReport;
+	private events: any;
+	private damagereports: any;
 	loadData: any;
 	loadDataStatus:any;
 
@@ -50,6 +52,8 @@ export class ConstructionsiteProvider {
 	public initialize(id){// {{{
 		console.log("INITIALIZING CONSITE PROVIDER FOR ID=" + id);
 		this.constructionsite= new Constructionsite();
+		this.events = [];
+		this.damagereports= [];
 		this.constructionsite.setId(id);
 	}// }}}
 
@@ -213,4 +217,19 @@ export class ConstructionsiteProvider {
 	public getDailyReport(){
 		return this.dailyReport;
 	}// }}}
+
+	public addEvent(event){// {{{
+		this.events.push(event);
+	}// }}}
+	public getEvents(){// {{{
+		return this.events;
+	}// }}}
+	public getNumEvents(){// {{{
+		return this.events.length;
+	}// }}}
+
+	public getNumDamageReports(){
+		return this.damagereports.length;
+	}
+
 }

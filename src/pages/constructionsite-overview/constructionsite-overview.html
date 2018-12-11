@@ -21,14 +21,19 @@
 			<ion-col>
 				<ion-card color="primary"> <!--CARD: HEADER{{{-->
 					<ion-card-header>
-						Baustelle Nr. {{consiteProv.constructionsite.id}} <br>
+						<p>Baustelle Nr. {{consiteProv.constructionsite.id}}</p>
+						<p> {{consiteProv.location.town }}, {{consiteProv.location.country }}; {{consiteProv.location.getLatStr()}},
+						{{consiteProv.location.getLonStr()}} </p>
+						<!--
 						{{ consiteProv.constructionsite.description }}
+						-->
 					</ion-card-header>
 					<ion-card-content>
+						<!--
 						<p> Ort: {{consiteProv.location.town }}, {{consiteProv.location.country }}</p>
+						-->
 						<p> eingeloggt als: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
-						<p> Koordinaten: {{consiteProv.location.getLatStr()}},
-						{{consiteProv.location.getLonStr()}} </p>
+
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
@@ -197,12 +202,13 @@
 			</ion-card> <!--}}}-->
 		</ion-col>
 		<ion-col>
-			<ion-card (click)="openEventPage()"> <!--CARD: COMMENTS{{{-->
+			<ion-card (click)="openEventsPage()"> <!--CARD: COMMENTS{{{-->
 				<ion-card-header>
-					Vorkommnis melden
+					Vorkommnisse und Sch&auml;den
 				</ion-card-header>
 				<ion-card-content>
-					Klicken
+					<p>Vorkommnisse: {{consiteProv.getNumEvents()}}</p>
+					<p>Schadensmeldungen: {{consiteProv.getNumDamageReports()}}</p>
 				</ion-card-content>
 			</ion-card> <!--}}}-->
 		</ion-col>

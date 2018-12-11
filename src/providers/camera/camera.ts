@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Diagnostic } from '@ionic-native/diagnostic';
+import {Observable} from 'rxjs/Observable';
 // import { CameraPreview, CameraPreviewPictureOptions, CameraPreviewOptions, CameraPreviewDimensions } from '@ionic-native/camera-preview';
 import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
@@ -23,6 +24,10 @@ export class CameraProvider {
 
 	lastImage: string = null;
 	loading: Loading;
+	photoStream: any;
+	photoStreamObserver:any;
+	copyFileListener:any;
+	copyFileObserver:any;
 
 	constructor(public http: HttpClient, // {{{
 		public camera: Camera,
@@ -37,6 +42,13 @@ export class CameraProvider {
 		private auth: AuthServiceProvider) {
 			console.log('Hello CameraProvider Provider');
 			this.checkPermissions();
+			this.photoStream = Observable.create(observer => {
+				this.photoStreamObserver = observer;
+			});
+			this.copyFileListener = Observable.create(observer => {
+				this.copyFileObserver = observer;
+			});
+
   }// }}}
 
 	checkPermissions(){// {{{
@@ -72,74 +84,131 @@ export class CameraProvider {
 			correctOrientation: true
 		};
 
-		console.log("takePicture OPTIONS:");
-		console.log(options);
+		console.log("SOURCE TYPE: " + sourceType);
 		// Get the data of an image
 		this.camera.getPicture(options)
 		.then((imagePath) => {
 			// Special handling for Android library
-			console.log(sourceType);
-			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {
+			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {// {{{
 				console.log("DEALING WITH ANDROID PHOTOLIBRARY");
 				this.filePath.resolveNativePath(imagePath)
 				.then(filePath => {
-					let correctPath = filePath.substr(0, filePath.lastIndexOf('/') + 1);
-					let currentName = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-					this.copyFileToLocalDir(correctPath, currentName, this.createFileName());
-
-					console.log("image Path:");
-					console.log(imagePath);
-					console.log("correct Path:");
-					console.log(correctPath);
-					console.log("current Name:")
-					console.log(currentName);
+					let path = filePath.substr(0, filePath.lastIndexOf('/') + 1);
+					let currentFilename = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
+					var newFileName = this.createFileName();
+					if(0){// {{{
+						//FIXME: cannot find file after copy -> fix listener?
+						//TODO: do the same for camera below
+						this.copyFileToLocalDir(path, currentFilename, newFileName);
+						console.log("PATH: " + path + "; FILENAME OLD: " + newFileName);
+// 						this.file.readAsDataURL(path, currentFilename)
+						this.copyFileListener
+						.subscribe(copyStatus => {
+							console.log("COPY STATUS: " + String(copyStatus));
+							this.file.readAsDataURL(path, newFileName)
+							.then(res=> {
+								console.log(JSON.stringify(res));
+								if(res){
+									console.log(JSON.stringify(res));
+									this.photoStreamObserver.next(res);
+								}
+							})
+							.catch(err => {
+								console.log(JSON.stringify(err));
+							});
+						});
+					} // }}}
+					else {// {{{
+// 						this.file.readAsDataURL(path, newFileName)
+						this.file.readAsDataURL(path, currentFilename)
+						.then(res=> {
+							console.log(JSON.stringify(res));
+							if(res){
+								console.log(JSON.stringify(res));
+								this.photoStreamObserver.next(res);
+							}
+						})
+						.catch(err => {
+							console.log(JSON.stringify(err));
+						});
+					}// }}}
+				})
+				.catch(err => {
+					console.log("ERROR: " + JSON.stringify(err));	
 				});
-			} else {
-				console.log("TAKING PICTURE");
-				var currentName = imagePath.substr(imagePath.lastIndexOf('/') + 1);
-				var correctPath = imagePath.substr(0, imagePath.lastIndexOf('/') + 1);
-				var newFileName =  this.createFileName();
-				this.copyFileToLocalDir(correctPath, currentName, newFileName);
 
-				console.log("image Path:");
+			} // }}}
+			else { //dealing with camera //{{{
+				// solution found here: https://forum.ionicframework.com/t/unable-to-display-image-using-file-uri/84977/19
 				console.log(imagePath);
-				console.log("correct Path:");
-				console.log(correctPath);
-				console.log("current Name:")
-				console.log(currentName);
-				console.log("new Filename:")
-				console.log(newFileName);
-
-			}
-		}, (err) => {
-				console.log("ERROR WHILE TAKING PICTURE");
-				console.log(err);
-				this.presentToast('Error while selecting image.');
+				let path =  imagePath.substring(0,imagePath.lastIndexOf('/')+1);
+				let currentFilename = imagePath.substring(imagePath.lastIndexOf('/')+1);
+				var newFileName =  this.createFileName();
+				console.log("PATH: " + path + "; FILENAME OLD: " + currentFilename);
+				// 					this.copyFileToLocalDir(path, currentFilename, newFileName); //TODO: fix copying, so that readAsDataURL resolves successfully
+				console.log("PATH: " + path + "; FILENAME OLD: " + newFileName);
+				this.file.readAsDataURL(path, currentFilename) //TODO: replace with newFileName
+				.then(res=> {
+					console.log(JSON.stringify(res));
+					this.photoStreamObserver.next(res);
+				});
+			}// }}}
+		}, 
+		(err) => {
+			console.log("ERROR WHILE TAKING PICTURE");
+			console.log(err);
+			this.presentToast('Error while selecting image.');
 		});
 	}	// }}}
 
-	// Create a new name for the image
 	private createFileName() {// {{{
-		var d = new Date();
-		let dateStr = d.toISOString();
-		dateStr = dateStr.substr(0,dateStr.lastIndexOf('.'));
-		let newFileName =  this.auth.getUserInfo().currentConstructionsiteId + "_" + dateStr + ".jpg";
-		console.log(newFileName);
+		let d = new Date();
+		let newFileName:string = "";
+
+		if(1){
+			let n = d.getTime();
+			newFileName =  n + ".jpg";
+		} else {
+			let dateStr = d.toISOString();
+			dateStr = dateStr.substr(0,dateStr.lastIndexOf('.'));
+			newFileName =  this.auth.getUserInfo().currentConstructionsiteId + "_" + dateStr + ".jpg";
+		}
 		return newFileName;
 	}// }}}
+	
+	copyFileToLocalDir(namePath, currentName, newFileName) {// {{{
+		// cordova.file.dataDirectory
+		console.log("COPYING FILE TO LOCAL DIR");
+		let externalStoragePath: string =  cordova.file.dataDirectory;
 
-	// Copy the image to a local folder
-	private copyFileToLocalDir(namePath, currentName, newFileName) {// {{{
-		this.file.copyFile(namePath, currentName, cordova.file.dataDirectory, newFileName)
-		.then(success => {
-			console.log("NEW FILE NAME:");
-			console.log(newFileName);
-			this.lastImage = newFileName;
-		}, error => {
-			this.presentToast('Error while storing file.');
-			console.log(error);
-		});
+		this.file.resolveLocalFilesystemUrl(namePath + currentName)
+			.then((entry: any)=>{
+// 				console.log('ENTRY:');
+// 				console.log(JSON.stringify(entry));
+				this.file.resolveLocalFilesystemUrl(externalStoragePath)
+					.then((dirEntry: any)=>{
+// 						entry.copyTo(dirEntry, newFileName, this.successCopy(), this.failCopy());
+						entry.copyTo(dirEntry, newFileName, this.successCopy());
+					}).catch((error)=>{
+						console.log(error);
+					});
+			})
+			.catch((error)=>{
+				console.log(error);
+			});
+
 	}// }}}
+
+	successCopy(){
+// 		console.log("SUCCESS COPY ENTRY: " + JSON.stringify(entry));
+		this.copyFileObserver.next(true);
+	}
+
+	failCopy(){
+// 		console.log("FAILED COPY ENTRY: " + JSON.stringify(error));
+		this.copyFileObserver.next(false);
+	}
+
 
 	private presentToast(text) {// {{{
 		let toast = this.toastCtrl.create({

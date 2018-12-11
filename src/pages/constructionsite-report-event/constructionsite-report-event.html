@@ -1,5 +1,5 @@
 <!--
-  Generated template for the ConstructionsiteEventPage page.
+  Generated template for the ConstructionsiteReportEventPage page.
 
   See http://ionicframework.com/docs/components/#navigation for more info on
   Ionic pages and navigation.
@@ -20,7 +20,7 @@
 
 			<ion-item>
 				<ion-label>Typ</ion-label>
-				<ion-select [(ngModel)]="event.type" multiple="true" name="type" required>
+				<ion-select [(ngModel)]="event.type" multiple="false" name="type" required>
 					<ion-option value="planChange">Plan&auml;nderung</ion-option>
 					<ion-option value="visit">Besuch</ion-option>
 					<ion-option value="cAG">Anordnung des AG</ion-option>
@@ -38,16 +38,27 @@
 				<ion-input type="text" [(ngModel)]="event.title" name="title" required></ion-input>
 			</ion-item>
 
-		  <button ion-item (click)="presentCameraActionSheet()">
-			  Photo
-			</button>
-
 			<ion-item>
 				<ion-label color="tertiary" floating>Beschreibung</ion-label>
 				<ion-input type="text" [(ngModel)]="event.description" name="description" required></ion-input>
 			</ion-item>
 
 		</ion-list>
+
+		  <button ion-button large (click)="presentCameraActionSheet()">
+			  Bild hinzuf&uuml;gen
+			</button>
+
+		<!--
+		<div *ngIf="event.imageFiles.length>0">
+		-->
+			<p>Hinzugef&uuml;gte Bilder</p>
+			<ion-card *ngFor="let image of event.imageFiles" class="photo-card">
+				<img src={{image}} />
+			</ion-card>
+			<!--
+		</div>
+			-->
 
 		<button ion-button class="submit-btn" large type="submit" [disabled]="!registerForm.form.valid">
 			Vorkommnis melden

@@ -26,7 +26,8 @@ import { ConstructionsiteDailyreportPage } from '../pages/constructionsite-daily
 import { ConstructionsiteEquipmentPage } from '../pages/constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteSettingsPage } from '../pages/constructionsite-settings/constructionsite-settings';
 import { ConstructionsiteContactsPage } from '../pages/constructionsite-contacts/constructionsite-contacts';
-import { ConstructionsiteEventPage } from '../pages/constructionsite-event/constructionsite-event';
+import { ConstructionsiteEventsPage } from '../pages/constructionsite-events/constructionsite-events';
+import { ConstructionsiteReportEventPage } from '../pages/constructionsite-report-event/constructionsite-report-event';
 import { ConstructionsiteMorePage } from '../pages/constructionsite-more/constructionsite-more';
 import { ConstructionsitePhotoPage } from '../pages/constructionsite-photo/constructionsite-photo';
 import { ConstructionsitePhotoEquipmentPage} from '../pages/constructionsite-photo-equipment/constructionsite-photo-equipment';
@@ -71,7 +72,8 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
 		ConstructionsiteMorePage,
 			ConstructionsiteContactsPage,
 			ConstructionsiteSettingsPage,
-		ConstructionsiteEventPage,
+		ConstructionsiteEventsPage,
+			ConstructionsiteReportEventPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
@@ -108,7 +110,8 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
 		ConstructionsiteMorePage,
 			ConstructionsiteContactsPage,
 			ConstructionsiteSettingsPage,
-		ConstructionsiteEventPage,
+		ConstructionsiteEventsPage,
+			ConstructionsiteReportEventPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
