@@ -33,7 +33,7 @@ export class ConstructionsiteProvider {
 	private constructionsite: Constructionsite;
 	private dailyReport: DailyReport;
 	private events: any;
-	private damagereports: any;
+	private damageReports: any;
 	loadData: any;
 	loadDataStatus:any;
 
@@ -53,7 +53,7 @@ export class ConstructionsiteProvider {
 		console.log("INITIALIZING CONSITE PROVIDER FOR ID=" + id);
 		this.constructionsite= new Constructionsite();
 		this.events = [];
-		this.damagereports= [];
+		this.damageReports= [];
 		this.constructionsite.setId(id);
 	}// }}}
 
@@ -177,6 +177,9 @@ export class ConstructionsiteProvider {
 	public getWorkerTeamMembers(){// {{{
 		return this.constructionsite.workerTeam.getMembers();
 	}// }}}
+	public getEquipmentItemListArray(){
+		return this.constructionsite.equipmentItemList.getItems();
+	}
 	public getContactList(){// {{{
 		return this.constructionsite.contactList.items;
 	}// }}}
@@ -206,11 +209,7 @@ export class ConstructionsiteProvider {
 			this.dailyReport.workDoneArr.push(job);
 		}
 
-		this.dailyReport.eventArr = [];
-		for (let i=0; i<3; i++){
-			let event = {id: i+1, title: "Besuch Bauleiter", commentary: "--"};
-			this.dailyReport.eventArr.push(event);
-		}
+		this.dailyReport.eventArr = this.getEvents();
 
 	}
 
@@ -228,8 +227,14 @@ export class ConstructionsiteProvider {
 		return this.events.length;
 	}// }}}
 
-	public getNumDamageReports(){
-		return this.damagereports.length;
-	}
+	public addDamageReport(report){// {{{
+		this.damageReports.push(report);
+	}// }}}
+	public getDamageReports(){// {{{
+		return this.damageReports;
+	}// }}}
+	public getNumDamageReports(){// {{{
+		return this.damageReports.length;
+	}// }}}
 
 }

@@ -31,7 +31,7 @@ export class ConstructionsiteTimerecordingPage {
   }
 
 	itemSelected(worker){
-		this.navCtrl.push(ConstructionsiteWorkerDetailPage, {worker: worker});
+// 		this.navCtrl.push(ConstructionsiteWorkerDetailPage, {worker: worker});
 	}
 
 }

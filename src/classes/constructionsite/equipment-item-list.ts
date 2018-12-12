@@ -1,6 +1,6 @@
 import { EquipmentItem } from './equipment-item'
 
-export class EquipmentItemList {// {{{
+export class EquipmentItemList {
 	
 	private items: any;
 
@@ -72,6 +72,6 @@ export class EquipmentItemList {// {{{
 		return count;
 	}// }}}
 
-}// }}}
+}
 
 

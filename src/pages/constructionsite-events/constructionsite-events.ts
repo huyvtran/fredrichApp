@@ -5,6 +5,7 @@ import { ConstructionsiteProvider } from '../../providers/constructionsite/const
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
 import { ConstructionsiteReportEventPage } from '../constructionsite-report-event/constructionsite-report-event';
+import { ConstructionsiteReportDamagePage } from '../constructionsite-report-damage/constructionsite-report-damage';
 
 /**
  * Generated class for the ConstructionsiteEventsPage page.
@@ -36,6 +37,9 @@ export class ConstructionsiteEventsPage {
 
 	openEventDetailPage(event){
 		//TODO open event detail page
+	}
 
+	openReportDamagePage(){
+		this.navCtrl.push(ConstructionsiteReportDamagePage);
 	}
 }

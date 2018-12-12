@@ -1,14 +1,14 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, ActionSheetController} from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { CameraProvider } from '../../providers/camera/camera';
 
-import { ConstructionsiteEvent } from '../../classes/constructionsite/constructionsite-event'
+import { DamageReport } from '../../classes/constructionsite/damage-report'
 
 /**
- * Generated class for the ConstructionsiteEventPage page.
+ * Generated class for the ConstructionsiteReportDamagePage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -16,23 +16,23 @@ import { ConstructionsiteEvent } from '../../classes/constructionsite/constructi
 
 @IonicPage()
 @Component({
-  selector: 'page-constructionsite-report-event',
-  templateUrl: 'constructionsite-report-event.html',
+  selector: 'page-constructionsite-report-damage',
+  templateUrl: 'constructionsite-report-damage.html',
 })
-export class ConstructionsiteReportEventPage {
+export class ConstructionsiteReportDamagePage {
 
-	event: ConstructionsiteEvent;
+	report: DamageReport;
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, 
 		private actionSheetCtrl: ActionSheetController, 
+		public cameraProvider: CameraProvider,
 		private auth: AuthServiceProvider, 
-		public consiteProv: ConstructionsiteProvider,
-		public cameraProvider: CameraProvider) {
-	  this.event = new ConstructionsiteEvent();// 
+		public consiteProv: ConstructionsiteProvider) {
+	  this.report = new DamageReport();
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConstructionsiteReportEventPage');
+    console.log('ionViewDidLoad ConstructionsiteReportDamagePage');
   }
 
 	public presentCameraActionSheet() {// {{{
@@ -43,15 +43,15 @@ export class ConstructionsiteReportEventPage {
 					text: 'Aus Galerie laden',
 					handler: () => {
 						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.PHOTOLIBRARY);
-						this.addPictureToEvent();
+						this.addPictureToDamageReport();
 					}
 				},
 				{
 					text: 'Kamera',
 					handler: () => {
 						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.CAMERA);
-						this.addPictureToEvent();
-// 						this.event.imageFiles.push("image" + this.event.imageFiles.length);
+						this.addPictureToDamageReport();
+// 						this.report.imageFiles.push("image" + this.report.imageFiles.length);
 					}
 				},
 				{
@@ -63,11 +63,11 @@ export class ConstructionsiteReportEventPage {
 		actionSheet.present();
 	}// }}}
 
-	submitEvent(){// {{{
-		this.event.author = this.getAuthorName();
-		this.event.id = this.consiteProv.getNumEvents(); //TODO get better ID
-		console.log(this.event);
-		this.consiteProv.addEvent(this.event);
+	submitDamageReport(){// {{{
+		this.report.author = this.getAuthorName();
+		this.report.id = this.consiteProv.getNumDamageReports(); //TODO get better ID
+		this.consiteProv.addDamageReport(this.report);
+		console.log(this.report);
 		this.navCtrl.pop();
 	}// }}}
 
@@ -76,14 +76,14 @@ export class ConstructionsiteReportEventPage {
 		return user.surname[0] + ". " + user.name;
 	}// }}}
 
-	addPictureToEvent(){// {{{
+	addPictureToDamageReport(){// {{{
 		let photoStream$ = this.cameraProvider.photoStream
 		.subscribe(imagePath => {
-			this.event.imageFiles.push(imagePath);
+			this.report.imageFiles.push(imagePath);
 			photoStream$.unsubscribe();
 
 			console.log("IMAGE FILES:");
-			for (let image of this.event.imageFiles) {
+			for (let image of this.report.imageFiles) {
 				console.log(image);
 			}
 		});

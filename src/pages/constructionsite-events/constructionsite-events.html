@@ -33,16 +33,14 @@
 		</button>  
 	</ion-list>
 
-	<!--
 	<ion-list>
 		<ion-list-header>
 			Schadensmeldungen	
 	  </ion-list-header>
-		<button ion-item *ngFor="let event of consiteProv.getEvents()">
-			<p> <b>{{event.title}}</b></p>
+		<button ion-item *ngFor="let report of consiteProv.getDamageReports()">
+			<p> <b>{{report.item.name}}: {{report.description}}</b></p>
 		</button>  
 	</ion-list>
-	-->
 
 
 

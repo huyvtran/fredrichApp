@@ -1,5 +1,5 @@
 
-export class EquipmentItem {// {{{
+export class EquipmentItem {
 
 	id: string;
 	category: string;
@@ -51,6 +51,6 @@ export class EquipmentItem {// {{{
 		this.name = "";
 		this.category = "";
 	}// }}}
-}// }}}
+}
 
 

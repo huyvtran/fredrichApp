@@ -61,7 +61,9 @@
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
+		</ion-row>
 
+		<ion-row>
 			<ion-col>
 				<ion-card> <!--CARD: Arbeitszeit Belegschaft{{{-->
 					<ion-card-header>
@@ -141,7 +143,9 @@
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
+		</ion-row>
 
+		<ion-row>
 			<ion-col>
 				<ion-card> <!--CARD: Arbeitszeit Nachunternehmer{{{-->
 					<ion-card-header>
@@ -220,7 +224,9 @@
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
+		</ion-row>
 
+		<ion-row>
 			<ion-col>
 				<ion-card> <!--CARD: Durchgefuerhte Arbeiten {{{-->
 					<ion-card-header>
@@ -253,15 +259,17 @@
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
+		</ion-row>
 
-
+		<ion-row>
 			<ion-col>
-				<ion-card> <!--CARD: Durchgefuerhte Arbeiten {{{-->
+				<ion-card> <!--CARD: Special Events {{{-->
 					<ion-card-header>
 						Besondere Vorkommnisse:
 					</ion-card-header>
 					<ion-card-content>
 
+						<div *ngIf="dailyReport.eventArr.length">
 						<ion-list>
 							<ion-item *ngFor="let event of dailyReport.eventArr">
 								<ion-grid>
@@ -270,27 +278,26 @@
 											{{event.id}}.
 										</ion-col>
 										<ion-col>
+											{{event.type}}
+										</ion-col>
+										<ion-col>
 											{{event.title}}
-										</ion-col>
-										<ion-col>
-											Kommentar:
-										</ion-col>
-										<ion-col>
-											{{event.commentary}}
 										</ion-col>
 
 									</ion-row>
 								</ion-grid>
 							</ion-item>
-
 						</ion-list>
+						</div>
+
+						<div *ngIf="dailyReport.eventArr.length==0"> 
+							-
+						</div>
+
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
-
-
-
-
 		</ion-row>
+		
 	</ion-grid>
 </ion-content>

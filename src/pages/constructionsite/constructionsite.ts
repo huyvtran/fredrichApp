@@ -6,7 +6,7 @@ import { ConstructionsiteTimerecordingPage} from '../constructionsite-timerecord
 import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteSetGeolocationPage} from '../constructionsite-set-geolocation/constructionsite-set-geolocation';
-// import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
+import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
 import { ConstructionsiteMorePage } from '../constructionsite-more/constructionsite-more';
 import { ConstructionsitePhotoPage } from '../constructionsite-photo/constructionsite-photo';
 
@@ -28,8 +28,9 @@ import { ConstructionsiteProvider } from '../../providers/constructionsite/const
 export class ConstructionsitePage {
 
 	tab1Root = ConstructionsiteOverviewPage;
-	tab2Root = ConstructionsitePhotoPage;
-	tab3Root = ConstructionsiteDailyreportPage;
+// 	tab2Root = ConstructionsitePhotoPage;
+	tab2Root = ConstructionsiteDailyreportPage;
+	tab3Root = ConstructionsiteContactsPage;
 	tab4Root = ConstructionsiteMorePage;
 	
 	constructionsiteId: string;
