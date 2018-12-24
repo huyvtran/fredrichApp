@@ -20,12 +20,63 @@
 			Personal	
 	  </ion-list-header>
 		-->
+		<!--
 		<button ion-item *ngFor="let worker of consiteProv.getWorkerTeamMembers()"
 				  (click)="itemSelected(worker)">
 			<p> <b>{{worker.getRoleStr()}}</b></p>
 			<p>{{ worker.name }}, {{worker.surname}}
 			<p>Tel: {{ worker.phoneNr}}, Email: {{worker.email}}</p>
 		</button>  
+		-->
+		<ion-item>
+			<ion-grid item-content>
+				<ion-row nowrap>
+					<ion-col col-3>
+						<p>Name, Vorname</p>
+					</ion-col>
+
+					<ion-col col-1>
+						<p> Anwesend </p>
+					</ion-col>
+
+					<ion-col>
+						<p>Arbeitszeit</p>
+					</ion-col>
+
+				</ion-row>
+			</ion-grid>
+
+		</ion-item>
+		<ion-item *ngFor="let worker of consiteProv.getWorkerTeamMembers()">
+			<ion-label>{{ worker.name }}</ion-label>
+			<ion-grid item-content>
+				<ion-row nowrap>
+					<ion-col col-3>
+						<p>{{ worker.name }}, {{worker.surname}}</p>
+					</ion-col>
+
+					<ion-col col-1>
+						<ion-checkbox [(ngModel)]="worker.isPresent"></ion-checkbox>
+					</ion-col>
+
+					<ion-col>
+						<ion-select [(ngModel)]="worker.timeWorkStartHour" [disabled]="!worker.isPresent">
+							<ion-option *ngFor="let timeStr of worktimeStartSelect" [value]="timeStr"
+								[selected]="timeStr=='07:00'">{{timeStr}}</ion-option>
+						</ion-select>
+					</ion-col>
+
+					<ion-col>
+						<ion-select [(ngModel)]="worker.timeWorkEndHour" [disabled]="!worker.isPresent">
+							<ion-option *ngFor="let timeStr of worktimeEndSelect" [value]="timeStr"
+								[selected]="timeStr=='17:00'">{{timeStr}}</ion-option>
+						</ion-select>
+					</ion-col>
+
+
+				</ion-row>
+			</ion-grid>
+		</ion-item>
 	</ion-list>
 
 </ion-content>

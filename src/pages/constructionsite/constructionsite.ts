@@ -29,9 +29,9 @@ export class ConstructionsitePage {
 
 	tab1Root = ConstructionsiteOverviewPage;
 // 	tab2Root = ConstructionsitePhotoPage;
-	tab2Root = ConstructionsiteDailyreportPage;
-	tab3Root = ConstructionsiteContactsPage;
-	tab4Root = ConstructionsiteMorePage;
+	tab2Root = ConstructionsiteOverviewPage;
+// 	tab3Root = ConstructionsiteContactsPage;
+	tab3Root = ConstructionsiteMorePage;
 	
 	constructionsiteId: string;
 

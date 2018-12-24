@@ -29,7 +29,7 @@
 	  </ion-list-header>
 		<button ion-item *ngFor="let event of consiteProv.getEvents()"
 			click="openEventDetailPage(event)">
-			<p> <b>{{event.id + 1}}. {{event.type}}: {{event.title}}</b></p>
+			<p> <b>{{event.getEventTypeString(event.type)}}: {{event.title}}</b></p>
 		</button>  
 	</ion-list>
 

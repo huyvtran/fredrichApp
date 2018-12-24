@@ -41,20 +41,16 @@
 
 		</ion-list>
 
-		  <button ion-button large (click)="presentCameraActionSheet()">
+		  <button ion-button type="button" large (click)="presentCameraActionSheet()">
 			  Bild hinzuf&uuml;gen
 			</button>
 
-		<!--
 		<div *ngIf="report.imageFiles.length>0">
-		-->
 			<p>Hinzugef&uuml;gte Bilder</p>
 			<ion-card *ngFor="let image of report.imageFiles" class="photo-card">
 				<img src={{image}} />
 			</ion-card>
-			<!--
 		</div>
-			-->
 
 		<button ion-button class="submit-btn" large type="submit" [disabled]="!registerForm.form.valid">
 			Schaden melden

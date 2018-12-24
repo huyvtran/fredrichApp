@@ -37,7 +37,7 @@ export class ConstructionsiteReportDamagePage {
 
 	public presentCameraActionSheet() {// {{{
 		let actionSheet = this.actionSheetCtrl.create({
-			title: 'Bildquelle ausw&auml;len:',
+			title: 'Bildquelle auswaehlen:',
 			buttons: [
 				{
 					text: 'Aus Galerie laden',

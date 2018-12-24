@@ -41,6 +41,18 @@ export class ConstructionsiteOverviewPage {
 
 	}
 
+	openPhotoPage(){
+
+	}
+
+	openContactsPage(){
+
+	}
+
+	openDailyReport(){
+
+	}
+
 	openEventsPage(){
 		this.navCtrl.push(ConstructionsiteEventsPage);
 	}

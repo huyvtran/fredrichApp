@@ -8,6 +8,7 @@ export class Worker {// {{{
 	email: string;
 	role: string;
 	schedule: any;
+	isPresent:boolean;
 	timeWorkStart: string;
 	timeWorkEnd: string;
 
@@ -19,6 +20,7 @@ export class Worker {// {{{
 		this.email = "";
 		this.role = "";
 		this.schedule = {timeStart: "07:00", timeEnd: "16:00"};
+		this.isPresent = true;
 	}
 
 	//PUBLIC

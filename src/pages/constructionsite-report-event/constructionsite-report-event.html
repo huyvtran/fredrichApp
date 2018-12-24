@@ -20,7 +20,13 @@
 
 			<ion-item>
 				<ion-label>Typ</ion-label>
-				<ion-select [(ngModel)]="event.type" multiple="false" name="type" required>
+				<ion-select [(ngModel)]="event.type" multiple="false" name="eventType" required>
+					<ion-option *ngFor="let eventType of event.getAvailableEventTypes()" [value]="eventType">{{
+						event.getEventTypeString(eventType) }}</ion-option>
+				</ion-select>
+			</ion-item>
+
+			<!--
 					<ion-option value="planChange">Plan&auml;nderung</ion-option>
 					<ion-option value="visit">Besuch</ion-option>
 					<ion-option value="cAG">Anordnung des AG</ion-option>
@@ -29,9 +35,7 @@
 					<ion-option value="hourlyWageWork">Stundenlohnarbeiten</ion-option>
 					<ion-option value="shipping">Versand</ion-option>
 					<ion-option value="other">Sonstiges</ion-option>
-				</ion-select>
-			</ion-item>
-
+			-->
 
 			<ion-item>
 				<ion-label color="tertiary" floating>Titel</ion-label>
@@ -45,20 +49,17 @@
 
 		</ion-list>
 
-		  <button ion-button large (click)="presentCameraActionSheet()">
-			  Bild hinzuf&uuml;gen
-			</button>
+		<!-- for forms, remember: always present type of each component! -->
+		<button ion-button type="button" large (click)="presentCameraActionSheet()">
+			Bild hinzuf&uuml;gen
+		</button>
 
-		<!--
 		<div *ngIf="event.imageFiles.length>0">
-		-->
 			<p>Hinzugef&uuml;gte Bilder</p>
 			<ion-card *ngFor="let image of event.imageFiles" class="photo-card">
 				<img src={{image}} />
 			</ion-card>
-			<!--
 		</div>
-			-->
 
 		<button ion-button class="submit-btn" large type="submit" [disabled]="!registerForm.form.valid">
 			Vorkommnis melden

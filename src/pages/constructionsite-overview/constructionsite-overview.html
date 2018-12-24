@@ -21,198 +21,238 @@
 			<ion-col>
 				<ion-card color="primary"> <!--CARD: HEADER{{{-->
 					<ion-card-header>
-						<p>Baustelle Nr. {{consiteProv.constructionsite.id}}</p>
-						<p> {{consiteProv.location.town }}, {{consiteProv.location.country }}; {{consiteProv.location.getLatStr()}},
-						{{consiteProv.location.getLonStr()}} </p>
+						<p>Baustelle Nr. {{consiteProv.constructionsite.id}} in
+						{{consiteProv.location.town }}, {{consiteProv.location.country }}.
+						{{consiteProv.location.getLatStr()}}, {{consiteProv.location.getLonStr()}} </p>
+						<p> eingeloggt als: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
 						<!--
 						{{ consiteProv.constructionsite.description }}
 						-->
 					</ion-card-header>
-					<ion-card-content>
-						<!--
-						<p> Ort: {{consiteProv.location.town }}, {{consiteProv.location.country }}</p>
-						-->
-						<p> eingeloggt als: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
 
+						<!--
+					<ion-card-content>
+						<p> Ort: {{consiteProv.location.town }}, {{consiteProv.location.country }}</p>
 					</ion-card-content>
+						-->
 				</ion-card> <!--}}}-->
 			</ion-col>
 		</ion-row>
 
 		<ion-row>
 			<ion-col>
-			<ion-card (click)="openWorkersPage()"> <!--CARD: PERSONAL{{{-->
-				<ion-card-header>
-					Personal	
-				</ion-card-header>
-				<ion-card-content>
-					<ion-grid>
+				<ion-card (click)="openWorkersPage()"> <!--CARD: PERSONAL{{{-->
+					<ion-card-header>
+						Personal	
+					</ion-card-header>
+					<ion-card-content>
+						<ion-grid>
+							<ion-row nowrap>
+								<ion-col>
+									Polier:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.getPolierCount()}}
+								</ion-col>
+							</ion-row>
+
+							<ion-row nowrap>
+								<ion-col>
+									Maschinist:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.getMaschinistCount()}}
+								</ion-col>
+							</ion-row>
+
+							<ion-row nowrap>
+								<ion-col>
+									Facharbeiter:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.getFacharbeiterCount()}}
+								</ion-col>
+							</ion-row>
+
+							<ion-row nowrap>
+								<ion-col>
+									Hilfsarbeiter:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.getHilfsarbeiterCount()}}
+								</ion-col>
+							</ion-row>
+
+							<ion-row nowrap>
+								<ion-col>
+									Gesamt:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.getAllWorkersCount()}}
+								</ion-col>
+							</ion-row>
+
+						</ion-grid>
+					</ion-card-content>
+				</ion-card>
+				<!--}}}-->
+			</ion-col> 
+			<ion-col> 
+				<!--CARD: GERAETE{{{-->
+				<ion-card (click)="openEquipmentPage()">
+					<ion-card-header>
+						Ger&auml;te	
+					</ion-card-header>
+					<ion-card-content>
+
 						<ion-row nowrap>
 							<ion-col>
-								Polier:
+								Rammen:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.getPolierCount()}}
+								{{consiteProv.getRamCount()}}
 							</ion-col>
 						</ion-row>
 
 						<ion-row nowrap>
 							<ion-col>
-								Maschinist:
+								Kr&auml;ne:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.getMaschinistCount()}}
+								{{consiteProv.getCraneCount()}}
 							</ion-col>
 						</ion-row>
 
 						<ion-row nowrap>
 							<ion-col>
-								Facharbeiter:
+								Pumpen:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.getFacharbeiterCount()}}
+								{{consiteProv.getPumpCount()}}
 							</ion-col>
 						</ion-row>
 
 						<ion-row nowrap>
 							<ion-col>
-								Hilfsarbeiter:
+								Andere:
 							</ion-col>
 							<ion-col>
-								{{consiteProv.getHilfsarbeiterCount()}}
+								{{consiteProv.getOtherCount()}}
 							</ion-col>
 						</ion-row>
 
-						<ion-row nowrap>
-							<ion-col>
-								Gesamt:
-							</ion-col>
-							<ion-col>
-								{{consiteProv.getAllWorkersCount()}}
-							</ion-col>
-						</ion-row>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+			<!--CARD: WEATHER{{{
+			<ion-col>
+				<ion-card (click)="openWeatherPage()"> 
+					<ion-card-header>
+						Wetter
+					</ion-card-header>
+					<ion-card-content>
+						<ion-grid>
+							<ion-row nowrap>
+								<ion-col>
+									Bericht f&uuml;r {{consiteProv.weather.date}}, {{consiteProv.weather.time}}
+									Uhr:
+								</ion-col>
+							</ion-row>
 
-					</ion-grid>
-				</ion-card-content>
-			</ion-card>
-		</ion-col> <!--}}}-->
+							<ion-row nowrap>
+								<ion-col>
+									Temperatur:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.weather.getTemperature()}} &deg;C
+								</ion-col>
+							</ion-row>
 
-		<ion-col> <!--CARD: GERAETE{{{-->
+							<ion-row nowrap>
+								<ion-col>
+									Niederschlag:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.weather.getPrecipitation()}} mm
+								</ion-col>
+							</ion-row>
 
-			<ion-card (click)="openEquipmentPage()">
-				<ion-card-header>
-					Ger&auml;te	
-				</ion-card-header>
-				<ion-card-content>
+							<ion-row nowrap>
+								<ion-col>
+									Wolkenbedeckung:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.weather.getCloudcover()}} %
+								</ion-col>
+							</ion-row>
 
-					<ion-row nowrap>
-						<ion-col>
-							Rammen:
-						</ion-col>
-						<ion-col>
-							{{consiteProv.getRamCount()}}
-						</ion-col>
-					</ion-row>
-
-					<ion-row nowrap>
-						<ion-col>
-							Kr&auml;ne:
-						</ion-col>
-						<ion-col>
-							{{consiteProv.getCraneCount()}}
-						</ion-col>
-					</ion-row>
-
-					<ion-row nowrap>
-						<ion-col>
-							Pumpen:
-						</ion-col>
-						<ion-col>
-							{{consiteProv.getPumpCount()}}
-						</ion-col>
-					</ion-row>
-
-					<ion-row nowrap>
-						<ion-col>
-							Andere:
-						</ion-col>
-						<ion-col>
-							{{consiteProv.getOtherCount()}}
-						</ion-col>
-					</ion-row>
-
-				</ion-card-content>
-			</ion-card> <!--}}}-->
-		</ion-col>
-
-		<ion-col>
-			<ion-card (click)="openWeatherPage()"> <!--CARD: WEATHER{{{-->
-				<ion-card-header>
-					Wetter
-				</ion-card-header>
-				<ion-card-content>
-					<ion-grid>
-						<ion-row nowrap>
-							<ion-col>
-								Bericht f&uuml;r {{consiteProv.weather.date}}, {{consiteProv.weather.time}}
-								Uhr:
-							</ion-col>
-						</ion-row>
-
-						<ion-row nowrap>
-							<ion-col>
-								Temperatur:
-							</ion-col>
-							<ion-col>
-								{{consiteProv.weather.getTemperature()}} &deg;C
-							</ion-col>
-						</ion-row>
-
-						<ion-row nowrap>
-							<ion-col>
-								Niederschlag:
-							</ion-col>
-							<ion-col>
-								{{consiteProv.weather.getPrecipitation()}} mm
-							</ion-col>
-						</ion-row>
-
-						<ion-row nowrap>
-							<ion-col>
-								Wolkenbedeckung:
-							</ion-col>
-							<ion-col>
-								{{consiteProv.weather.getCloudcover()}} %
-							</ion-col>
-						</ion-row>
-
-						<ion-row nowrap>
-							<ion-col>
-								Wind:
-							</ion-col>
-							<ion-col>
-								{{consiteProv.weather.getWindSpeedAvg()}} km/h bis
-								{{consiteProv.weather.getWindSpeedMax()}} km/h (max.)
-							</ion-col>
-						</ion-row>
+							<ion-row nowrap>
+								<ion-col>
+									Wind:
+								</ion-col>
+								<ion-col>
+									{{consiteProv.weather.getWindSpeedAvg()}} km/h bis
+									{{consiteProv.weather.getWindSpeedMax()}} km/h (max.)
+								</ion-col>
+							</ion-row>
 
 
-					</ion-grid>
-				</ion-card-content>
-			</ion-card> <!--}}}-->
-		</ion-col>
-		<ion-col>
-			<ion-card (click)="openEventsPage()"> <!--CARD: COMMENTS{{{-->
-				<ion-card-header>
-					Berichte
-				</ion-card-header>
-				<ion-card-content>
-					<p>Vorkommnisse: {{consiteProv.getNumEvents()}}</p>
-					<p>Schadensmeldungen: {{consiteProv.getNumDamageReports()}}</p>
-				</ion-card-content>
-			</ion-card> <!--}}}-->
-		</ion-col>
-	</ion-row>
-</ion-grid>
+						</ion-grid>
+					</ion-card-content>
+				</ion-card> 
+			</ion-col>
+			}}}-->
+			<ion-col>
+				<!--CARD: PHOTOSEITE{{{-->
+					<ion-card (click)="openPhotoPage()"> 
+						<ion-card-header>
+							Foto	
+						</ion-card-header>
+						<ion-card-content>
+							<p>Foto zu Baustelle</p>
+							<p>Foto zu Gerät</p>
+						</ion-card-content>
+					</ion-card> 
+					<!--}}}-->
+			</ion-col>
+			<ion-col>
+				<!--CARD: DAILY REPORT{{{-->
+					<ion-card (click)="openDailyReport()"> 
+						<ion-card-header>
+							Tagesbericht
+						</ion-card-header>
+						<ion-card-content>
+							<p>Tagesbericht</p>
+						</ion-card-content>
+					</ion-card> 
+					<!--}}}-->
+			</ion-col>
+			<ion-col>
+				<!--CARD: CONTACTS{{{-->
+					<ion-card (click)="openContactsPage()"> 
+						<ion-card-header>
+							Kontakte	
+						</ion-card-header>
+						<ion-card-content>
+							<p>card content</p>
+						</ion-card-content>
+					</ion-card> 
+					<!--}}}-->
+			</ion-col>
 
-</ion-content>
+
+			<ion-col>
+				<ion-card (click)="openEventsPage()"> <!--CARD: COMMENTS{{{-->
+					<ion-card-header>
+						Berichte
+					</ion-card-header>
+					<ion-card-content>
+						<p>Vorkommnisse: {{consiteProv.getNumEvents()}}</p>
+						<p>Schadensmeldungen: {{consiteProv.getNumDamageReports()}}</p>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+		</ion-row>
+	</ion-grid>
+
+	</ion-content>
