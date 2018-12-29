@@ -27,4 +27,11 @@ export class TimeProvider {
       return date.toLocaleDateString("de-DE", dateStrOptions);
 	}
 
+	timeStr2Num(timeStr:string): number{
+		let bits=timeStr.split(":");
+		let timeNum = Number(bits[0]) + Number(bits[1])/60;
+		return timeNum;
+	}
+
+
 }

@@ -4,7 +4,8 @@ export class DailyReport {
 	constructionsite: any;
 	timestamp: any;
 	weatherReport: any;
-	timeReport: any;
+	workersTimeReport: any;
+	workersTimeReportTotals: any;
 	workDoneArr:any = [];
 	eventArr:any = [];
 
@@ -17,11 +18,12 @@ export class DailyReport {
 		this.constructionsite = {id: "", description: ""};
 		this.timestamp = {calendarWeek: "", weekDay: "", date: ""};
 		this.weatherReport = {time: "", temperatureDegC: "", conditions: ""};
-		this.timeReport = {countPolier: -1, countPolierHours: -1, 
+		this.workersTimeReport = {countPolier: -1, countPolierHours: -1, 
 			countMaschinist: -1, countMaschinistHours: -1, 
 			countFacharbeiter: -1, countFacharbeiterHours: -1,
 			countHilfsarbeiter: -1, countHilfsarbeiterHours: -1,
 		};
+		this.workersTimeReportTotals = [];
 
 		this.workDoneArr = [];
 		this.eventArr = [];
@@ -30,6 +32,7 @@ export class DailyReport {
 	setId(id){// {{{
 		this.id=id;
 	}// }}}
+
 }
 
 

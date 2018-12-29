@@ -55,4 +55,5 @@ export class ConstructionsiteTimerecordingPage {
 		}
 		console.log(this.worktimeStartSelect);
 	}
+	//TODO: add scroll to selected items: https://github.com/ionic-team/ionic/issues/6356
 }

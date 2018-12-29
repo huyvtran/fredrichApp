@@ -145,6 +145,7 @@ export class ConstructionsiteProvider {
 		return this.location.checkGeolocationValidityUpdates();
 	}// }}}
 
+	//WORKERS
 	public getPolierCount(){// {{{
 		return this.constructionsite.workerTeam.getPolierCount();
 	}// }}}
@@ -160,7 +161,21 @@ export class ConstructionsiteProvider {
 	public getAllWorkersCount(){// {{{
 		return this.constructionsite.workerTeam.getNumWorkers();
 	}// }}}
+	public getWorkerTeamMembers(){// {{{
+		return this.constructionsite.workerTeam.getMembers();
+	}// }}}
+	public getTodaysWorkerHoursByRole(role:string):number{// {{{
+		let hours=0;
+		let workers = this.getWorkerTeamMembers();
+		for (let worker of workers) {
+			if(worker.getRole() === role){
+				hours = hours + worker.getHoursWorkedToday();
+			}
+		}
+		return hours;
+	}// }}}
 
+	//EQUIPMENT
 	public getRamCount(){// {{{
 		return this.constructionsite.equipmentItemList.getRamCount();
 	}// }}}
@@ -174,16 +189,14 @@ export class ConstructionsiteProvider {
 		return this.constructionsite.equipmentItemList.getOtherCount();
 	}// }}}
 
-	public getWorkerTeamMembers(){// {{{
-		return this.constructionsite.workerTeam.getMembers();
-	}// }}}
-	public getEquipmentItemListArray(){
+	public getEquipmentItemListArray(){// {{{
 		return this.constructionsite.equipmentItemList.getItems();
-	}
+	}// }}}
 	public getContactList(){// {{{
 		return this.constructionsite.contactList.items;
 	}// }}}
 
+	//DAILY REPORT
 	public generateDailyReport(){// {{{
 		this.dailyReport = new DailyReport();
 		this.dailyReport.constructionsite.id= this.constructionsite.id;
@@ -197,11 +210,8 @@ export class ConstructionsiteProvider {
 			conditions: this.weather.precipitation + "mm, " + this.weather.cloudCoverPercent + "% Bedeckung"
 		};
 
-		this.dailyReport.timeReport = {countPolier: -1, countPolierHours: -1, 
-			countMaschinist: -1, countMaschinistHours: -1, 
-			countFacharbeiter: -1, countFacharbeiterHours: -1,
-			countHilfsarbeiter: -1, countHilfsarbeiterHours: -1,
-		};
+		this.generateWorkersTimeReport();
+		this.generateWorkersTimeReportTotals();
 
 		this.dailyReport.workDoneArr = [];
 		for (let i=0; i<3; i++){
@@ -211,12 +221,41 @@ export class ConstructionsiteProvider {
 
 		this.dailyReport.eventArr = this.getEvents();
 
-	}
+	}// }}}
+	private generateWorkersTimeReport(){// {{{
+		let roles = this.getAvailableRoles();
+		let timeReportArr = [];
+		for (let role of roles){
+			let timeReportRole = {role: role, roleStr:"", count:0, hourStart:"", hourEnd:"", numHours:0};
+			timeReportRole.roleStr=this.getRoleStr(role);
+			timeReportRole.count = this.constructionsite.workerTeam.getPresentWorkerCountByRole(role);
+			timeReportRole.hourStart = this.timeNum2Str(this.constructionsite.workerTeam.getHourStartAvgByRole(role));
+			timeReportRole.hourEnd = this.timeNum2Str(this.constructionsite.workerTeam.getHourEndAvgByRole(role));
+			timeReportRole.numHours= this.constructionsite.workerTeam.getWorkerHoursByRoleToday(role);
+			timeReportArr.push(timeReportRole);
+		}
+		this.dailyReport.workersTimeReport = timeReportArr;
+	}// }}}
+	private generateWorkersTimeReportTotals(){// {{{
+		let roles = this.getAvailableRoles();
+		let totals ={numWorkersPresent:0, numHours:0}, 
+			nwp=0, 
+			numHours=0;
+		for (let role of roles){
+			nwp = nwp + this.constructionsite.workerTeam.getPresentWorkerCountByRole(role);
+			numHours = numHours + this.constructionsite.workerTeam.getWorkerHoursByRoleToday(role);
+		}
+		totals.numWorkersPresent = nwp;
+		totals.numHours = numHours;
+		this.dailyReport.workersTimeReportTotals = totals;
+		console.log(this.dailyReport.workersTimeReportTotals);
+	}// }}}
 
-	public getDailyReport(){
+	public getDailyReport(){// {{{
 		return this.dailyReport;
 	}// }}}
 
+	//EVENTS
 	public addEvent(event){// {{{
 		this.events.push(event);
 	}// }}}
@@ -235,6 +274,50 @@ export class ConstructionsiteProvider {
 	}// }}}
 	public getNumDamageReports(){// {{{
 		return this.damageReports.length;
+	}// }}}
+
+	//UTILS
+	getAvailableRoles(){
+		return ["1Polier", "2Maschinist", "3Facharbeiter", "4Hilfsarbeiter"];
+	}
+	getRoleStr(role){// {{{
+		let roleStr="";
+		switch (role) {
+			case "1Polier": {
+				//statements;
+				roleStr = "Polier";
+				break;
+			}
+			case "2Maschinist": {
+				//statements;
+				roleStr = "Maschinist";
+				break;
+			}
+			case "3Facharbeiter": {
+				//statements;
+				roleStr = "Facharbeiter";
+				break;
+			}
+			case "4Hilfsarbeiter": {
+				//statements;
+				roleStr = "Hilfsarbeiter";
+				break;
+			}
+			default: {
+				roleStr = role;
+				break;
+			}
+		}
+		return roleStr;
+	}// }}}
+	timeNum2Str(time:number){// {{{
+		var pad = "00";
+		let hour = Math.floor(time);
+		var hourStr= (pad+String(hour)).slice(-pad.length);	
+		let min = (time - hour)*60;
+		var minStr= (pad+String(min)).slice(-pad.length);	
+		let timeStr=hourStr + ":" + minStr;
+		return timeStr;
 	}// }}}
 
 }

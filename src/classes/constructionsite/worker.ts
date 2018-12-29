@@ -7,7 +7,6 @@ export class Worker {// {{{
 	phoneNr: string;
 	email: string;
 	role: string;
-	schedule: any;
 	isPresent:boolean;
 	timeWorkStart: string;
 	timeWorkEnd: string;
@@ -19,8 +18,9 @@ export class Worker {// {{{
 		this.phoneNr = "";
 		this.email = "";
 		this.role = "";
-		this.schedule = {timeStart: "07:00", timeEnd: "16:00"};
 		this.isPresent = true;
+		this.timeWorkStart = "07:00"; //TODO: RICHTIG SETZEN
+		this.timeWorkEnd= "16:30";
 	}
 
 	//PUBLIC
@@ -31,7 +31,9 @@ export class Worker {// {{{
 		this.phoneNr = data.phoneNr;
 		this.email = data.email;
 		this.role = data.role;
-		// 		this.schedule = ...
+	}// }}}
+	getRole(){// {{{
+		return this.role;
 	}// }}}
 	getRoleStr(){// {{{
 		let roleStr="";
@@ -63,6 +65,18 @@ export class Worker {// {{{
 		}
 		return roleStr;
 	}// }}}
+	getHoursWorkedToday(){
+		console.log("time work start:", this.timeWorkStart);
+		let hourStart = this.timeStr2Num(this.timeWorkStart);
+		let hourEnd = this.timeStr2Num(this.timeWorkEnd);
+		return hourEnd - hourStart;
+	}
+
+	timeStr2Num(timeStr:string): number{
+		let bits=timeStr.split(":");
+		let timeNum = Number(bits[0]) + Number(bits[1])/60;
+		return timeNum;
+	}
 
 	//PRIVATE
 }// }}}

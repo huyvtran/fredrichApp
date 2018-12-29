@@ -4,6 +4,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ConstructionsiteTimerecordingPage } from '../constructionsite-timerecording/constructionsite-timerecording';
 import { ConstructionsiteEquipmentPage} from '../constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteEventsPage} from '../constructionsite-events/constructionsite-events';
+import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
+
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 
@@ -50,7 +52,7 @@ export class ConstructionsiteOverviewPage {
 	}
 
 	openDailyReport(){
-
+		this.navCtrl.push(ConstructionsiteDailyreportPage);
 	}
 
 	openEventsPage(){

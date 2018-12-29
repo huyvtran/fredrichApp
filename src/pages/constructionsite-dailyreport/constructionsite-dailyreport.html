@@ -95,24 +95,24 @@
 
 
 						<ion-list>
-							<ion-item *ngFor="let role of workerRoles">
+							<ion-item *ngFor="let roleReport of consiteProv.dailyReport.workersTimeReport">
 								<ion-grid>
 									<ion-row nowrap>
 										<ion-col col-3>
-											{{role}}
+											{{roleReport.roleStr}}
 										</ion-col>
 
 										<ion-col>
-											07:00
+											{{roleReport.hourStart}}
 										</ion-col>
 										<ion-col>
-											16:00
+											{{roleReport.hourEnd}}
 										</ion-col>
 										<ion-col>
-											1
+											{{roleReport.count}}
 										</ion-col>
 										<ion-col>
-											8
+											{{roleReport.numHours}}
 										</ion-col>
 
 									</ion-row>
@@ -131,10 +131,10 @@
 										<ion-col>
 										</ion-col>
 										<ion-col>
-											4
+											{{consiteProv.dailyReport.workersTimeReportTotals.numWorkersPresent}}
 										</ion-col>
 										<ion-col>
-											31
+											{{consiteProv.dailyReport.workersTimeReportTotals.numHours}}
 										</ion-col>
 									</ion-row>
 								</ion-grid>
