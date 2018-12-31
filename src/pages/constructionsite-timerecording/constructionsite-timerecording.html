@@ -60,14 +60,14 @@
 					</ion-col>
 
 					<ion-col>
-						<ion-select [(ngModel)]="worker.timeWorkStartHour" [disabled]="!worker.isPresent">
+						<ion-select [(ngModel)]="worker.timeWorkStart" [disabled]="!worker.isPresent">
 							<ion-option *ngFor="let timeStr of worktimeStartSelect" [value]="timeStr"
 								[selected]="timeStr=='07:00'">{{timeStr}}</ion-option>
 						</ion-select>
 					</ion-col>
 
 					<ion-col>
-						<ion-select [(ngModel)]="worker.timeWorkEndHour" [disabled]="!worker.isPresent">
+						<ion-select [(ngModel)]="worker.timeWorkEnd" [disabled]="!worker.isPresent">
 							<ion-option *ngFor="let timeStr of worktimeEndSelect" [value]="timeStr"
 								[selected]="timeStr=='17:00'">{{timeStr}}</ion-option>
 						</ion-select>

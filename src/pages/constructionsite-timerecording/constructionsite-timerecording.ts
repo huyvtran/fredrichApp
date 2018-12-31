@@ -28,12 +28,15 @@ export class ConstructionsiteTimerecordingPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider) {
 	  this.createWorktimes();
-
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteTimerecordingPage');
   }
+
+	ionViewDidLeave(){
+		console.log(this.consiteProv.getWorkerTeamMembers());
+	}
 
 	itemSelected(worker){
 // 		this.navCtrl.push(ConstructionsiteWorkerDetailPage, {worker: worker});
@@ -53,7 +56,7 @@ export class ConstructionsiteTimerecordingPage {
 				this.worktimeEndSelect.push(timeStr);
 			}
 		}
-		console.log(this.worktimeStartSelect);
+// 		console.log(this.worktimeStartSelect);
 	}
 	//TODO: add scroll to selected items: https://github.com/ionic-team/ionic/issues/6356
 }
