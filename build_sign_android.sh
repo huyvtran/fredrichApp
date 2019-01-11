@@ -1,6 +1,6 @@
 #!/bin/bash
 appName="fredrichApp"
-buildNr="0.0.3"
+buildNr="0.0.4"
 rootDir="/Users/johannes/GoogleDrive/Projects/FredrichSpezialtiefbau/Verwaltungssoftware/FredrichApp/fredrichApp"
 buildDir="$rootDir/build/$buildNr"
 apkPath="$buildDir/$appName-$buildNr.apk"

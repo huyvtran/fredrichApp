@@ -1,8 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 import { ConstructionsitePhotoEquipmentPage } from '../constructionsite-photo-equipment/constructionsite-photo-equipment';
 // import { ConstructionsitePhotoSitePage } from '../constructionsite-photo-site/constructionsite-photo-site';
 import { CameraViewPage } from '../camera-view/camera-view';
+
+import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { CameraProvider } from '../../providers/camera/camera';
+
 
 /**
  * Generated class for the ConstructionsitePhotoPage page.
@@ -18,7 +22,10 @@ import { CameraViewPage } from '../camera-view/camera-view';
 })
 export class ConstructionsitePhotoPage {
 
-	constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams,
+		private actionSheetCtrl: ActionSheetController, 
+		private auth: AuthServiceProvider, 
+		public cameraProvider: CameraProvider) {
 	}
 
 	ionViewDidLoad() {
@@ -26,12 +33,43 @@ export class ConstructionsitePhotoPage {
 	}
 
 	openPhotoEquipmentPage(){
-		this.navCtrl.push(ConstructionsitePhotoEquipmentPage);
+// 		this.navCtrl.push(ConstructionsitePhotoEquipmentPage);
+		this.presentCameraActionSheet();
 	}
 
 	openPhotoSitePage(){
 		//set options
-		this.navCtrl.push(CameraViewPage);
+// 		this.navCtrl.push(CameraViewPage);
+		this.presentCameraActionSheet();
 	}
+
+	public presentCameraActionSheet() {// {{{
+		let actionSheet = this.actionSheetCtrl.create({
+			title: 'Bildquelle auswaehlen:',
+			buttons: [
+				{
+					text: 'Aus Galerie laden',
+					handler: () => {
+						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.PHOTOLIBRARY);
+// 						this.addPictureToEvent();
+					}
+				},
+				{
+					text: 'Kamera',
+					handler: () => {
+						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.CAMERA);
+// 						this.addPictureToEvent();
+					}
+				},
+				{
+					text: 'Abbrechen',
+					role: 'cancel'
+				}
+			]
+		});
+		actionSheet.present();
+	}// }}}
+
+
 
 }

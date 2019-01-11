@@ -9,6 +9,7 @@ import { GlobalsProvider } from '../globals/globals'
 import { WeatherProvider } from '../weather/weather'
 import { TimeProvider } from '../time/time'
 import { GeolocationProvider } from '../geolocation/geolocation'
+import { ConstructionsiteContactsProvider } from '../constructionsite-contacts/constructionsite-contacts'
 
 //CLASSES
 import { Worker } from '../../classes/constructionsite/worker'
@@ -42,10 +43,11 @@ export class ConstructionsiteProvider {
 		private auth: AuthServiceProvider, 
 		public globals: GlobalsProvider, 
 		public time: TimeProvider, 
-		public location: GeolocationProvider) 
+		public location: GeolocationProvider,
+	public contacts: ConstructionsiteContactsProvider) 
 	{
 		console.log('Hello ConstructionsiteProvider Provider');
-		this.loadDataStatus = {consiteData: false, weather: false};
+		this.loadDataStatus = {consiteData: false, weather: false, contacts: false};
 		this.loadData = new Rx.BehaviorSubject(this.loadDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
 	}// }}}
 
@@ -70,7 +72,7 @@ export class ConstructionsiteProvider {
 	checkLoadDataCompleted(){// {{{
 		this.loadDataUpdates().subscribe(data => {
 			console.log("checking completion for: ", data);
-			if(data.consiteData && data.weather){
+			if(data.consiteData && data.weather && data.contacts){
 				console.log("LOADING CONSTRUCTIONSITE DATA COMPLETED, closing observable");
 				this.loadData.complete();
 			}
@@ -91,7 +93,6 @@ export class ConstructionsiteProvider {
 				this.setLocation(data['location']);
 				this.setWorkerTeam(data['personal_arr']);
 				this.setEquipmentItemList(data['equipment_arr']);
-				this.setContactList(data['contacts_arr']);
 			},
 			err => {
 				console.log(err);
@@ -192,8 +193,31 @@ export class ConstructionsiteProvider {
 	public getEquipmentItemListArray(){// {{{
 		return this.constructionsite.equipmentItemList.getItems();
 	}// }}}
-	public getContactList(){// {{{
-		return this.constructionsite.contactList.items;
+
+	//CONTACTS
+	public loadContactsData(){// {{{
+		this.loadDataUpdates().subscribe(
+			loadingStatus => { //{{{
+				if(loadingStatus.consiteData && !loadingStatus.contacts){
+					console.log("LOADING CONTACTS DATA");
+					this.contacts.loadContactsData();
+					this.contacts.loadingUpdates()
+						.subscribe(hasLoaded => {
+							if(hasLoaded){
+								this.loadDataStatus.contacts = true;
+								this.loadData.next(this.loadDataStatus);
+							}
+						},
+						err => {
+						});
+				}
+			}, //}}}
+			err => {},
+			() => {});
+	}// }}}
+
+	public getContacts(){// {{{
+		return this.contacts.getContacts();
 	}// }}}
 
 	//DAILY REPORT
@@ -311,12 +335,17 @@ export class ConstructionsiteProvider {
 		return roleStr;
 	}// }}}
 	timeNum2Str(time:number){// {{{
-		var pad = "00";
-		let hour = Math.floor(time);
-		var hourStr= (pad+String(hour)).slice(-pad.length);	
-		let min = (time - hour)*60;
-		var minStr= (pad+String(min)).slice(-pad.length);	
-		let timeStr=hourStr + ":" + minStr;
+		let timeStr="";
+		if(isNaN(time)){
+			timeStr="";
+		} else {
+			var pad = "00";
+			let hour = Math.floor(time);
+			var hourStr= (pad+String(hour)).slice(-pad.length);	
+			let min = (time - hour)*60;
+			var minStr= (pad+String(min)).slice(-pad.length);	
+			timeStr=hourStr + ":" + minStr;
+		}
 		return timeStr;
 	}// }}}
 

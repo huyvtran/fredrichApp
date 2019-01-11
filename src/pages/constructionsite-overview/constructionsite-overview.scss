@@ -3,7 +3,17 @@ page-constructionsite-overview {
     display: flex;
     flex-direction: column;
 //     width: 100% !important;
-    width: 43vw !important;
+    width: 100% !important;
+    height: 100% !important;
+    margin: 0 !important;
+	 border: 1px solid color($colors, tertiary);
+  }
+
+  .card_header {
+    display: flex;
+    flex-direction: column;
+//     width: 100% !important;
+    width: 100% !important;
     height: 100% !important;
     margin: 0 !important;
 	 border: 1px solid color($colors, tertiary);

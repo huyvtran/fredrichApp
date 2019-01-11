@@ -57,6 +57,7 @@ import { GlobalsProvider } from '../providers/globals/globals';
 import { WeatherProvider } from '../providers/weather/weather';
 import { TimeProvider } from '../providers/time/time';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
+import { ConstructionsiteContactsProvider } from '../providers/constructionsite-contacts/constructionsite-contacts';
 
 
 @NgModule({
@@ -145,6 +146,7 @@ import { GeolocationProvider } from '../providers/geolocation/geolocation';
 		Camera,
 		CameraProvider,
     ConstructionsiteProvider,
+    ConstructionsiteContactsProvider,
     GlobalsProvider,
     WeatherProvider,
     TimeProvider,

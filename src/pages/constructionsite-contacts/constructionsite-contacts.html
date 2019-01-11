@@ -19,7 +19,7 @@
 		<ion-item-sliding>
 	-->
 
-			<ion-item  *ngFor="let contact of consiteProv.getContactList()">
+			<ion-item  *ngFor="let contact of consiteProv.getContacts()">
 				<p> <b>{{contact.getRoleStr()}}</b> </p>
 				<p> {{ contact.companyName }} </p>
 				<p> {{ contact.name }}, {{ contact.surname }} </p>

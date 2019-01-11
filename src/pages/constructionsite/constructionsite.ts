@@ -61,42 +61,51 @@ export class ConstructionsitePage {
 		this.consiteProv.loadDataUpdates()
 			.subscribe(loadingStatus => {
 				console.log("LOADING STATUS: ", loadingStatus);
-				if(loadingStatus.consiteData && !loadingStatus.weather){
+				if(loadingStatus.consiteData && !(loadingStatus.weather && loadingStatus.contacts)){
 					this.loadSecondaryData();
 				}
 			},
 			err => {},
 			() => {
 				console.log("CONSITE FILLED:");
-				console.log(this.consiteProv.getConstructionsite())
-				console.log(this.consiteProv.getWeather())
+				console.log(this.consiteProv.getConstructionsite());
+				console.log(this.consiteProv.getWeather());
+				console.log(this.consiteProv.getContacts());
 			});
 		this.consiteProv.checkLoadDataCompleted();
 	}// }}}
 
 	loadSecondaryData(){// {{{
+		//TODO: ladesequenzen sauber nacheinander ablaufen lassen
 		console.log("LOADING SECONDARY DATA");
 		this.consiteProv.loadDataUpdates()
 			.subscribe(loadingStatus => {
 				if(loadingStatus.consiteData){
-					let $check = this.consiteProv.isGeolocationValid();
-					console.log($check);
-					$check
-						.subscribe(isValid => {
-							if(isValid){
-								console.log("GEOLOCATION VALID, PROCEEDING");
-								console.log(this.consiteProv.location);
-								this.consiteProv.loadWeatherData();
-								// 								$check.unsubscribe(); //stay subscribed in case
-								// 								user logs out
-							} else {
-								console.log("GEOLOCATION INVALID", isValid);
-								this.presentSetGeolocationActionSheet();
-							}
-						},
-						err => {
-							console.log(err);
-						});
+					//load contacts
+					if(!loadingStatus.contacts){
+						this.consiteProv.loadContactsData();
+					}
+					//load weather data only for valid geolocation
+					if(!loadingStatus.weather){
+						let $check = this.consiteProv.isGeolocationValid();
+						console.log($check);
+						$check
+							.subscribe(isValid => {
+								if(isValid){
+									console.log("GEOLOCATION VALID, PROCEEDING");
+									console.log(this.consiteProv.location);
+									this.consiteProv.loadWeatherData();
+									// 								$check.unsubscribe(); //stay subscribed in case
+									// 								user logs out
+								} else {
+									console.log("GEOLOCATION INVALID", isValid);
+									this.presentSetGeolocationActionSheet();
+								}
+							},
+							err => {
+								console.log(err);
+							});
+					}
 				}
 			},
 			err => {},

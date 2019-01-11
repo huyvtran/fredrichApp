@@ -5,6 +5,8 @@ import { ConstructionsiteTimerecordingPage } from '../constructionsite-timerecor
 import { ConstructionsiteEquipmentPage} from '../constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteEventsPage} from '../constructionsite-events/constructionsite-events';
 import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
+import { ConstructionsitePhotoPage} from '../constructionsite-photo/constructionsite-photo';
+import { ConstructionsiteContactsPage} from '../constructionsite-contacts/constructionsite-contacts';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -44,11 +46,11 @@ export class ConstructionsiteOverviewPage {
 	}
 
 	openPhotoPage(){
-
+		this.navCtrl.push(ConstructionsitePhotoPage);
 	}
 
 	openContactsPage(){
-
+		this.navCtrl.push(ConstructionsiteContactsPage);
 	}
 
 	openDailyReport(){

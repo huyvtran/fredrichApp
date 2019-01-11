@@ -32,15 +32,18 @@
 			<ion-grid item-content>
 				<ion-row nowrap>
 					<ion-col col-3>
-						<p>Name, Vorname</p>
+						<p>Name</p>
 					</ion-col>
 
 					<ion-col col-1>
-						<p> Anwesend </p>
+						<p> Anw</p>
 					</ion-col>
 
 					<ion-col>
-						<p>Arbeitszeit</p>
+						<p>von</p>
+					</ion-col>
+					<ion-col>
+						<p>bis</p>
 					</ion-col>
 
 				</ion-row>
@@ -52,7 +55,7 @@
 			<ion-grid item-content>
 				<ion-row nowrap>
 					<ion-col col-3>
-						<p>{{ worker.name }}, {{worker.surname}}</p>
+						<p>{{ worker.name }}, {{ worker.surname }}</p>
 					</ion-col>
 
 					<ion-col col-1>
@@ -60,19 +63,17 @@
 					</ion-col>
 
 					<ion-col>
-						<ion-select [(ngModel)]="worker.timeWorkStart" [disabled]="!worker.isPresent">
-							<ion-option *ngFor="let timeStr of worktimeStartSelect" [value]="timeStr"
-								[selected]="timeStr=='07:00'">{{timeStr}}</ion-option>
+						<ion-select [(ngModel)]="worker.timeWorkStart" [disabled]="!worker.isPresent"
+							class="myCustomSelect" (click)="onSelectClicked()">
+							<ion-option *ngFor="let timeStr of worktimeStartSelect" [value]="timeStr">{{timeStr}}</ion-option>
 						</ion-select>
 					</ion-col>
 
 					<ion-col>
-						<ion-select [(ngModel)]="worker.timeWorkEnd" [disabled]="!worker.isPresent">
-							<ion-option *ngFor="let timeStr of worktimeEndSelect" [value]="timeStr"
-								[selected]="timeStr=='17:00'">{{timeStr}}</ion-option>
+						<ion-select [(ngModel)]="worker.timeWorkEnd" [disabled]="!worker.isPresent" class="myCustomSelect"  (click)="onSelectClicked()">
+							<ion-option *ngFor="let timeStr of worktimeEndSelect" [value]="timeStr">{{timeStr}}</ion-option>
 						</ion-select>
 					</ion-col>
-
 
 				</ion-row>
 			</ion-grid>

@@ -32,9 +32,10 @@ export class ConstructionsiteTimerecordingPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteTimerecordingPage');
+		console.log(this.consiteProv.getWorkerTeamMembers());
   }
 
-	ionViewDidLeave(){
+	ionViewWillLeave(){
 		console.log(this.consiteProv.getWorkerTeamMembers());
 	}
 
@@ -42,7 +43,7 @@ export class ConstructionsiteTimerecordingPage {
 // 		this.navCtrl.push(ConstructionsiteWorkerDetailPage, {worker: worker});
 	}
 
-	createWorktimes(){
+	createWorktimes(){// {{{
 		let minutes=["00","15","30","45"];
 		let hours=[];
 		this.worktimeStartSelect=[];
@@ -57,6 +58,39 @@ export class ConstructionsiteTimerecordingPage {
 			}
 		}
 // 		console.log(this.worktimeStartSelect);
-	}
-	//TODO: add scroll to selected items: https://github.com/ionic-team/ionic/issues/6356
+	}// }}}
+
+	public onSelectClicked (): void {// {{{
+		const options: HTMLCollectionOf<Element> = document.getElementsByClassName('alert-tappable alert-radio') // These classes come from the generated elements for the ion-select/ion-option
+		setTimeout(() => {
+			let i: number = 0;
+			const len: number = options.length;
+			for (i; i < len; i++) {
+				if ((options[i] as HTMLElement).attributes[3].nodeValue === 'true') {
+					let scrollIndex = Math.min(i+2, len-1);
+					options[scrollIndex].scrollIntoView({ block: 'end', behavior: 'instant' });
+				}
+			}
+		}, 500) // Leave enough time for the popup to render
+	}// }}}
+// 	public onSelectClicked(selectButton: Select): void {{{{
+//     const options: HTMLCollectionOf<Element> = document.getElementsByClassName('alert-tappable alert-radio'); // These classes come from the generated elements for the ion-select/ion-option
+// 		console.log(selectButton);
+// 		console.log(options);
+//     (<any>selectButton._overlay).didEnter.subscribe(
+//       () => {
+//         //Give a one cycle delay just to run this just after the didEnter has been called
+//         setTimeout(() => {
+//           let i: number = 0;
+//           const len: number = options.length;
+//           for (i; i < len; i++) {
+//             if ((options[i] as HTMLElement).attributes[3].nodeValue === 'true') {
+//               options[i].scrollIntoView({ block: 'end', behavior: 'instant' });
+//             }
+//           }
+//         });
+//       }
+//     );
+//   }}}}
+
 }
