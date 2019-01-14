@@ -44,6 +44,9 @@ export class EquipmentItem {
 		}
 		return categoryStr;
 	}// }}}
+	getId(){
+		return this.id;
+	}
 
 	//PRIVATE
 	private setDefaultValues(){// {{{

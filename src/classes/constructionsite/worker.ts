@@ -31,6 +31,9 @@ export class Worker {// {{{
 		this.phoneNr = data.phoneNr;
 		this.email = data.email;
 		this.role = data.role;
+		this.isPresent = data.isPresent;
+		this.timeWorkStart = data.timeWorkStart;
+		this.timeWorkEnd = data.timeWorkEnd;
 	}// }}}
 	getRole(){// {{{
 		return this.role;

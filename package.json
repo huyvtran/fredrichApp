@@ -20,6 +20,7 @@
     "@angular/http": "5.2.11",
     "@angular/platform-browser": "5.2.11",
     "@angular/platform-browser-dynamic": "5.2.11",
+    "@ionic-native/call-number": "^4.19.0",
     "@ionic-native/camera": "^4.17.0",
     "@ionic-native/camera-preview": "^4.17.0",
     "@ionic-native/core": "~4.15.0",
@@ -32,6 +33,7 @@
     "@ionic-native/transfer": "^3.14.0",
     "@ionic/pro": "2.0.3",
     "@ionic/storage": "2.2.0",
+    "call-number": "1.0.1",
     "cordova-android": "6.3.0",
     "cordova-plugin-camera": "4.0.3",
     "cordova-plugin-camera-preview": "git+https://github.com/cordova-plugin-camera-preview/cordova-plugin-camera-preview.git",
@@ -75,7 +77,8 @@
       },
       "cordova-plugin-camera": {},
       "cordova-plugin-file-transfer": {},
-      "cordova-plugin-filepath": {}
+      "cordova-plugin-filepath": {},
+      "mx.ferreyra.callnumber": {}
     },
     "platforms": [
       "android"

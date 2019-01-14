@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ActionSheetController } from 'ionic-angular';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { TelephoneProvider } from '../../providers/telephone/telephone';
 
 import { ConstructionsiteWorkerDetailPage } from '../constructionsite-worker-detail/constructionsite-worker-detail';
 
@@ -25,8 +27,10 @@ export class ConstructionsiteTimerecordingPage {
 // 	minuteSelect:number;
 	worktimeStartSelect:any=[];
 	worktimeEndSelect:any=[];
+	phoneNr:any;
+	calleeStr:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider, private telephone: TelephoneProvider, public actionSheetCtrl: ActionSheetController) {
 	  this.createWorktimes();
   }
 
@@ -92,5 +96,35 @@ export class ConstructionsiteTimerecordingPage {
 //       }
 //     );
 //   }}}}
+	
+
+	// calling a number
+   presentActionSheetPhone() {// {{{
+      const actionSheet = this.actionSheetCtrl.create({
+			title: this.calleeStr + ' anrufen',
+      buttons: [
+         {
+         text: this.phoneNr + ' wählen',
+         handler: () => {
+				this.telephone.callNr(this.phoneNr);
+            console.log('Call Number clicked');
+         }
+         },{
+         text: 'Zurück',
+         role: 'cancel',
+         handler: () => {
+         console.log('Cancel clicked');
+         }
+         }
+      ]
+      });
+      actionSheet.present();
+   }// }}}
+
+	callWorker(worker){
+		this.phoneNr = worker.phoneNr;
+		this.calleeStr = worker.name;
+		this.presentActionSheetPhone();
+	}
 
 }

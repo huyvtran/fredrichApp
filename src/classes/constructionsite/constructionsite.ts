@@ -23,6 +23,9 @@ export class Constructionsite {
 	setId(id){// {{{
 		this.id=id;
 	}// }}}
+	getId(){
+		return this.id;
+	}
 	
 }
 

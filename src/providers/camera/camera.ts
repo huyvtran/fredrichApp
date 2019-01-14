@@ -7,7 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
-import { ActionSheetController, ToastController, Platform, LoadingController, Loading } from 'ionic-angular';
+import { ToastController, Platform, LoadingController, Loading } from 'ionic-angular';
 
 import { AuthServiceProvider } from '../auth-service/auth-service';
 
@@ -26,8 +26,8 @@ export class CameraProvider {
 	loading: Loading;
 	photoStream: any;
 	photoStreamObserver:any;
-	copyFileListener:any;
-	copyFileObserver:any;
+// 	copyFileListener:any;
+// 	copyFileObserver:any;
 
 	constructor(public http: HttpClient, // {{{
 		public camera: Camera,
@@ -35,7 +35,6 @@ export class CameraProvider {
 		private transfer: Transfer, 
 		private file: File, 
 		private filePath: FilePath, 
-		public actionSheetCtrl: ActionSheetController, 
 		public toastCtrl: ToastController, 
 		public platform: Platform, 
 		public loadingCtrl: LoadingController,
@@ -45,9 +44,9 @@ export class CameraProvider {
 			this.photoStream = Observable.create(observer => {
 				this.photoStreamObserver = observer;
 			});
-			this.copyFileListener = Observable.create(observer => {
-				this.copyFileObserver = observer;
-			});
+// 			this.copyFileListener = Observable.create(observer => {
+// 				this.copyFileObserver = observer;
+// 			});
 
   }// }}}
 
@@ -95,58 +94,30 @@ export class CameraProvider {
 				.then(filePath => {
 					let path = filePath.substr(0, filePath.lastIndexOf('/') + 1);
 					let currentFilename = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-					var newFileName = this.createFileName();
-					if(0){// {{{
-						//FIXME: cannot find file after copy -> fix listener?
-						//TODO: do the same for camera below
-						this.copyFileToLocalDir(path, currentFilename, newFileName);
-						console.log("PATH: " + path + "; FILENAME OLD: " + newFileName);
-// 						this.file.readAsDataURL(path, currentFilename)
-						this.copyFileListener
-						.subscribe(copyStatus => {
-							console.log("COPY STATUS: " + String(copyStatus));
-							this.file.readAsDataURL(path, newFileName)
-							.then(res=> {
-								console.log(JSON.stringify(res));
-								if(res){
-									console.log(JSON.stringify(res));
-									this.photoStreamObserver.next(res);
-								}
-							})
-							.catch(err => {
-								console.log(JSON.stringify(err));
-							});
-						});
-					} // }}}
-					else {// {{{
-// 						this.file.readAsDataURL(path, newFileName)
-						this.file.readAsDataURL(path, currentFilename)
-						.then(res=> {
-							console.log(JSON.stringify(res));
-							if(res){
-								console.log(JSON.stringify(res));
-								this.photoStreamObserver.next(res);
-							}
-						})
-						.catch(err => {
-							console.log(JSON.stringify(err));
-						});
-					}// }}}
+					this.file.readAsDataURL(path, currentFilename)
+					.then(res=> {
+// 						console.log(JSON.stringify(res));
+						if(res){
+// 							this.photoStreamObserver.next(res);
+							let testReturn = [path, currentFilename];
+							this.photoStreamObserver.next(testReturn);
+						}
+					})
+					.catch(err => {
+						console.log(JSON.stringify(err));
+					});
 				})
 				.catch(err => {
 					console.log("ERROR: " + JSON.stringify(err));	
 				});
-
 			} // }}}
 			else { //dealing with camera //{{{
 				// solution found here: https://forum.ionicframework.com/t/unable-to-display-image-using-file-uri/84977/19
 				console.log(imagePath);
 				let path =  imagePath.substring(0,imagePath.lastIndexOf('/')+1);
 				let currentFilename = imagePath.substring(imagePath.lastIndexOf('/')+1);
-				var newFileName =  this.createFileName();
-				console.log("PATH: " + path + "; FILENAME OLD: " + currentFilename);
-				// 					this.copyFileToLocalDir(path, currentFilename, newFileName); //TODO: fix copying, so that readAsDataURL resolves successfully
-				console.log("PATH: " + path + "; FILENAME OLD: " + newFileName);
+// 				console.log("PATH: " + path + "; FILENAME OLD: " + currentFilename);
+// 				console.log("PATH: " + path + "; FILENAME OLD: " + newFileName);
 				this.file.readAsDataURL(path, currentFilename) //TODO: replace with newFileName
 				.then(res=> {
 					console.log(JSON.stringify(res));
@@ -161,54 +132,53 @@ export class CameraProvider {
 		});
 	}	// }}}
 
-	private createFileName() {// {{{
-		let d = new Date();
-		let newFileName:string = "";
-
-		if(1){
-			let n = d.getTime();
-			newFileName =  n + ".jpg";
-		} else {
-			let dateStr = d.toISOString();
-			dateStr = dateStr.substr(0,dateStr.lastIndexOf('.'));
-			newFileName =  this.auth.getUserInfo().currentConstructionsiteId + "_" + dateStr + ".jpg";
-		}
-		return newFileName;
-	}// }}}
+// 	private createFileName() {// {{{
+// 		let d = new Date();
+// 		let newFileName:string = "";
+// 
+// 		if(1){
+// 			let n = d.getTime();
+// 			newFileName =  n + ".jpg";
+// 		} else {
+// 			let dateStr = d.toISOString();
+// 			dateStr = dateStr.substr(0,dateStr.lastIndexOf('.'));
+// 			newFileName =  this.auth.getUserInfo().currentConstructionsiteId + "_" + dateStr + ".jpg";
+// 		}
+// 		return newFileName;
+// 	}// }}}
 	
-	copyFileToLocalDir(namePath, currentName, newFileName) {// {{{
-		// cordova.file.dataDirectory
-		console.log("COPYING FILE TO LOCAL DIR");
-		let externalStoragePath: string =  cordova.file.dataDirectory;
+// 	copyFileToLocalDir(namePath, currentName, newFileName) {// {{{
+// 		// cordova.file.dataDirectory
+// 		console.log("COPYING FILE TO LOCAL DIR");
+// 		let externalStoragePath: string =  cordova.file.dataDirectory;
+// 
+// 		this.file.resolveLocalFilesystemUrl(namePath + currentName)
+// 			.then((entry: any)=>{
+// // 				console.log('ENTRY:');
+// // 				console.log(JSON.stringify(entry));
+// 				this.file.resolveLocalFilesystemUrl(externalStoragePath)
+// 					.then((dirEntry: any)=>{
+// // 						entry.copyTo(dirEntry, newFileName, this.successCopy(), this.failCopy());
+// 						entry.copyTo(dirEntry, newFileName, this.successCopy());
+// 					}).catch((error)=>{
+// 						console.log(error);
+// 					});
+// 			})
+// 			.catch((error)=>{
+// 				console.log(error);
+// 			});
+// 
+// 	}// }}}
 
-		this.file.resolveLocalFilesystemUrl(namePath + currentName)
-			.then((entry: any)=>{
-// 				console.log('ENTRY:');
-// 				console.log(JSON.stringify(entry));
-				this.file.resolveLocalFilesystemUrl(externalStoragePath)
-					.then((dirEntry: any)=>{
-// 						entry.copyTo(dirEntry, newFileName, this.successCopy(), this.failCopy());
-						entry.copyTo(dirEntry, newFileName, this.successCopy());
-					}).catch((error)=>{
-						console.log(error);
-					});
-			})
-			.catch((error)=>{
-				console.log(error);
-			});
-
-	}// }}}
-
-	successCopy(){
-// 		console.log("SUCCESS COPY ENTRY: " + JSON.stringify(entry));
-		this.copyFileObserver.next(true);
-	}
-
-	failCopy(){
-// 		console.log("FAILED COPY ENTRY: " + JSON.stringify(error));
-		this.copyFileObserver.next(false);
-	}
-
+// 	successCopy(){// {{{
+// // 		console.log("SUCCESS COPY ENTRY: " + JSON.stringify(entry));
+// 		this.copyFileObserver.next(true);
+// 	}// }}}
+// 
+// 	failCopy(){// {{{
+// // 		console.log("FAILED COPY ENTRY: " + JSON.stringify(error));
+// 		this.copyFileObserver.next(false);
+// 	}// }}}
 
 	private presentToast(text) {// {{{
 		let toast = this.toastCtrl.create({

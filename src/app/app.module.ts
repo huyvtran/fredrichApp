@@ -10,6 +10,7 @@ import { Camera } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
+import { CallNumber } from '@ionic-native/call-number';
 // import { CameraPreviewRect } from '@ionic-native';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -58,6 +59,8 @@ import { WeatherProvider } from '../providers/weather/weather';
 import { TimeProvider } from '../providers/time/time';
 import { GeolocationProvider } from '../providers/geolocation/geolocation';
 import { ConstructionsiteContactsProvider } from '../providers/constructionsite-contacts/constructionsite-contacts';
+import { TelephoneProvider } from '../providers/telephone/telephone';
+import { FileHandlerProvider } from '../providers/file-handler/file-handler';
 
 
 @NgModule({
@@ -150,7 +153,10 @@ import { ConstructionsiteContactsProvider } from '../providers/constructionsite-
     GlobalsProvider,
     WeatherProvider,
     TimeProvider,
-    GeolocationProvider
+    GeolocationProvider,
+	 CallNumber,
+    TelephoneProvider,
+    FileHandlerProvider
   ]
 })
 export class AppModule {}

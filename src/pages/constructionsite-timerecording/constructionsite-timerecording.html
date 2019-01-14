@@ -15,20 +15,7 @@
 
 <ion-content padding>
 	<ion-list>
-		<!--
 		<ion-list-header>
-			Personal	
-	  </ion-list-header>
-		-->
-		<!--
-		<button ion-item *ngFor="let worker of consiteProv.getWorkerTeamMembers()"
-				  (click)="itemSelected(worker)">
-			<p> <b>{{worker.getRoleStr()}}</b></p>
-			<p>{{ worker.name }}, {{worker.surname}}
-			<p>Tel: {{ worker.phoneNr}}, Email: {{worker.email}}</p>
-		</button>  
-		-->
-		<ion-item>
 			<ion-grid item-content>
 				<ion-row nowrap>
 					<ion-col col-3>
@@ -45,11 +32,14 @@
 					<ion-col>
 						<p>bis</p>
 					</ion-col>
+					<ion-col col-2>
+						<p>Anruf</p>
+					</ion-col>
 
 				</ion-row>
 			</ion-grid>
-
-		</ion-item>
+	  </ion-list-header>
+	
 		<ion-item *ngFor="let worker of consiteProv.getWorkerTeamMembers()">
 			<ion-label>{{ worker.name }}</ion-label>
 			<ion-grid item-content>
@@ -59,22 +49,38 @@
 					</ion-col>
 
 					<ion-col col-1>
+						<!--
 						<ion-checkbox [(ngModel)]="worker.isPresent"></ion-checkbox>
+						-->
+						<div *ngIf="worker.isPresent"><ion-icon name="checkbox"></ion-icon></div>
 					</ion-col>
 
 					<ion-col>
+						<p *ngIf="worker.isPresent"> {{worker.timeWorkStart}} </p>
+						<p *ngIf="!worker.isPresent"> -- </p>
+						<!--
 						<ion-select [(ngModel)]="worker.timeWorkStart" [disabled]="!worker.isPresent"
 							class="myCustomSelect" (click)="onSelectClicked()">
 							<ion-option *ngFor="let timeStr of worktimeStartSelect" [value]="timeStr">{{timeStr}}</ion-option>
 						</ion-select>
+						-->
 					</ion-col>
 
 					<ion-col>
+						<p *ngIf="worker.isPresent"> {{worker.timeWorkEnd}} </p>
+						<p *ngIf="!worker.isPresent"> -- </p>
+						<!--
 						<ion-select [(ngModel)]="worker.timeWorkEnd" [disabled]="!worker.isPresent" class="myCustomSelect"  (click)="onSelectClicked()">
 							<ion-option *ngFor="let timeStr of worktimeEndSelect" [value]="timeStr">{{timeStr}}</ion-option>
 						</ion-select>
+						-->
 					</ion-col>
 
+					<ion-col col-2>
+						<button ion-button full (click)="callWorker(worker)">
+							<ion-icon name="call"></ion-icon>
+						</button>
+					</ion-col>
 				</ion-row>
 			</ion-grid>
 		</ion-item>

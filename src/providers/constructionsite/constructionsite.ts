@@ -10,6 +10,7 @@ import { WeatherProvider } from '../weather/weather'
 import { TimeProvider } from '../time/time'
 import { GeolocationProvider } from '../geolocation/geolocation'
 import { ConstructionsiteContactsProvider } from '../constructionsite-contacts/constructionsite-contacts'
+import { FileHandlerProvider } from '../file-handler/file-handler'
 
 //CLASSES
 import { Worker } from '../../classes/constructionsite/worker'
@@ -35,8 +36,12 @@ export class ConstructionsiteProvider {
 	private dailyReport: DailyReport;
 	private events: any;
 	private damageReports: any;
-	loadData: any;
-	loadDataStatus:any;
+	loadPrimaryData: any;
+	loadPrimaryDataStatus:any;
+	loadSecondaryData: any;
+	loadSecondaryDataStatus:any;
+	loadAllData: any;
+	loadAllDataStatus:any;
 
 	constructor(public http: HttpClient,  // {{{
 		public weather: WeatherProvider, 
@@ -44,11 +49,18 @@ export class ConstructionsiteProvider {
 		public globals: GlobalsProvider, 
 		public time: TimeProvider, 
 		public location: GeolocationProvider,
+		public fileHandler: FileHandlerProvider,
 	public contacts: ConstructionsiteContactsProvider) 
 	{
 		console.log('Hello ConstructionsiteProvider Provider');
-		this.loadDataStatus = {consiteData: false, weather: false, contacts: false};
-		this.loadData = new Rx.BehaviorSubject(this.loadDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
+		this.loadPrimaryDataStatus = false;
+		this.loadPrimaryData = new Rx.BehaviorSubject(this.loadPrimaryDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
+
+		this.loadSecondaryDataStatus = {weather: false, contacts: false}; //TODO: add workers, equipment
+		this.loadSecondaryData = new Rx.BehaviorSubject(this.loadSecondaryDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
+
+		this.loadAllDataStatus = false;
+		this.loadAllData = new Rx.BehaviorSubject(this.loadAllDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
 	}// }}}
 
 	public initialize(id){// {{{
@@ -59,50 +71,137 @@ export class ConstructionsiteProvider {
 		this.constructionsite.setId(id);
 	}// }}}
 
+	//LOADING AND POPULATING CONSITE PROVIDER
+	loadConstructionsiteData() {// {{{
+		this.loadPrimaryConsiteData();
+		this.loadPrimaryDataUpdates()
+			.subscribe(hasCompleted => {
+				if(hasCompleted){
+					this.loadSecondaryConsiteData();
+					this.configure();
+				}
+			});
+		this.checkAllLoadingCompleted();
+	}// }}}
+	loadPrimaryConsiteData(){// {{{
+		let url = this.globals.serverPhpScriptsUrl + "get_consite_info.php?token=" + this.auth.getUserInfo().getToken();
+		this.http.get(url)
+			.subscribe(data => {
+				console.log("CONSITE INFO DATA:", data);
+				this.setMeta(data['meta']);
+				//XXX: TODO: move below items to separate data load modules
+				this.setLocation(data['location']);
+				this.setWorkerTeam(data['personal_arr']);
+				this.setEquipmentItemList(data['equipment_arr']);
+			},
+			err => {console.log(err);},
+			() => {
+				this.loadPrimaryDataStatus = true;
+				this.loadPrimaryData.next(this.loadPrimaryDataStatus);
+				this.loadPrimaryData.complete();
+			});
+	}// }}}
+	loadSecondaryConsiteData(){// {{{
+		this.loadContactsData();
+		this.loadWeatherData();
+	}// }}}
+	public configure(){// {{{
+		console.log("CONFIGURING CONSITE PROVIDER");
+		let subDir = this.constructionsite.getId();
+		this.fileHandler.setProjDirPath(subDir);
+	}// }}}
+
+	//LOAD DATA CHECKS
+	loadPrimaryDataUpdates(){// {{{
+		return this.loadPrimaryData;
+	}// }}}
+	loadSecondaryDataUpdates(){// {{{
+		return this.loadSecondaryData;
+	}// }}}
+	loadAllCompletedUpdates(){// {{{
+		return this.loadAllData;
+	}// }}}
+	checkAllLoadingCompleted(){// {{{
+		this.loadSecondaryDataUpdates()
+		.subscribe(loadingStatus => {
+			let allLoadingCompleted = (loadingStatus.weather && loadingStatus.contacts);
+			if(allLoadingCompleted){
+				this.loadAllData.next(true);
+				this.loadPrimaryData.complete();
+				this.loadSecondaryData.complete();
+				this.loadAllData.complete();
+			}
+		});
+	}// }}}
+
+	//SECONDARY DATA LOADING ROUTINES
+	loadWeatherData(){// {{{
+		this.isGeolocationValid()
+		.subscribe(isValid => {
+			if(isValid){
+				this.loadWeatherDataHelper();
+			} else {
+				//TODO: load data of constructionsite
+// 				this.location.updateGeolocation(); 
+// 				this.location.loadingStatus()
+// 				.subscribe(hasCompleted => {
+// 					if(hasCompleted){
+// 						this.loadWeatherDataHelper();
+// 					}
+// 				});
+			}
+		});
+	}// }}}
+	loadWeatherDataHelper(){// {{{
+		console.log("LOADING WEATHER DATA");
+		this.weather.loadWeatherData(this.location.lat, this.location.lon);
+		this.weather.loadingUpdates()
+			.subscribe(hasLoaded => {
+				if(hasLoaded){
+					this.loadSecondaryDataStatus.weather = true;
+					this.loadSecondaryData.next(this.loadSecondaryDataStatus);
+				}
+			},
+			err => {
+			});
+	}// }}}
+	public loadContactsData(){// {{{
+		console.log("LOADING CONTACTS DATA");
+		this.contacts.loadContactsData();
+		this.contacts.loadingUpdates()
+			.subscribe(hasLoaded => {
+				if(hasLoaded){
+					this.loadSecondaryDataStatus.contacts= true;
+					this.loadSecondaryData.next(this.loadSecondaryDataStatus);
+				}
+			},
+			err => {
+			});
+	}// }}}
+
+	//CONSITE SPECIFICS
 	getConstructionsite(){// {{{
 		return this.constructionsite;
 	}// }}}
 	getWeather(){// {{{
 		return this.weather;
 	}// }}}
-
-	loadDataUpdates(){// {{{
-		return this.loadData;
-	}// }}}
-	checkLoadDataCompleted(){// {{{
-		this.loadDataUpdates().subscribe(data => {
-			console.log("checking completion for: ", data);
-			if(data.consiteData && data.weather && data.contacts){
-				console.log("LOADING CONSTRUCTIONSITE DATA COMPLETED, closing observable");
-				this.loadData.complete();
-			}
-		},
-			err => {console.log(err);},
-			() => {});
+	getConstructionsiteId(){// {{{
+		return this.constructionsite.getId();
 	}// }}}
 
-	loadConstructionsiteData() {// {{{
-		console.log("LOADING CONSITE DATA");
-		let url = this.globals.serverPhpScriptsUrl + "get_consite_info.php?token=" + this.auth.getUserInfo().getToken();
-		console.log("URL: " + url);
-		console.log(this.http);
-		this.http.get(url)
-			.subscribe(data => {
-				console.log("CONSITE INFO DATA:", data);
-				this.setMeta(data['meta']);
-				this.setLocation(data['location']);
-				this.setWorkerTeam(data['personal_arr']);
-				this.setEquipmentItemList(data['equipment_arr']);
-			},
-			err => {
-				console.log(err);
-			},
-			() => {
-				console.log("consite data loading completed");
-				this.loadDataStatus.consiteData = true;
-				this.loadData.next(this.loadDataStatus);
-			});
-	}// }}}
+// 	checkLoadDataCompleted(){// {{{
+// 		this.loadDataUpdates().subscribe(data => {
+// 			console.log("checking completion for: ", data);
+// 			if(data.consiteData && data.weather && data.contacts){
+// 				console.log("LOADING CONSTRUCTIONSITE DATA COMPLETED, closing observable");
+// 				this.loadData.complete();
+// 			}
+// 		},
+// 			err => {console.log(err);},
+// 			() => {});
+// 	}// }}}
+
 	private setMeta(data){// {{{
 		this.constructionsite.description = data.description;
 	}// }}}
@@ -119,29 +218,7 @@ export class ConstructionsiteProvider {
 		this.constructionsite.contactList.setData(data);
 	}// }}}
 
-	loadWeatherData(){// {{{
-		this.loadDataUpdates().subscribe(
-			loadingStatus => { //{{{
-				if(loadingStatus.consiteData && !loadingStatus.weather){
-					console.log("LOADING WEATHER DATA");
-					//here we assume that location has been corectly set previously
-					console.log("WEATHER LOCATION: ", this.location);
-					this.weather.loadWeatherData(this.location.lat, this.location.lon);
-					this.weather.loadingUpdates()
-						.subscribe(hasLoaded => {
-							if(hasLoaded){
-								this.loadDataStatus.weather = true;
-								this.loadData.next(this.loadDataStatus);
-							}
-						},
-						err => {
-						});
-				}
-			}, //}}}
-			err => {},
-			() => {});
-	}// }}}
-
+	//GEOLOCATION
 	isGeolocationValid(){// {{{
 		return this.location.checkGeolocationValidityUpdates();
 	}// }}}
@@ -189,33 +266,11 @@ export class ConstructionsiteProvider {
 	public getOtherCount(){// {{{
 		return this.constructionsite.equipmentItemList.getOtherCount();
 	}// }}}
-
 	public getEquipmentItemListArray(){// {{{
 		return this.constructionsite.equipmentItemList.getItems();
 	}// }}}
 
 	//CONTACTS
-	public loadContactsData(){// {{{
-		this.loadDataUpdates().subscribe(
-			loadingStatus => { //{{{
-				if(loadingStatus.consiteData && !loadingStatus.contacts){
-					console.log("LOADING CONTACTS DATA");
-					this.contacts.loadContactsData();
-					this.contacts.loadingUpdates()
-						.subscribe(hasLoaded => {
-							if(hasLoaded){
-								this.loadDataStatus.contacts = true;
-								this.loadData.next(this.loadDataStatus);
-							}
-						},
-						err => {
-						});
-				}
-			}, //}}}
-			err => {},
-			() => {});
-	}// }}}
-
 	public getContacts(){// {{{
 		return this.contacts.getContacts();
 	}// }}}
@@ -274,7 +329,6 @@ export class ConstructionsiteProvider {
 		this.dailyReport.workersTimeReportTotals = totals;
 		console.log(this.dailyReport.workersTimeReportTotals);
 	}// }}}
-
 	public getDailyReport(){// {{{
 		return this.dailyReport;
 	}// }}}

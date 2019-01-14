@@ -15,10 +15,23 @@
 
 <ion-content padding>
 	<ion-list>
-		<button ion-item *ngFor="let item of consiteProv.constructionsite.equipmentItemList.getItems()" (click)="itemSelected(item)">
-			<p> <b>{{ item.getCategoryStr() }}</b></p>
-			<p>{{item.name}}, ID: {{item.id}} </p>
-		</button>  
+		<ion-item *ngFor="let item of consiteProv.constructionsite.equipmentItemList.getItems()" (click)="itemSelected(item)">
+			<ion-grid item-content>
+				<ion-row nowrap>
+					<ion-col>
+						<p> <b>{{ item.getCategoryStr() }}</b></p>
+						<p>{{item.name}}, ID: {{item.id}} </p>
+					</ion-col>
+					<ion-col col-2>
+						<button full ion-button (click)="takePicture(item)">
+							<ion-icon name="camera"></ion-icon>
+						</button>
+					</ion-col>
+
+				</ion-row>
+			</ion-grid>
+
+		</ion-item>  
 	</ion-list>
 
 
