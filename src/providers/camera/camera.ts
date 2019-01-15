@@ -7,7 +7,7 @@ import { Camera, CameraOptions } from '@ionic-native/camera';
 import { File } from '@ionic-native/file';
 import { FilePath } from '@ionic-native/file-path';
 import { Transfer, TransferObject } from '@ionic-native/transfer';
-import { ToastController, Platform, LoadingController, Loading } from 'ionic-angular';
+import { ToastController, Platform } from 'ionic-angular';
 
 import { AuthServiceProvider } from '../auth-service/auth-service';
 
@@ -23,11 +23,9 @@ declare var cordova: any; // global variable for paths
 export class CameraProvider {
 
 	lastImage: string = null;
-	loading: Loading;
 	photoStream: any;
 	photoStreamObserver:any;
-// 	copyFileListener:any;
-// 	copyFileObserver:any;
+	pictureOptions:any;
 
 	constructor(public http: HttpClient, // {{{
 		public camera: Camera,
@@ -35,32 +33,34 @@ export class CameraProvider {
 		private transfer: Transfer, 
 		private file: File, 
 		private filePath: FilePath, 
-		public toastCtrl: ToastController, 
-		public platform: Platform, 
-		public loadingCtrl: LoadingController,
-		private auth: AuthServiceProvider) {
+		private toastCtrl: ToastController, 
+		private platform: Platform, 
+		private auth: AuthServiceProvider
+	) {
 			console.log('Hello CameraProvider Provider');
 			this.checkPermissions();
 			this.photoStream = Observable.create(observer => {
 				this.photoStreamObserver = observer;
 			});
-// 			this.copyFileListener = Observable.create(observer => {
-// 				this.copyFileObserver = observer;
-// 			});
-
-  }// }}}
+			this.pictureOptions = {
+				quality: 80,
+				sourceType: '',
+// 				saveToPhotoAlbum: true,
+				saveToPhotoAlbum: false,
+				correctOrientation: true
+			};
+	}// }}}
 
 	checkPermissions(){// {{{
 		this.diagnostic.isCameraAuthorized().then((authorized) => {
 			if(authorized){
-// 				this.initializePreview();
+				//do nothing
 			} else {
 				this.diagnostic.requestCameraAuthorization().then((status) => {
 					if(status == this.diagnostic.permissionStatus.GRANTED) {
-// 						this.initializePreview();
+						//do nothing
 					} else {
-						// Permissions not granted
-						// Therefore, create and present toast
+						// Permissions not granted by user: present toast
 						this.toastCtrl.create(
 						{
 							message: "Cannot access camera",
@@ -75,17 +75,11 @@ export class CameraProvider {
 	}// }}}
 
 	public takePicture(sourceType) {// {{{
-		// Create options for the Camera Dialog
-		var options = {
-			quality: 80,
-			sourceType: sourceType,
-			saveToPhotoAlbum: false,
-			correctOrientation: true
-		};
 
+		this.pictureOptions.sourceType = sourceType;
 		console.log("SOURCE TYPE: " + sourceType);
 		// Get the data of an image
-		this.camera.getPicture(options)
+		this.camera.getPicture(this.pictureOptions)
 		.then((imagePath) => {
 			// Special handling for Android library
 			if (this.platform.is('android') && sourceType === this.camera.PictureSourceType.PHOTOLIBRARY) {// {{{
@@ -94,35 +88,19 @@ export class CameraProvider {
 				.then(filePath => {
 					let path = filePath.substr(0, filePath.lastIndexOf('/') + 1);
 					let currentFilename = imagePath.substring(imagePath.lastIndexOf('/') + 1, imagePath.lastIndexOf('?'));
-					this.file.readAsDataURL(path, currentFilename)
-					.then(res=> {
-// 						console.log(JSON.stringify(res));
-						if(res){
-// 							this.photoStreamObserver.next(res);
-							let testReturn = [path, currentFilename];
-							this.photoStreamObserver.next(testReturn);
-						}
-					})
-					.catch(err => {
-						console.log(JSON.stringify(err));
-					});
+					let fileInfo = [path, currentFilename];
+					this.photoStreamObserver.next(fileInfo);
 				})
 				.catch(err => {
 					console.log("ERROR: " + JSON.stringify(err));	
 				});
 			} // }}}
 			else { //dealing with camera //{{{
-				// solution found here: https://forum.ionicframework.com/t/unable-to-display-image-using-file-uri/84977/19
 				console.log(imagePath);
 				let path =  imagePath.substring(0,imagePath.lastIndexOf('/')+1);
 				let currentFilename = imagePath.substring(imagePath.lastIndexOf('/')+1);
-// 				console.log("PATH: " + path + "; FILENAME OLD: " + currentFilename);
-// 				console.log("PATH: " + path + "; FILENAME OLD: " + newFileName);
-				this.file.readAsDataURL(path, currentFilename) //TODO: replace with newFileName
-				.then(res=> {
-					console.log(JSON.stringify(res));
-					this.photoStreamObserver.next(res);
-				});
+				let fileInfo = [path, currentFilename];
+				this.photoStreamObserver.next(fileInfo);
 			}// }}}
 		}, 
 		(err) => {
@@ -131,54 +109,6 @@ export class CameraProvider {
 			this.presentToast('Error while selecting image.');
 		});
 	}	// }}}
-
-// 	private createFileName() {// {{{
-// 		let d = new Date();
-// 		let newFileName:string = "";
-// 
-// 		if(1){
-// 			let n = d.getTime();
-// 			newFileName =  n + ".jpg";
-// 		} else {
-// 			let dateStr = d.toISOString();
-// 			dateStr = dateStr.substr(0,dateStr.lastIndexOf('.'));
-// 			newFileName =  this.auth.getUserInfo().currentConstructionsiteId + "_" + dateStr + ".jpg";
-// 		}
-// 		return newFileName;
-// 	}// }}}
-	
-// 	copyFileToLocalDir(namePath, currentName, newFileName) {// {{{
-// 		// cordova.file.dataDirectory
-// 		console.log("COPYING FILE TO LOCAL DIR");
-// 		let externalStoragePath: string =  cordova.file.dataDirectory;
-// 
-// 		this.file.resolveLocalFilesystemUrl(namePath + currentName)
-// 			.then((entry: any)=>{
-// // 				console.log('ENTRY:');
-// // 				console.log(JSON.stringify(entry));
-// 				this.file.resolveLocalFilesystemUrl(externalStoragePath)
-// 					.then((dirEntry: any)=>{
-// // 						entry.copyTo(dirEntry, newFileName, this.successCopy(), this.failCopy());
-// 						entry.copyTo(dirEntry, newFileName, this.successCopy());
-// 					}).catch((error)=>{
-// 						console.log(error);
-// 					});
-// 			})
-// 			.catch((error)=>{
-// 				console.log(error);
-// 			});
-// 
-// 	}// }}}
-
-// 	successCopy(){// {{{
-// // 		console.log("SUCCESS COPY ENTRY: " + JSON.stringify(entry));
-// 		this.copyFileObserver.next(true);
-// 	}// }}}
-// 
-// 	failCopy(){// {{{
-// // 		console.log("FAILED COPY ENTRY: " + JSON.stringify(error));
-// 		this.copyFileObserver.next(false);
-// 	}// }}}
 
 	private presentToast(text) {// {{{
 		let toast = this.toastCtrl.create({
@@ -190,6 +120,7 @@ export class CameraProvider {
 	}// }}}
 
 	// Always get the accurate path to your apps folder
+	// TODO: move to filehandler
 	public pathForImage(img) {// {{{
 		if (img === null) {
 			return '';

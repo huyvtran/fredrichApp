@@ -108,7 +108,7 @@ export class ConstructionsiteProvider {
 	public configure(){// {{{
 		console.log("CONFIGURING CONSITE PROVIDER");
 		let subDir = this.constructionsite.getId();
-		this.fileHandler.setProjDirPath(subDir);
+		this.fileHandler.configure(subDir);
 	}// }}}
 
 	//LOAD DATA CHECKS

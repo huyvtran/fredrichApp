@@ -32,7 +32,12 @@ export class TimeProvider {
 
 	getDateStrForFilename(){
 		let d = new Date();
-		let dateStr = d.getFullYear() + "-" + (d.getMonth()+1) + "-" + d.getDate() + "_" + d.getHours() + "-" + d.getMinutes() + "-" + d.getSeconds();
+		let dateStr = d.getFullYear() + "-" + 
+			this.pad((d.getMonth()+1)) + "-" + 
+			this.pad(d.getDate()) + "_" + 
+			this.pad(d.getHours()) + "-" + 
+			this.pad(d.getMinutes()) + "-" + 
+			this.pad(d.getSeconds());
 		return dateStr;
 	}
 
@@ -41,6 +46,18 @@ export class TimeProvider {
 		let timeNum = Number(bits[0]) + Number(bits[1])/60;
 		return timeNum;
 	}
+
+	//TODO: move to utils
+	pad(str:any, numZeros?:number){
+		if(numZeros){/*do nothing*/}
+		else {numZeros=2;}
+		str = String(str);
+		var padding = '';
+		for (let i=0; i<numZeros;i++){padding = padding + '0';}
+		let paddedStr = (padding + str).slice(-padding.length);
+		return paddedStr;
+	}
+
 
 
 }

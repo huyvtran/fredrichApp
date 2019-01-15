@@ -80,5 +80,12 @@ export class ConstructionsiteEvent {
 		}
 		return eventTypeStr;
 	}// }}}
+	getId(){// {{{
+		return this.id;
+	}// }}}
+
+	setId(id){// {{{
+		this.id=id;
+	}// }}}
 }
 
