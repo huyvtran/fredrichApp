@@ -30,7 +30,14 @@ export class ConstructionsiteTimerecordingPage {
 	phoneNr:any;
 	calleeStr:any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider, private telephone: TelephoneProvider, public actionSheetCtrl: ActionSheetController) {
+	constructor(
+		public navCtrl: NavController, 
+		public navParams: NavParams, 
+		public consiteProv: ConstructionsiteProvider, 
+		private auth: AuthServiceProvider, 
+		private telephone: TelephoneProvider, 
+		public actionSheetCtrl: ActionSheetController
+	) {
 	  this.createWorktimes();
   }
 
@@ -97,34 +104,9 @@ export class ConstructionsiteTimerecordingPage {
 //     );
 //   }}}}
 	
-
-	// calling a number
-   presentActionSheetPhone() {// {{{
-      const actionSheet = this.actionSheetCtrl.create({
-			title: this.calleeStr + ' anrufen',
-      buttons: [
-         {
-         text: this.phoneNr + ' wählen',
-         handler: () => {
-				this.telephone.callNr(this.phoneNr);
-            console.log('Call Number clicked');
-         }
-         },{
-         text: 'Zurück',
-         role: 'cancel',
-         handler: () => {
-         console.log('Cancel clicked');
-         }
-         }
-      ]
-      });
-      actionSheet.present();
-   }// }}}
-
 	callWorker(worker){
-		this.phoneNr = worker.phoneNr;
-		this.calleeStr = worker.name;
-		this.presentActionSheetPhone();
+		let params = {calleeStr: worker.name, phoneNr: worker.phoneNr};
+		this.telephone.presentActionSheetPhone(params);
 	}
 
 }

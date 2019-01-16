@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { CallNumber } from '@ionic-native/call-number';
+import { ActionSheetController } from 'ionic-angular';
 
 /*
   Generated class for the TelephoneProvider provider.
@@ -11,7 +12,11 @@ import { CallNumber } from '@ionic-native/call-number';
 @Injectable()
 export class TelephoneProvider {
 
-  constructor(public http: HttpClient, private callNumber: CallNumber) {
+	constructor(
+		public http: HttpClient, 
+		private callNumber: CallNumber,
+		public actionSheetCtrl: ActionSheetController
+	) {
     console.log('Hello TelephoneProvider Provider');
   }
 
@@ -25,5 +30,30 @@ export class TelephoneProvider {
 	sanitizePhoneNr(phoneNr){
 		return phoneNr; //XXX
 	}
+
+   presentActionSheetPhone(params) {// {{{
+		let calleeStr = params.calleeStr;
+		let phoneNr = params.phoneNr;
+      const actionSheet = this.actionSheetCtrl.create({
+			title: calleeStr + ' anrufen',
+			buttons: [
+				{
+					text: phoneNr + ' wählen',
+					handler: () => {
+						this.callNr(phoneNr);
+						console.log('Call Number clicked');
+					}
+				},{
+					text: 'Zurück',
+					role: 'cancel',
+					handler: () => {
+						console.log('Cancel clicked');
+					}
+				}
+			]
+      });
+      actionSheet.present();
+   }// }}}
+
 
 }

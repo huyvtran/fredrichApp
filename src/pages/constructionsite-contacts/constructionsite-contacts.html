@@ -20,11 +20,27 @@
 	-->
 
 			<ion-item  *ngFor="let contact of consiteProv.getContacts()">
-				<p> <b>{{contact.getRoleStr()}}</b> </p>
-				<p> {{ contact.companyName }} </p>
-				<p> {{ contact.name }}, {{ contact.surname }} </p>
-				<p> {{ contact.phoneNr }}</p>
-				<p> {{ contact.email}}</p>
+				<ion-grid item-content>	
+					<ion-row nowrap>
+						<ion-col col-6>
+							<p> <b>{{contact.getRoleStr()}}</b> </p>
+							<p> {{ contact.companyName }} </p>
+							<p> {{ contact.name }}, {{ contact.surname }} </p>
+							<p> {{ contact.phoneNr }}</p>
+							<p> {{ contact.email}}</p>
+						</ion-col>
+						<ion-col>
+							<button ion-button full (click)="callContact(contact)">
+								<ion-icon name="call"></ion-icon>
+							</button>
+						</ion-col>
+						<ion-col>
+							<button ion-button full (click)="writeEmailToContact(contact)">
+								<ion-icon name="mail"></ion-icon>
+							</button>
+						</ion-col>
+					</ion-row>
+				</ion-grid>
 			</ion-item>
 
 			<!--

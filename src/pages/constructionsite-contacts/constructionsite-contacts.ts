@@ -3,6 +3,7 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
+import { TelephoneProvider } from '../../providers/telephone/telephone';
 
 /**
  * Generated class for the ConstructionsiteContactsPage page.
@@ -18,7 +19,13 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class ConstructionsiteContactsPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private auth: AuthServiceProvider, public consiteProv: ConstructionsiteProvider) {
+	constructor(
+		public navCtrl: NavController, 
+		public navParams: NavParams, 
+		private auth: AuthServiceProvider, 
+		public consiteProv: ConstructionsiteProvider,
+		private telephone: TelephoneProvider
+	) {
 
   }
 
@@ -28,6 +35,16 @@ export class ConstructionsiteContactsPage {
 
 	itemSelected(contact){
 
+	}
+
+	// calling a number
+	callContact(contact){
+		let params = {calleeStr: contact.name, phoneNr: contact.phoneNr};
+		this.telephone.presentActionSheetPhone(params);
+	}
+
+	writeEmailToContact(contact){
+		//TODO: write email routine
 	}
 
 }

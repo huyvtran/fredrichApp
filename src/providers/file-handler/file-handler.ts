@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { File } from '@ionic-native/file';
-
+import { Platform } from 'ionic-angular';
 
 declare var cordova: any; // global variable for paths
 
@@ -17,7 +17,7 @@ export class FileHandlerProvider {
 	baseDirPath: string;
 	projDirPath: string;
 
-  constructor(public http: HttpClient, public file: File) {
+  constructor(public http: HttpClient, public file: File, public platform: Platform) {
     console.log('Hello FileHandlerProvider Provider');
 	  this.baseDirPath = '';
 	  this.projDirPath = '';
@@ -42,19 +42,6 @@ export class FileHandlerProvider {
 		return promise;
 	}// }}}
 	
-// 	public copyFileToProjDir(path, fileName, newFileName){// {{{
-// 		console.log("ATTEMPT TO COPY: " + path + fileName + " TO: " + this.getProjDirPath() + newFileName);
-// 		this.file.copyFile(path, fileName, this.getProjDirPath(), newFileName)
-// 			.then(res => {
-// 				console.log("COPY: SUCCESS");
-// 				console.log(JSON.stringify(res));
-// 			})
-// 			.catch(err => {
-// 				console.log("COPY: FAIL");
-// 				console.log(JSON.stringify(err));
-// 			});
-// 	}// }}}
-
 	public configure(subDirName){// {{{
 		this.setBaseDirPath();
 		this.setProjDirPath(subDirName);
@@ -89,29 +76,32 @@ export class FileHandlerProvider {
 		}
 	}// }}}
 	checkProjDir(){// {{{
-		//check whether project dir exists, and create it if necessary.
+		if(this.platform.is('cordova')){
+			//check whether project dir exists, and create it if necessary.
+			let replaceDir = false;
+			let subDir = this.getProjDirPath().substring(this.getBaseDirPath().length);
+			console.log("CHECK PROJ DIR SUBDIR: " + subDir);
 
-		let replaceDir = false;
-		let subDir = this.getProjDirPath().substring(this.getBaseDirPath().length);
-		console.log("CHECK PROJ DIR SUBDIR: " + subDir);
-
-		this.file.checkDir(this.getBaseDirPath(), subDir)
-		.then(res => {
-			console.log(JSON.stringify(res));
-			console.log("SUBDIR EXISTS. DO NOTHING.");
-			})
-		.catch(err => {
-				console.log(JSON.stringify(err));
-				console.log("SUBDIR DOES NOT EXIST. CREATING SUBDIR.");
-			this.file.createDir(this.getBaseDirPath(), subDir, replaceDir)
-				.then(res => {
-					console.log("SUBDIR SUCCESSFULLY CREATED");
+			this.file.checkDir(this.getBaseDirPath(), subDir)
+			.then(res => {
+				console.log(JSON.stringify(res));
+				console.log("SUBDIR EXISTS. DO NOTHING.");
 				})
-				.catch(err => {
-					console.log("ERROR WHILE CREATING SUBDIR.");
+			.catch(err => {
 					console.log(JSON.stringify(err));
-				});
-		});
+					console.log("SUBDIR DOES NOT EXIST. CREATING SUBDIR.");
+				this.file.createDir(this.getBaseDirPath(), subDir, replaceDir)
+					.then(res => {
+						console.log("SUBDIR SUCCESSFULLY CREATED");
+					})
+					.catch(err => {
+						console.log("ERROR WHILE CREATING SUBDIR.");
+						console.log(JSON.stringify(err));
+					});
+			});
+		} else {
+			//do nothing
+		}
 	}// }}}
 
 }
