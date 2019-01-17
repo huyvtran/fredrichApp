@@ -28,7 +28,11 @@ export class TelephoneProvider {
    }// }}}
 
 	sanitizePhoneNr(phoneNr){
-		return phoneNr; //XXX
+// 		let phoneNrSanitized = phoneNr.replace(/([+])+/g,'00');
+		let phoneNrSanitized = phoneNr.replace(/([+])/g,'00');
+		phoneNrSanitized = phoneNrSanitized.replace(/[^0-9]/g,'');
+		console.log(phoneNrSanitized);
+		return phoneNrSanitized;
 	}
 
    presentActionSheetPhone(params) {// {{{

@@ -2,13 +2,14 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ActionSheetController, AlertController} from 'ionic-angular';
 
 import { ConstructionsiteOverviewPage } from '../constructionsite-overview/constructionsite-overview';
-import { ConstructionsiteTimerecordingPage} from '../constructionsite-timerecording/constructionsite-timerecording';
-import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
-import { ConstructionsiteEquipmentPage } from '../constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteSetGeolocationPage} from '../constructionsite-set-geolocation/constructionsite-set-geolocation';
-import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
 import { ConstructionsiteMorePage } from '../constructionsite-more/constructionsite-more';
-import { ConstructionsitePhotoPage } from '../constructionsite-photo/constructionsite-photo';
+import { ConstructionsiteAlertsPage } from '../constructionsite-alerts/constructionsite-alerts';
+// import { ConstructionsiteTimerecordingPage} from '../constructionsite-timerecording/constructionsite-timerecording';
+// import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
+// import { ConstructionsiteEquipmentPage } from '../constructionsite-equipment/constructionsite-equipment';
+// import { ConstructionsiteContactsPage } from '../constructionsite-contacts/constructionsite-contacts';
+// import { ConstructionsitePhotoPage } from '../constructionsite-photo/constructionsite-photo';
 
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
@@ -28,10 +29,10 @@ import { ConstructionsiteProvider } from '../../providers/constructionsite/const
 export class ConstructionsitePage {
 
 	tab1Root = ConstructionsiteOverviewPage;
-// 	tab2Root = ConstructionsitePhotoPage;
-	tab2Root = ConstructionsiteOverviewPage;
-// 	tab3Root = ConstructionsiteContactsPage;
+	tab2Root = ConstructionsiteAlertsPage;
 	tab3Root = ConstructionsiteMorePage;
+// 	tab2Root = ConstructionsitePhotoPage;
+// 	tab3Root = ConstructionsiteContactsPage;
 	
 	constructionsiteId: string;
 
@@ -57,6 +58,7 @@ export class ConstructionsitePage {
 
 	loadConsiteData(){// {{{ 
 		this.consiteProv.loadConstructionsiteData();
+		this.checkGeolocationValidity();
 		this.consiteProv.loadAllCompletedUpdates() //TODO: insert this updates to consiteprov
 			.subscribe(res => {
 				console.log("CONSITE FILLED:");
@@ -67,6 +69,21 @@ export class ConstructionsitePage {
 
 	}// }}}
 
+	public checkGeolocationValidity(){// {{{
+		this.consiteProv.loadPrimaryDataUpdates()
+			.subscribe(hasCompleted => {
+				if(hasCompleted){
+					this.consiteProv.isGeolocationValid()
+						.subscribe(isValid => {
+							if(isValid){
+								//do nothing
+							} else {
+								this.presentSetGeolocationActionSheet();
+							}
+						});
+				} else {/* do nothing */}
+			});
+	}// }}}
 
 	public presentSetGeolocationActionSheet() {// {{{
 		let actionSheet = this.actionSheetCtrl.create({
@@ -79,7 +96,7 @@ export class ConstructionsitePage {
 					}
 				},
 				{
-					text: "Sp&auml;ter",
+					text: "Später",
 					role: 'cancel',
 					handler: () => {this.presentAlert();}
 				}

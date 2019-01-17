@@ -89,16 +89,18 @@ export class ConstructionsiteProvider {
 			.subscribe(data => {
 				console.log("CONSITE INFO DATA:", data);
 				this.setMeta(data['meta']);
-				//XXX: TODO: move below items to separate data load modules
 				this.setLocation(data['location']);
+				//XXX: TODO: move below items to separate data load modules
 				this.setWorkerTeam(data['personal_arr']);
 				this.setEquipmentItemList(data['equipment_arr']);
-			},
-			err => {console.log(err);},
-			() => {
+
+				//broadcast completion
 				this.loadPrimaryDataStatus = true;
 				this.loadPrimaryData.next(this.loadPrimaryDataStatus);
 				this.loadPrimaryData.complete();
+			},
+			err => {console.log(err);},
+			() => {
 			});
 	}// }}}
 	loadSecondaryConsiteData(){// {{{

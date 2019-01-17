@@ -35,6 +35,7 @@ import { ConstructionsitePhotoPage } from '../pages/constructionsite-photo/const
 import { ConstructionsitePhotoEquipmentPage} from '../pages/constructionsite-photo-equipment/constructionsite-photo-equipment';
 import { ConstructionsitePhotoSitePage} from '../pages/constructionsite-photo-site/constructionsite-photo-site';
 import { ConstructionsitePhotoCameraPage} from '../pages/constructionsite-photo-camera/constructionsite-photo-camera';
+import { ConstructionsiteAlertsPage } from '../pages/constructionsite-alerts/constructionsite-alerts';
 import { RepairshopPage} from '../pages/repairshop/repairshop';
 import { RepairshopOverviewPage} from '../pages/repairshop-overview/repairshop-overview';
 import { RepairshopJobsPage} from '../pages/repairshop-jobs/repairshop-jobs';
@@ -84,6 +85,7 @@ import { FileHandlerProvider } from '../providers/file-handler/file-handler';
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
 			ConstructionsitePhotoCameraPage,
+		ConstructionsiteAlertsPage,
 	RepairshopPage,
 		RepairshopOverviewPage,
 		RepairshopJobsPage,
@@ -123,6 +125,7 @@ import { FileHandlerProvider } from '../providers/file-handler/file-handler';
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
 			ConstructionsitePhotoCameraPage,
+		ConstructionsiteAlertsPage,
 	RepairshopPage,
 		RepairshopOverviewPage,
 		RepairshopJobsPage,

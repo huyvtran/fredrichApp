@@ -16,7 +16,7 @@
 
 
 <ion-content padding>
-	<ion-grid>
+	<ion-grid class="grid-header">
 		<ion-row>
 			<ion-col>
 				<ion-card color="primary" class="card_header"> <!--CARD: HEADER{{{-->
@@ -38,7 +38,9 @@
 				</ion-card> <!--}}}-->
 			</ion-col>
 		</ion-row>
+	</ion-grid>
 
+	<ion-grid class="grid-cards">
 		<ion-row>
 			<ion-col>
 				<ion-card (click)="openWorkersPage()"> <!--CARD: PERSONAL{{{-->
@@ -208,9 +210,12 @@
 						<ion-card-header>
 							Foto	
 						</ion-card-header>
-						<ion-card-content>
+						<ion-card-content text-center>
+						<!--
+							<ion-icon name="camera" style="font-size:40px;"></ion-icon>
 							<p>Foto zu Baustelle</p>
 							<p>Foto zu Ger&auml;t</p>
+						-->
 						</ion-card-content>
 					</ion-card> 
 					<!--}}}-->
@@ -222,7 +227,9 @@
 							Tagesbericht
 						</ion-card-header>
 						<ion-card-content>
+							<!--
 							<p>Tagesbericht</p>
+							-->
 						</ion-card-content>
 					</ion-card> 
 					<!--}}}-->
@@ -234,12 +241,13 @@
 							Kontakte	
 						</ion-card-header>
 						<ion-card-content>
+							<!--
 							<p>card content</p>
+							-->
 						</ion-card-content>
 					</ion-card> 
 					<!--}}}-->
 			</ion-col>
-
 
 			<ion-col>
 				<ion-card (click)="openEventsPage()"> <!--CARD: COMMENTS{{{-->

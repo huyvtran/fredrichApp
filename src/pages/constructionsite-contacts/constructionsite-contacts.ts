@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ToastController } from 'ionic-angular';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -24,7 +25,8 @@ export class ConstructionsiteContactsPage {
 		public navParams: NavParams, 
 		private auth: AuthServiceProvider, 
 		public consiteProv: ConstructionsiteProvider,
-		private telephone: TelephoneProvider
+		private telephone: TelephoneProvider,
+		private toastCtrl: ToastController
 	) {
 
   }
@@ -45,6 +47,21 @@ export class ConstructionsiteContactsPage {
 
 	writeEmailToContact(contact){
 		//TODO: write email routine
+		this.presentToast();
+	}
+
+	presentToast() {
+		let toast = this.toastCtrl.create({
+			message: 'Email-Funktion wird bei Bedarf eingebaut.',
+			duration: 3000,
+			position: 'middle'
+		});
+
+		toast.onDidDismiss(() => {
+			console.log('Dismissed toast');
+		});
+
+		toast.present();
 	}
 
 }
