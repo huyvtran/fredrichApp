@@ -6,7 +6,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { CameraProvider } from '../../providers/camera/camera';
 import { TimeProvider } from '../../providers/time/time';
 import { FileHandlerProvider } from '../../providers/file-handler/file-handler';
-
+import { QrScannerProvider } from '../../providers/qr-scanner/qr-scanner';
 
 /**
  * Generated class for the ConstructionsiteEquipmentPage page.
@@ -29,7 +29,8 @@ export class ConstructionsiteEquipmentPage {
 		public actionSheetCtrl: ActionSheetController, 
 		public cameraProvider: CameraProvider,
 		public timeProvider: TimeProvider,
-		public fileHandler: FileHandlerProvider
+		public fileHandler: FileHandlerProvider,
+		public qrScannerProvider: QrScannerProvider
 	) {
 
   }
@@ -94,4 +95,7 @@ export class ConstructionsiteEquipmentPage {
 		return newFileName;
 	}// }}}
 
+	scan(){
+		this.qrScannerProvider.scanEquipment();
+	}
 }
