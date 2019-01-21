@@ -26,6 +26,7 @@ import { ConstructionsiteSetGeolocationPage } from '../pages/constructionsite-se
 import { ConstructionsiteTimerecordingPage } from '../pages/constructionsite-timerecording/constructionsite-timerecording';
 import { ConstructionsiteDailyreportPage } from '../pages/constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../pages/constructionsite-equipment/constructionsite-equipment';
+import { ConstructionsiteEquipmentDetailPage } from '../pages/constructionsite-equipment-detail/constructionsite-equipment-detail';
 import { ConstructionsiteSettingsPage } from '../pages/constructionsite-settings/constructionsite-settings';
 import { ConstructionsiteContactsPage } from '../pages/constructionsite-contacts/constructionsite-contacts';
 import { ConstructionsiteEventsPage } from '../pages/constructionsite-events/constructionsite-events';
@@ -77,6 +78,7 @@ import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 		ConstructionsiteTimerecordingPage,
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
+			ConstructionsiteEquipmentDetailPage,
 		ConstructionsiteMorePage,
 			ConstructionsiteContactsPage,
 			ConstructionsiteSettingsPage,
@@ -117,6 +119,7 @@ import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 		ConstructionsiteTimerecordingPage,
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
+		ConstructionsiteEquipmentDetailPage,
 		ConstructionsiteMorePage,
 			ConstructionsiteContactsPage,
 			ConstructionsiteSettingsPage,

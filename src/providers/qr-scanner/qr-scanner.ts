@@ -2,6 +2,8 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 // import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
+//
+import { EquipmentItem } from '../../classes/equipment/equipment-item'
 
 /*
   Generated class for the QrScannerProvider provider.
@@ -49,15 +51,25 @@ export class QrScannerProvider {
 	}
 
 	scanEquipment(){
-		this.scan()
-			.then(res => {
-				this.getEquipmentFromId(res);
-			})
-			.catch(err => console.log(JSON.stringify(err)));
+		const promise = new Promise((resolve, reject) => {
+			this.scan()
+				.then(res => {
+					let item = this.getEquipmentFromId(res);
+					resolve(item);	
+				})
+				.catch(err => {
+					console.log(JSON.stringify(err));
+					reject(err);
+				});
+		});
+		return promise;
 	}
 
 	getEquipmentFromId(id){
-		console.log(id);
+		//TODO: implement real search here
+		let item = new EquipmentItem();
+		item.setData({id: id, category: "4Andere", name: "Hydr.Agg IHC 27tm 313 KW Fundex IHC I"});
+		return item;
 	}
 
 

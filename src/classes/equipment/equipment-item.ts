@@ -1,9 +1,11 @@
+import { DamageReport } from './damage-report'
 
 export class EquipmentItem {
 
 	id: string;
 	category: string;
 	name: string;
+	damageReports: any;
 
 	constructor(){
 		this.setDefaultValues();
@@ -47,12 +49,20 @@ export class EquipmentItem {
 	getId(){
 		return this.id;
 	}
+	getDamageReports(){
+		return this.damageReports;
+	}
+
+	addDamageReport(report: DamageReport){
+		this.damageReports.push(report);
+	}
 
 	//PRIVATE
 	private setDefaultValues(){// {{{
 		this.id = "";
 		this.name = "";
 		this.category = "";
+		this.damageReports = [];
 	}// }}}
 }
 

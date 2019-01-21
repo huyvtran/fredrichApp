@@ -1,0 +1,34 @@
+<!--
+  Generated template for the ConstructionsiteEquipmentDetailPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+	  <ion-title>{{item.name}}</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding>
+	<p>{{item.category}}</p>
+	<p>{{item.id}}</p>
+
+	<button ion-button large (click)="openReportDamagePage(item)">
+		Schaden melden
+	</button>
+
+	<ion-list>
+		<ion-list-header>
+			Schadensberichte
+		</ion-list-header>
+		<ion-item *ngFor="let report of item.getDamageReports()" (click)="viewDamageReport(report)">
+			{{report.title}}
+		</ion-item>  
+	</ion-list>
+
+
+</ion-content>

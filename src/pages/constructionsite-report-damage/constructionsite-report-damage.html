@@ -18,6 +18,7 @@
 	<form (ngSubmit)="submitDamageReport()" #registerForm="ngForm">
 		<ion-list>
 
+			<!--
 			<ion-item>
 				<ion-label>Ger&auml;t</ion-label>
 				<ion-select [(ngModel)]="report.item" multiple="false" name="item" required>
@@ -25,24 +26,29 @@
 						item.name }}</ion-option>
 				</ion-select>
 			</ion-item>
+			-->
 
 
-			<!--
 			<ion-item>
 				<ion-label color="tertiary" floating>Titel</ion-label>
 				<ion-input type="text" [(ngModel)]="report.title" name="title" required></ion-input>
 			</ion-item>
-			-->
 
+			<!--
 			<ion-item>
 				<ion-label color="tertiary" floating>Beschreibung</ion-label>
 				<ion-input type="text" [(ngModel)]="report.description" name="description" required></ion-input>
 			</ion-item>
+			-->
 
 		</ion-list>
 
 		  <button ion-button type="button" large (click)="presentCameraActionSheet()">
 			  Bild hinzuf&uuml;gen
+			</button>
+
+		  <button ion-button type="button" large (click)="recordAudio()">
+			  Sprachnachricht hinzuf&uuml;gen
 			</button>
 
 		<div *ngIf="report.imageFiles.length>0">
@@ -57,6 +63,5 @@
 		</button>
 
 	</form>
-
 
 </ion-content>

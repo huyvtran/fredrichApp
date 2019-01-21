@@ -8,6 +8,8 @@ import { TimeProvider } from '../../providers/time/time';
 import { FileHandlerProvider } from '../../providers/file-handler/file-handler';
 import { QrScannerProvider } from '../../providers/qr-scanner/qr-scanner';
 
+import { ConstructionsiteEquipmentDetailPage } from '../../pages/constructionsite-equipment-detail/constructionsite-equipment-detail';
+
 /**
  * Generated class for the ConstructionsiteEquipmentPage page.
  *
@@ -39,8 +41,8 @@ export class ConstructionsiteEquipmentPage {
     console.log('ionViewDidLoad ConstructionsiteEquipmentPage');
   }
 
-	itemSelected(equipment){// {{{
-
+	itemSelected(item){// {{{
+		this.navCtrl.push(ConstructionsiteEquipmentDetailPage, {item: item});
 	}// }}}
 
 	presentCameraActionSheet(item) {// {{{
@@ -96,6 +98,16 @@ export class ConstructionsiteEquipmentPage {
 	}// }}}
 
 	scan(){
-		this.qrScannerProvider.scanEquipment();
+		this.qrScannerProvider.scanEquipment()
+			.then(item => {
+				this.openEquipmentDetailPage(item);
+			})
+			.catch(err => {
+				console.log(JSON.stringify(err));
+			});
+	}
+
+	openEquipmentDetailPage(item){
+		this.navCtrl.push(ConstructionsiteEquipmentDetailPage, {item: item});
 	}
 }

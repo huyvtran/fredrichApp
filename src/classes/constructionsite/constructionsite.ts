@@ -1,6 +1,6 @@
 
 import { WorkerTeam } from './worker-team'
-import { EquipmentItemList } from './equipment-item-list'
+import { EquipmentItemList } from '../equipment/equipment-item-list'
 import { ContactList } from './contact-list'
 
 export class Constructionsite {

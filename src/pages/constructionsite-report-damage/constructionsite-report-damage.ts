@@ -8,8 +8,9 @@ import { CameraProvider } from '../../providers/camera/camera';
 import { FileHandlerProvider } from '../../providers/file-handler/file-handler';
 import { TimeProvider } from '../../providers/time/time';
 
+import { DamageReport } from '../../classes/equipment/damage-report'
+import { EquipmentItem } from '../../classes/equipment/equipment-item'
 
-import { DamageReport } from '../../classes/constructionsite/damage-report'
 
 /**
  * Generated class for the ConstructionsiteReportDamagePage page.
@@ -26,6 +27,7 @@ import { DamageReport } from '../../classes/constructionsite/damage-report'
 export class ConstructionsiteReportDamagePage {
 
 	report: DamageReport;
+	item: EquipmentItem;
 
 	constructor(public navCtrl: NavController, public navParams: NavParams, 
 		private actionSheetCtrl: ActionSheetController, 
@@ -37,6 +39,7 @@ export class ConstructionsiteReportDamagePage {
 		public consiteProv: ConstructionsiteProvider
 	) {
 	  this.report = new DamageReport();
+	  this.item = this.navParams.get('item');
   }
 
   ionViewDidLoad() {
@@ -107,29 +110,43 @@ export class ConstructionsiteReportDamagePage {
 		});
 		return promise;
 	}// }}}
+
 	addPictureToDamageReport(path:string, fileName:string){// {{{
-		// solution for image display found here: https://forum.ionicframework.com/t/unable-to-display-image-using-file-uri/84977/19
-		this.file.readAsDataURL(path, fileName)
-			.then(imagePathBase64 => {
-				this.report.imageFiles.push(imagePathBase64);
-				
-				//DEBUG
-				console.log("EVENT IMAGE FILES:");
-				for (let image of this.report.imageFiles) {console.log(image);}
-			})
-			.catch(err => {
-				console.log(JSON.stringify(err));
-			});
+		let data = {path: path, fileName: fileName}; 
+		this.report.imageFiles.push(data);
+// 		// solution for image display found here: https://forum.ionicframework.com/t/unable-to-display-image-using-file-uri/84977/19
+// 		this.file.readAsDataURL(path, fileName)
+// 			.then(imagePathBase64 => {
+// 				this.report.imageFiles.push(imagePathBase64);
+// 				
+// 				//DEBUG
+// 				console.log("EVENT IMAGE FILES:");
+// 				for (let image of this.report.imageFiles) {console.log(image);}
+// 			})
+// 			.catch(err => {
+// 				console.log(JSON.stringify(err));
+// 			});
 	}// }}}
 	createNewFileName(){// {{{
 		let newFileName = "damagereport_" + this.report.id + "_" + this.timeProvider.getDateStrForFilename();
 		return newFileName;
 	}// }}}
 
+	getImageDataUrl(data){// {{{ //TODO move to some image handler etc
+		this.file.readAsDataURL(data.path, data.fileName)
+			.then(imagePathBase64 => {
+				return imagePathBase64;
+			})
+			.catch(err => {
+				console.log(JSON.stringify(err));
+			});
+	}// }}}
+
 	submitDamageReport(){// {{{
 		this.report.author = this.getAuthorName();
 		this.report.id = this.consiteProv.getNumDamageReports(); //TODO get better ID
-		this.consiteProv.addDamageReport(this.report);
+		this.item.addDamageReport(this.report);
+// 		this.consiteProv.addDamageReport(this.report);
 		console.log(this.report);
 		this.navCtrl.pop();
 	}// }}}
