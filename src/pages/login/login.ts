@@ -39,6 +39,7 @@ export class LoginPage {
 // 			this.registerCredentials.password= "pass";
 			this.registerCredentials.token= "456abc";
 		}
+
 		this.auth.login(this.registerCredentials)
 			.subscribe(allowed => {
 				if (allowed) {

@@ -2,7 +2,9 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { EquipmentItem } from '../../classes/equipment/equipment-item'
+import { DamageReport } from '../../classes/equipment/damage-report'
 import { ConstructionsiteReportDamagePage } from '../constructionsite-report-damage/constructionsite-report-damage'
+import { EquipmentDamageReportDetailPage } from '../equipment-damage-report-detail/equipment-damage-report-detail';
 
 /**
  * Generated class for the ConstructionsiteEquipmentDetailPage page.
@@ -21,15 +23,15 @@ export class ConstructionsiteEquipmentDetailPage {
 	item: EquipmentItem;
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
-	  this.item = this.navParams.get('item');
-  }
+		  this.item = this.navParams.get('item');
+	  }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConstructionsiteEquipmentDetailPage');
+	 console.log('ionViewDidLoad ConstructionsiteEquipmentDetailPage');
   }
 
-	viewDamageReport(report){
-		//TODO Navcontroller push of damage report view page
+	viewDamageReport(report: DamageReport){
+		this.navCtrl.push(EquipmentDamageReportDetailPage, {report: report});
 	}
 
 	openReportDamagePage(){

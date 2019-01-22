@@ -14,11 +14,10 @@
 
 
 <ion-content padding>
-	<p>{{item.category}}</p>
-	<p>{{item.id}}</p>
+	<p>Nr: {{item.id}}; {{item.category}}</p>
 
 	<button ion-button large (click)="openReportDamagePage(item)">
-		Schaden melden
+		Neue Schadensmeldung
 	</button>
 
 	<ion-list>
@@ -26,7 +25,7 @@
 			Schadensberichte
 		</ion-list-header>
 		<ion-item *ngFor="let report of item.getDamageReports()" (click)="viewDamageReport(report)">
-			{{report.title}}
+			{{report.title}}, {{report.getTimestamp()}}
 		</ion-item>  
 	</ion-list>
 

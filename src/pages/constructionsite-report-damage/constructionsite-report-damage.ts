@@ -7,6 +7,7 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 import { CameraProvider } from '../../providers/camera/camera';
 import { FileHandlerProvider } from '../../providers/file-handler/file-handler';
 import { TimeProvider } from '../../providers/time/time';
+import { AudioProvider } from '../../providers/audio/audio';
 
 import { DamageReport } from '../../classes/equipment/damage-report'
 import { EquipmentItem } from '../../classes/equipment/equipment-item'
@@ -36,6 +37,7 @@ export class ConstructionsiteReportDamagePage {
 		private file: File,
 		public fileHandler: FileHandlerProvider,
 		public timeProvider: TimeProvider,
+		public audioProvider: AudioProvider,
 		public consiteProv: ConstructionsiteProvider
 	) {
 	  this.report = new DamageReport();
@@ -72,7 +74,6 @@ export class ConstructionsiteReportDamagePage {
 		});
 		actionSheet.present();
 	}// }}}
-
 	handlePicture(){// {{{
 		this.copyPictureToLocal()
 			.then(res => {
@@ -110,7 +111,6 @@ export class ConstructionsiteReportDamagePage {
 		});
 		return promise;
 	}// }}}
-
 	addPictureToDamageReport(path:string, fileName:string){// {{{
 		let data = {path: path, fileName: fileName}; 
 		this.report.imageFiles.push(data);
@@ -155,4 +155,12 @@ export class ConstructionsiteReportDamagePage {
 		return user.surname[0] + ". " + user.name;
 	}// }}}
 
+	recordAudio(){
+		console.log("RECORDING AUDIO");
+		this.audioProvider.captureAudio();
+	}
+
+	playAudio(myFile){
+		this.audioProvider.play(myFile);
+	}
 }

@@ -52,6 +52,9 @@ export class EquipmentItem {
 	getDamageReports(){
 		return this.damageReports;
 	}
+	getName(){
+		return this.name;
+	}
 
 	addDamageReport(report: DamageReport){
 		this.damageReports.push(report);

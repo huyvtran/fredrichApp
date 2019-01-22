@@ -12,6 +12,9 @@ import { Transfer } from '@ionic-native/transfer';
 import { FilePath } from '@ionic-native/file-path';
 import { CallNumber } from '@ionic-native/call-number';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
+import { MediaCapture } from '@ionic-native/media-capture';
+import { Media } from '@ionic-native/media';
+import { IonicStorageModule } from '@ionic/storage';
 // import { CameraPreviewRect } from '@ionic-native';
 
 import { HttpClientModule } from '@angular/common/http';
@@ -49,6 +52,7 @@ import { StorehouseLogisticsPage} from '../pages/storehouse-logistics/storehouse
 import { SettingsPage } from '../pages/settings/settings';
 import { LoginPage } from '../pages/login/login';
 import { CameraViewPage } from '../pages/camera-view/camera-view';
+import { EquipmentDamageReportDetailPage } from '../pages/equipment-damage-report-detail/equipment-damage-report-detail';
 
 //MODULES
 import { LoginPageModule } from '../pages/login/login.module';
@@ -65,6 +69,7 @@ import { ConstructionsiteContactsProvider } from '../providers/constructionsite-
 import { TelephoneProvider } from '../providers/telephone/telephone';
 import { FileHandlerProvider } from '../providers/file-handler/file-handler';
 import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
+import { AudioProvider } from '../providers/audio/audio';
 
 
 @NgModule({
@@ -99,6 +104,7 @@ import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 		StorehouseInventoryPage,
 		StorehouseLogisticsPage,
 	SettingsPage,
+	EquipmentDamageReportDetailPage,
 // 	LoginPage,
     HomePage
   ],
@@ -106,7 +112,8 @@ import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
     BrowserModule,
 	HttpClientModule,
 	  LoginPageModule,
-    IonicModule.forRoot(MyApp)
+	  IonicModule.forRoot(MyApp),
+	  IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -140,6 +147,7 @@ import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 		StorehouseInventoryPage,
 		StorehouseLogisticsPage,
 	SettingsPage,
+	EquipmentDamageReportDetailPage,
 	LoginPage,
     HomePage
   ],
@@ -155,6 +163,8 @@ import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 		AuthServiceProvider,
 		CameraPreview,
 		Camera,
+		MediaCapture,
+		Media,
 		CameraProvider,
     ConstructionsiteProvider,
     ConstructionsiteContactsProvider,
@@ -166,7 +176,8 @@ import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 	 BarcodeScanner,
     TelephoneProvider,
     FileHandlerProvider,
-	 QrScannerProvider
+	 QrScannerProvider,
+    AudioProvider
   ]
 })
 export class AppModule {}

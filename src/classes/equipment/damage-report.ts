@@ -2,10 +2,10 @@
 export class DamageReport {
 
 	id: string;
-	timestamp: string;
+	timestamp: Date;
 	title: string;
 	imageFiles: any;
-	audios: any;
+	audioFiles: any;
 	author: string;
 
 	constructor(){
@@ -18,15 +18,18 @@ export class DamageReport {
 		return this.id;
 	}
 
+	getTimestamp(){
+		return this.timestamp.toISOString();
+	}
+
 	//PRIVATE
 	private setDefaultValues(){// {{{
 		this.id = "";
-		let d = new Date();
-		this.timestamp = d.toISOString();
+		this.timestamp = new Date();
 		this.title = "";
 		this.author = "";
 		this.imageFiles = [];
-		this.audios = [];
+		this.audioFiles = [];
 	}// }}}
 }
 
