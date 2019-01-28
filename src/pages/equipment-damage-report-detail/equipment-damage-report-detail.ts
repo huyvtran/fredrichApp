@@ -53,8 +53,8 @@ export class EquipmentDamageReportDetailPage {
 	}// }}}
 
 	deleteDamageReport(report: DamageReport){
-// 		let item = report.getParentItem();
-// 		item.deleteDamageReport(report.getId());
+		let item = report.getParentItem();
+		item.deleteDamageReport(report.getId());
 		this.navCtrl.pop();
 	}
 

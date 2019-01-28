@@ -30,7 +30,7 @@ export class EquipmentItemList {
 		}
 		return false;
 	}// }}}
-	public addItem(data){// {{{
+	public addItem(data){// {{{ //TODO: refactor so that this accepts only items, and another routine which accepts the data
 		let item = new EquipmentItem();
 		item.setData(data);
 		this.items.push(item);

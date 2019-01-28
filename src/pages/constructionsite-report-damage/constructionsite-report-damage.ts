@@ -148,7 +148,7 @@ export class ConstructionsiteReportDamagePage {
 
 	submitDamageReport(){// {{{
 		this.report.author = this.getAuthorName();
-		this.report.id = this.consiteProv.getNumDamageReports(); //TODO get better ID
+		this.report.id = String(this.consiteProv.getNumDamageReports()); //TODO get better ID
 		this.item.addDamageReport(this.report);
 // 		this.consiteProv.addDamageReport(this.report);
 		console.log(this.report);

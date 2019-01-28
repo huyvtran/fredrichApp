@@ -72,6 +72,8 @@ import { FileHandlerProvider } from '../providers/file-handler/file-handler';
 import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 import { AudioProvider } from '../providers/audio/audio';
 import { EquipmentProvider } from '../providers/equipment/equipment';
+import { ConstructionsiteEquipmentProvider } from '../providers/constructionsite-equipment/constructionsite-equipment';
+import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-workers/constructionsite-workers';
 
 
 @NgModule({
@@ -181,7 +183,9 @@ import { EquipmentProvider } from '../providers/equipment/equipment';
     FileHandlerProvider,
 	 QrScannerProvider,
     AudioProvider,
-    EquipmentProvider
+    EquipmentProvider,
+    ConstructionsiteEquipmentProvider,
+    ConstructionsiteWorkersProvider
   ]
 })
 export class AppModule {}

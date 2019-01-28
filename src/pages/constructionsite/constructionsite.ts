@@ -65,6 +65,7 @@ export class ConstructionsitePage {
 				console.log(this.consiteProv.getConstructionsite());
 				console.log(this.consiteProv.getWeather());
 				console.log(this.consiteProv.getContacts());
+				console.log(this.consiteProv.getEquipment());
 			});
 
 	}// }}}

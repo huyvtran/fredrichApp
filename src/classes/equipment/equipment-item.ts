@@ -67,6 +67,13 @@ export class EquipmentItem {
 		report.parentItemId = this.id;
 		this.damageReports.push(report);
 	}// }}}
+	deleteDamageReport(report_id){// {{{
+		for (let i=0; i<this.getNumDamageReports(); i++){
+			if(this.damageReports[i].getId()==report_id){
+				this.damageReports.splice(i,1);
+			}
+		}
+	}// }}}
 
 	//PRIVATE
 	private setDefaultValues(){// {{{

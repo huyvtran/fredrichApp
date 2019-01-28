@@ -60,6 +60,20 @@ export class WorkerTeam {
 	public getHilfsarbeiterCount(){// {{{
 		return this.getRoleCount("4Hilfsarbeiter");
 	}// }}}
+
+	public getPresentPolierCount(){// {{{
+		return this.getPresentWorkerCountByRole("1Polier");
+	}// }}}
+	public getPresentMaschinistCount(){// {{{
+		return this.getPresentWorkerCountByRole("2Maschinist");
+	}// }}}
+	public getPresentFacharbeiterCount(){// {{{
+		return this.getPresentWorkerCountByRole("3Facharbeiter");
+	}// }}}
+	public getPresentHilfsarbeiterCount(){// {{{
+		return this.getPresentWorkerCountByRole("4Hilfsarbeiter");
+	}// }}}
+
 	public getPresentWorkerCountByRole(role){// {{{
 		let count = 0;
 		for (let member of this.members){
@@ -109,6 +123,14 @@ export class WorkerTeam {
 	public getNumWorkers(){// {{{
 		return this.members.length;
 	}// }}}
+	public getPresentWorkersCount(){// {{{
+		let count = 0;
+		for (let member of this.members){
+			if(member.isPresent){count++;}
+		}
+		return count;
+	}// }}}
+
 
 	//PRIVATE
 	private clearTeam(){// {{{

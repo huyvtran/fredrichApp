@@ -10,7 +10,8 @@ import { WeatherProvider } from '../weather/weather'
 import { TimeProvider } from '../time/time'
 import { GeolocationProvider } from '../geolocation/geolocation'
 import { ConstructionsiteContactsProvider } from '../constructionsite-contacts/constructionsite-contacts'
-import { EquipmentProvider } from '../equipment/equipment'
+import { ConstructionsiteEquipmentProvider } from '../constructionsite-equipment/constructionsite-equipment'
+import { ConstructionsiteWorkersProvider } from '../constructionsite-workers/constructionsite-workers'
 import { FileHandlerProvider } from '../file-handler/file-handler'
 
 //CLASSES
@@ -52,14 +53,15 @@ export class ConstructionsiteProvider {
 		public location: GeolocationProvider,
 		public fileHandler: FileHandlerProvider,
 		public contacts: ConstructionsiteContactsProvider,
-		public equipment: EquipmentProvider
+		public equipment: ConstructionsiteEquipmentProvider,
+		public workers: ConstructionsiteWorkersProvider
 	) 
 	{
 		console.log('Hello ConstructionsiteProvider Provider');
 		this.loadPrimaryDataStatus = false;
 		this.loadPrimaryData = new Rx.BehaviorSubject(this.loadPrimaryDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
 
-		this.loadSecondaryDataStatus = {weather: false, contacts: false}; //TODO: add workers, equipment
+		this.loadSecondaryDataStatus = {weather: false, contacts: false, equipment: false, workers: false}; 
 		this.loadSecondaryData = new Rx.BehaviorSubject(this.loadSecondaryDataStatus); //use BehaviorSubject instead of Observable, as it emits last value on subscribe
 
 		this.loadAllDataStatus = false;
@@ -70,7 +72,7 @@ export class ConstructionsiteProvider {
 		console.log("INITIALIZING CONSITE PROVIDER FOR ID=" + id);
 		this.constructionsite= new Constructionsite();
 		this.events = [];
-		this.damageReports= [];
+// 		this.damageReports= [];
 		this.constructionsite.setId(id);
 	}// }}}
 
@@ -94,8 +96,8 @@ export class ConstructionsiteProvider {
 				this.setMeta(data['meta']);
 				this.setLocation(data['location']);
 				//XXX: TODO: move below items to separate data load modules
-				this.setWorkerTeam(data['personal_arr']);
-				this.setEquipmentItemList(data['equipment_arr']);
+// 				this.setWorkerTeam(data['personal_arr']);
+// 				this.setEquipmentItemList(data['equipment_arr']);
 
 				//broadcast completion
 				this.loadPrimaryDataStatus = true;
@@ -107,6 +109,8 @@ export class ConstructionsiteProvider {
 			});
 	}// }}}
 	loadSecondaryConsiteData(){// {{{
+		this.loadWorkersData();
+		this.loadEquipmentData();
 		this.loadContactsData();
 		this.loadWeatherData();
 	}// }}}
@@ -129,7 +133,7 @@ export class ConstructionsiteProvider {
 	checkAllLoadingCompleted(){// {{{
 		this.loadSecondaryDataUpdates()
 		.subscribe(loadingStatus => {
-			let allLoadingCompleted = (loadingStatus.weather && loadingStatus.contacts);
+			let allLoadingCompleted = (loadingStatus.weather && loadingStatus.contacts && loadingStatus.equipment && loadingStatus.workers);
 			if(allLoadingCompleted){
 				this.loadAllData.next(true);
 				this.loadPrimaryData.complete();
@@ -183,6 +187,32 @@ export class ConstructionsiteProvider {
 			err => {
 			});
 	}// }}}
+	public loadEquipmentData(){// {{{
+		console.log("LOADING EQUIPMENT DATA");
+		this.equipment.loadEquipmentData();
+		this.equipment.loadingUpdates()
+			.subscribe(hasLoaded => {
+				if(hasLoaded){
+					this.loadSecondaryDataStatus.equipment= true;
+					this.loadSecondaryData.next(this.loadSecondaryDataStatus);
+				}
+			},
+			err => {
+			});
+	}// }}}
+	public loadWorkersData(){// {{{
+		console.log("LOADING WORKERS DATA");
+		this.workers.loadWorkersData();
+		this.workers.loadingUpdates()
+			.subscribe(hasLoaded => {
+				if(hasLoaded){
+					this.loadSecondaryDataStatus.workers= true;
+					this.loadSecondaryData.next(this.loadSecondaryDataStatus);
+				}
+			},
+			err => {
+			});
+	}// }}}
 
 	//CONSITE SPECIFICS
 	getConstructionsite(){// {{{
@@ -195,33 +225,22 @@ export class ConstructionsiteProvider {
 		return this.constructionsite.getId();
 	}// }}}
 
-// 	checkLoadDataCompleted(){// {{{
-// 		this.loadDataUpdates().subscribe(data => {
-// 			console.log("checking completion for: ", data);
-// 			if(data.consiteData && data.weather && data.contacts){
-// 				console.log("LOADING CONSTRUCTIONSITE DATA COMPLETED, closing observable");
-// 				this.loadData.complete();
-// 			}
-// 		},
-// 			err => {console.log(err);},
-// 			() => {});
-// 	}// }}}
-
 	private setMeta(data){// {{{
 		this.constructionsite.description = data.description;
 	}// }}}
 	private setLocation(data){// {{{
 		this.location.setLocationData(data);
 	}// }}}
-	private setWorkerTeam(data){// {{{
-		this.constructionsite.workerTeam.setData(data);
-	}// }}}
-	private setEquipmentItemList(data){// {{{
-		this.constructionsite.equipmentItemList.setData(data);
-	}// }}}
-	private setContactList(data){// {{{
-		this.constructionsite.contactList.setData(data);
-	}// }}}
+// 	private setWorkerTeam(data){// {{{
+// 		this.constructionsite.workerTeam.setData(data);
+// 	}// }}}
+// 	private setEquipmentItemList(data){// {{{
+// // 		this.constructionsite.equipmentItemList.setData(data);
+// 		this.equipment.setEquipmentItemListData(data);
+// 	}// }}}
+// 	private setContactList(data){// {{{
+// 		this.constructionsite.contactList.setData(data);
+// 	}// }}}
 
 	//GEOLOCATION
 	isGeolocationValid(){// {{{
@@ -229,50 +248,38 @@ export class ConstructionsiteProvider {
 	}// }}}
 
 	//WORKERS
-	public getPolierCount(){// {{{
-		return this.constructionsite.workerTeam.getPolierCount();
-	}// }}}
-	public getMaschinistCount(){// {{{
-		return this.constructionsite.workerTeam.getMaschinistCount();
-	}// }}}
-	public getFacharbeiterCount(){// {{{
-		return this.constructionsite.workerTeam.getFacharbeiterCount();
-	}// }}}
-	public getHilfsarbeiterCount(){// {{{
-		return this.constructionsite.workerTeam.getHilfsarbeiterCount();
-	}// }}}
-	public getAllWorkersCount(){// {{{
-		return this.constructionsite.workerTeam.getNumWorkers();
-	}// }}}
+// 	public getPolierCount(){// {{{
+// 		return this.constructionsite.workerTeam.getPolierCount();
+// 	}// }}}
+// 	public getMaschinistCount(){// {{{
+// 		return this.constructionsite.workerTeam.getMaschinistCount();
+// 	}// }}}
+// 	public getFacharbeiterCount(){// {{{
+// 		return this.constructionsite.workerTeam.getFacharbeiterCount();
+// 	}// }}}
+// 	public getHilfsarbeiterCount(){// {{{
+// 		return this.constructionsite.workerTeam.getHilfsarbeiterCount();
+// 	}// }}}
+// 	public getAllWorkersCount(){// {{{
+// 		return this.constructionsite.workerTeam.getNumWorkers();
+// 	}// }}}
 	public getWorkerTeamMembers(){// {{{
-		return this.constructionsite.workerTeam.getMembers();
+		return this.workers.getTeamMembers();
 	}// }}}
-	public getTodaysWorkerHoursByRole(role:string):number{// {{{
-		let hours=0;
-		let workers = this.getWorkerTeamMembers();
-		for (let worker of workers) {
-			if(worker.getRole() === role){
-				hours = hours + worker.getHoursWorkedToday();
-			}
-		}
-		return hours;
-	}// }}}
+// 	public getTodaysWorkerHoursByRole(role:string):number{// {{{
+// 		let hours=0;
+// 		let workers = this.getWorkerTeamMembers();
+// 		for (let worker of workers) {
+// 			if(worker.getRole() === role){
+// 				hours = hours + worker.getHoursWorkedToday();
+// 			}
+// 		}
+// 		return hours;
+// 	}// }}}
 
 	//EQUIPMENT
-	public getRamCount(){// {{{
-		return this.constructionsite.equipmentItemList.getRamCount();
-	}// }}}
-	public getCraneCount(){// {{{
-		return this.constructionsite.equipmentItemList.getCraneCount();
-	}// }}}
-	public getPumpCount(){// {{{
-		return this.constructionsite.equipmentItemList.getPumpCount();
-	}// }}}
-	public getOtherCount(){// {{{
-		return this.constructionsite.equipmentItemList.getOtherCount();
-	}// }}}
-	public getEquipmentItemListArray(){// {{{
-		return this.constructionsite.equipmentItemList.getItems();
+	public getEquipment(){// {{{
+		return this.equipment.getEquipmentItemList();
 	}// }}}
 
 	//CONTACTS
@@ -356,7 +363,7 @@ export class ConstructionsiteProvider {
 		return this.damageReports;
 	}// }}}
 	public getNumDamageReports(){// {{{
-		return this.damageReports.length;
+		return this.equipment.getNumDamageReports();
 	}// }}}
 
 	//UTILS

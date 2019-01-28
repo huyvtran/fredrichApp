@@ -17,7 +17,7 @@
 	<button ion-button full (click)="scan()">QR-CODE SCANNEN</button>
 
 	<ion-list>
-		<ion-item *ngFor="let item of consiteProv.constructionsite.equipmentItemList.getItems()" (click)="itemSelected(item)">
+		<ion-item *ngFor="let item of consiteProv.equipment.getEquipmentItemListArray()" (click)="itemSelected(item)">
 			<ion-grid item-content>
 				<ion-row nowrap>
 					<ion-col>

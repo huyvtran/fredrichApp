@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import {Observable} from 'rxjs/Observable';
+import { Observable} from 'rxjs/Observable';
 
 import { AuthServiceProvider } from '../auth-service/auth-service';
 import { GlobalsProvider } from '../globals/globals'
@@ -22,7 +22,7 @@ export class ConstructionsiteContactsProvider {
 	loadingStatus:any;
 	loadingStatusObserver:any;
 
-	constructor(public http: HttpClient, private auth: AuthServiceProvider, public globals: GlobalsProvider) {
+	constructor(public http: HttpClient, private auth: AuthServiceProvider, public globals: GlobalsProvider) {// {{{
 		console.log('Hello ConstructionsiteContactsProvider Provider');
 		this.loadingStatus = Observable.create(observer => {
 			this.loadingStatusObserver = observer;
@@ -47,9 +47,9 @@ export class ConstructionsiteContactsProvider {
 			"LieferantBewehrungsstahl",
 			"LieferantFußplatten"];
 
-	}
+	}// }}}
 
-	loadContactsData() {
+	loadContactsData() {// {{{
 		this.contacts = [];
 		let url = this.globals.serverPhpScriptsUrl + "get_consite_contacts.php?token=" + this.auth.getUserInfo().getToken();
 		this.http.get(url)
@@ -67,26 +67,25 @@ export class ConstructionsiteContactsProvider {
 				this.loadingStatusObserver.next(true);
 				this.loadingStatusObserver.complete();
 			});
-	}
+	}// }}}
 
-	loadingUpdates(){
+	loadingUpdates(){// {{{
 		return this.loadingStatus;
-	}
+	}// }}}
 
-
-	sortContacts(){
+	sortContacts(){// {{{
 		this.contacts.sort((a, b) => {
 			let roleIdA = this.contactTypes.indexOf(a.role);
 			let roleIdB = this.contactTypes.indexOf(b.role);
 			return roleIdA - roleIdB;
 		});
-	}
+	}// }}}
 
-	getContacts(){
+	getContacts(){// {{{
 		return this.contacts;
-	}
+	}// }}}
 
-	getContactTypes(){
+	getContactTypes(){// {{{
 		return this.contactTypes;
-	}
+	}// }}}
 }
