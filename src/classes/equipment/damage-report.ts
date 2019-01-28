@@ -7,6 +7,8 @@ export class DamageReport {
 	imageFiles: any;
 	audioFiles: any;
 	author: string;
+	isUploaded: boolean;
+	parentItemId: string;
 
 	constructor(){
 		this.setDefaultValues();
@@ -14,12 +16,30 @@ export class DamageReport {
 	//PUBLIC 
 	setData(data){ //{{{
 	} // }}}
-	getId(){
+	getId(){// {{{
 		return this.id;
-	}
-
-	getTimestamp(){
+	}// }}}
+	getTimestamp(){// {{{
 		return this.timestamp.toISOString();
+	}// }}}
+	getTimestampLocal(){// {{{
+		return this.timestamp.toLocaleString();
+	}// }}}
+	getImageFiles(){// {{{
+		return this.imageFiles;
+	}// }}}
+	getNumImageFiles(){// {{{
+		return this.imageFiles.length;
+	}// }}}
+	getAudioFiles(){// {{{
+		return this.audioFiles;
+	}// }}}
+	getNumAudioFiles(){// {{{
+		return this.audioFiles.length;
+	}// }}}
+	getParentItem(){
+		// 		return this.equipmentProvider.getItemById(this.parentItemId); //TODO: refactor with
+		// 		new equipmentprovider
 	}
 
 	//PRIVATE
@@ -30,6 +50,7 @@ export class DamageReport {
 		this.author = "";
 		this.imageFiles = [];
 		this.audioFiles = [];
+		this.isUploaded = false;
 	}// }}}
 }
 

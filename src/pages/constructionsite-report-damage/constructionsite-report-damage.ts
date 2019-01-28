@@ -40,8 +40,12 @@ export class ConstructionsiteReportDamagePage {
 		public audioProvider: AudioProvider,
 		public consiteProv: ConstructionsiteProvider
 	) {
-	  this.report = new DamageReport();
-	  this.item = this.navParams.get('item');
+		if(this.navParams.get('report')){
+			this.report = this.navParams.get('report');
+		} else {
+			this.report = new DamageReport();
+		}
+		this.item = this.navParams.get('item');
   }
 
   ionViewDidLoad() {

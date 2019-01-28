@@ -52,10 +52,13 @@ export class AudioProvider {
 					let arr = JSON.parse(res);
 					arr = arr.concat(files);
 					this.storage.set(MEDIA_FILES_KEY, JSON.stringify(arr));
+// 					console.log(JSON.stringify(arr));
 				} else {
 					this.storage.set(MEDIA_FILES_KEY, JSON.stringify(files))
+// 					console.log(JSON.stringify(files));
 				}
 				this.mediaFiles = this.mediaFiles.concat(files);
+				console.log("MEDIA FILES: " + JSON.stringify(this.mediaFiles));
 			})
   }
 

@@ -54,8 +54,9 @@ import { LoginPage } from '../pages/login/login';
 import { CameraViewPage } from '../pages/camera-view/camera-view';
 import { EquipmentDamageReportDetailPage } from '../pages/equipment-damage-report-detail/equipment-damage-report-detail';
 
-//MODULES
+//MODULES (imported here because pages are included multiple times)
 import { LoginPageModule } from '../pages/login/login.module';
+import { ConstructionsiteReportDamagePageModule } from '../pages/constructionsite-report-damage/constructionsite-report-damage.module';
 
 //PROVIDERS
 import { AuthServiceProvider } from '../providers/auth-service/auth-service';
@@ -70,6 +71,7 @@ import { TelephoneProvider } from '../providers/telephone/telephone';
 import { FileHandlerProvider } from '../providers/file-handler/file-handler';
 import { QrScannerProvider } from '../providers/qr-scanner/qr-scanner';
 import { AudioProvider } from '../providers/audio/audio';
+import { EquipmentProvider } from '../providers/equipment/equipment';
 
 
 @NgModule({
@@ -89,7 +91,6 @@ import { AudioProvider } from '../providers/audio/audio';
 			ConstructionsiteSettingsPage,
 		ConstructionsiteEventsPage,
 			ConstructionsiteReportEventPage,
-			ConstructionsiteReportDamagePage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
@@ -105,13 +106,15 @@ import { AudioProvider } from '../providers/audio/audio';
 		StorehouseLogisticsPage,
 	SettingsPage,
 	EquipmentDamageReportDetailPage,
-// 	LoginPage,
     HomePage
+// 	LoginPage,
+// 	ConstructionsiteReportDamagePage,
   ],
   imports: [
     BrowserModule,
 	HttpClientModule,
 	  LoginPageModule,
+	ConstructionsiteReportDamagePageModule,
 	  IonicModule.forRoot(MyApp),
 	  IonicStorageModule.forRoot()
   ],
@@ -177,7 +180,8 @@ import { AudioProvider } from '../providers/audio/audio';
     TelephoneProvider,
     FileHandlerProvider,
 	 QrScannerProvider,
-    AudioProvider
+    AudioProvider,
+    EquipmentProvider
   ]
 })
 export class AppModule {}

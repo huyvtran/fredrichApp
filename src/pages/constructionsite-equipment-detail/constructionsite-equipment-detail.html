@@ -7,27 +7,43 @@
 <ion-header>
 
   <ion-navbar>
+	  <ion-title>Gerät Detailansicht</ion-title>
+	  <!--
 	  <ion-title>{{item.name}}</ion-title>
+	  -->
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
-	<p>Nr: {{item.id}}; {{item.category}}</p>
+	<ion-list>
+		<ion-list-header>
+			Übersicht
+		</ion-list-header>
+		<ion-item>
+			Name: {{item.name}}
+		</ion-item>  
+		<ion-item>
+			Nr: {{item.id}}
+		</ion-item>  
+		<ion-item>
+			Kategorie: {{item.getCategoryStr()}}
+		</ion-item>  
+	</ion-list>
+
+	<ion-list>
+		<ion-list-header>
+			Schadensberichte: {{item.getNumDamageReports()}}
+		</ion-list-header>
+		<ion-item *ngFor="let report of item.getDamageReports()" (click)="viewDamageReport(report)">
+			{{report.title}}, {{report.author}} - {{report.getTimestampLocal()}}
+			<ion-icon name="checkmark" item-right *ngIf="item.isUploaded"></ion-icon>	
+		</ion-item>  
+	</ion-list>
 
 	<button ion-button large (click)="openReportDamagePage(item)">
 		Neue Schadensmeldung
 	</button>
-
-	<ion-list>
-		<ion-list-header>
-			Schadensberichte
-		</ion-list-header>
-		<ion-item *ngFor="let report of item.getDamageReports()" (click)="viewDamageReport(report)">
-			{{report.title}}, {{report.getTimestamp()}}
-		</ion-item>  
-	</ion-list>
-
 
 </ion-content>

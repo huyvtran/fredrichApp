@@ -10,6 +10,7 @@ import { WeatherProvider } from '../weather/weather'
 import { TimeProvider } from '../time/time'
 import { GeolocationProvider } from '../geolocation/geolocation'
 import { ConstructionsiteContactsProvider } from '../constructionsite-contacts/constructionsite-contacts'
+import { EquipmentProvider } from '../equipment/equipment'
 import { FileHandlerProvider } from '../file-handler/file-handler'
 
 //CLASSES
@@ -50,7 +51,9 @@ export class ConstructionsiteProvider {
 		public time: TimeProvider, 
 		public location: GeolocationProvider,
 		public fileHandler: FileHandlerProvider,
-	public contacts: ConstructionsiteContactsProvider) 
+		public contacts: ConstructionsiteContactsProvider,
+		public equipment: EquipmentProvider
+	) 
 	{
 		console.log('Hello ConstructionsiteProvider Provider');
 		this.loadPrimaryDataStatus = false;

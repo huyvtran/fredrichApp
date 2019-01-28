@@ -14,9 +14,54 @@
 
 
 <ion-content padding>
-	<p>Titel</p>
-	<p>Audios</p>
-	<p>Photos</p>
-	<p>Autor</p>
-	<p>Datum</p>
+	<ion-list>
+		<ion-list-header>
+			Übersicht
+		</ion-list-header>
+		<ion-item>
+			Titel: {{report.title}}
+		</ion-item>  
+		<ion-item>
+			Autor: {{report.author}}
+		</ion-item>  
+		<ion-item>
+			Datum: {{report.getTimestampLocal()}}
+		</ion-item>  
+	</ion-list>
+
+	<ion-list>
+		<ion-list-header>
+			Photos: {{report.getNumImageFiles()}}
+		</ion-list-header>
+		<ion-item *ngFor="let photo of report.getImageFiles()">
+			{{photo.title}}
+		</ion-item>  
+	</ion-list>
+
+	<ion-list>
+		<ion-list-header>
+			Sprachnachrichten: {{report.getNumAudioFiles()}}
+		</ion-list-header>
+		<ion-item *ngFor="let file of report.getAudioFiles()">
+			{{file.title}}
+		</ion-item>  
+	</ion-list>
+
+	<ion-list>
+		<ion-list-header>
+			Aktionen	
+		</ion-list-header>
+		<ion-item >
+			<ion-grid item-content>
+				<ion-row>
+					<ion-col>
+						<button ion-button large (click)="editDamageReport(report)">Editieren</button>
+					</ion-col>
+					<ion-col>
+						<button ion-button large (click)="presentDamageReportDeleteActionsheet(report)">Löschen</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
+		</ion-item>  
+	</ion-list>
 </ion-content>

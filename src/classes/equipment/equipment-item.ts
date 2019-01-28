@@ -2,13 +2,14 @@ import { DamageReport } from './damage-report'
 
 export class EquipmentItem {
 
-	id: string;
-	category: string;
-	name: string;
-	damageReports: any;
+	private id: string;
+	private category: string;
+	private name: string;
+	private damageReports: any;
 
 	constructor(){
 		this.setDefaultValues();
+		this.addDummyDamageReport();
 	}
 	//PUBLIC 
 	setData(data){ //{{{
@@ -46,19 +47,26 @@ export class EquipmentItem {
 		}
 		return categoryStr;
 	}// }}}
-	getId(){
+	getId(){// {{{
 		return this.id;
-	}
-	getDamageReports(){
-		return this.damageReports;
-	}
-	getName(){
+	}// }}}
+	getName(){// {{{
 		return this.name;
-	}
+	}// }}}
+	getCategory(){// {{{
+		return this.category;
+	}// }}}
+	getDamageReports(){// {{{
+		return this.damageReports;
+	}// }}}
+	getNumDamageReports(){// {{{
+		return this.damageReports.length;
+	}// }}}
 
-	addDamageReport(report: DamageReport){
+	addDamageReport(report: DamageReport){// {{{
+		report.parentItemId = this.id;
 		this.damageReports.push(report);
-	}
+	}// }}}
 
 	//PRIVATE
 	private setDefaultValues(){// {{{
@@ -66,6 +74,15 @@ export class EquipmentItem {
 		this.name = "";
 		this.category = "";
 		this.damageReports = [];
+	}// }}}
+
+	//TESTING ONLY
+	private addDummyDamageReport(){// {{{ 
+		let report = new DamageReport();
+		report.id = "108";
+		report.author = "Autorname";
+		report.title = "Report Title";
+		this.addDamageReport(report);
 	}// }}}
 }
 
