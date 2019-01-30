@@ -22,6 +22,7 @@ export class DailyReport {
 			countMaschinist: -1, countMaschinistHours: -1, 
 			countFacharbeiter: -1, countFacharbeiterHours: -1,
 			countHilfsarbeiter: -1, countHilfsarbeiterHours: -1,
+			countAzubi: -1, countAzubiHours: -1,
 		};
 		this.workersTimeReportTotals = [];
 

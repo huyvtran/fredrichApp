@@ -24,8 +24,6 @@ export class ConstructionsiteDailyreportPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider) {
 	  this.consiteProv.generateDailyReport();
 	  this.dailyReport = this.consiteProv.getDailyReport();
-	  this.workerRoles = ["Polier", "Maschinist", "Facharbeiter", "Hilfsarbeiter"];
-
 	  console.log(this.dailyReport)
   }
 

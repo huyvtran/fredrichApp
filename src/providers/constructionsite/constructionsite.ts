@@ -370,7 +370,8 @@ export class ConstructionsiteProvider {
 
 	//UTILS
 	getAvailableRoles(){
-		return ["1Polier", "2Maschinist", "3Facharbeiter", "4Hilfsarbeiter"];
+// 		return ["1Polier", "2Maschinist", "3Facharbeiter", "4Hilfsarbeiter"];
+		return ["1Polier", "2Maschinist", "3Facharbeiter", "5Azubi"];
 	}
 	getRoleStr(role){// {{{
 		let roleStr="";
@@ -393,6 +394,11 @@ export class ConstructionsiteProvider {
 			case "4Hilfsarbeiter": {
 				//statements;
 				roleStr = "Hilfsarbeiter";
+				break;
+			}
+			case "5Azubi": {
+				//statements;
+				roleStr = "Azubi";
 				break;
 			}
 			default: {

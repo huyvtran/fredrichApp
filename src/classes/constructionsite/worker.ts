@@ -61,6 +61,11 @@ export class Worker {// {{{
 				roleStr = "Hilfsarbeiter";
 				break;
 			}
+			case "5Azubi": {
+				//statements;
+				roleStr = "Azubi";
+				break;
+			}
 			default: {
 				roleStr = this.role;
 				break;

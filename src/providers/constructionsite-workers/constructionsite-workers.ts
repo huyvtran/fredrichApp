@@ -64,7 +64,9 @@ export class ConstructionsiteWorkersProvider {
 	public getHilfsarbeiterCount(){// {{{
 		return this.workerTeam.getHilfsarbeiterCount();
 	}// }}}
-
+	public getAzubiCount(){// {{{
+		return this.workerTeam.getAzubiCount();
+	}// }}}
 	public getPresentPolierCount(){// {{{
 		return this.workerTeam.getPresentPolierCount();
 	}// }}}
@@ -77,14 +79,15 @@ export class ConstructionsiteWorkersProvider {
 	public getPresentHilfsarbeiterCount(){// {{{
 		return this.workerTeam.getPresentHilfsarbeiterCount();
 	}// }}}
-
+	public getPresentAzubiCount(){// {{{
+		return this.workerTeam.getPresentAzubiCount();
+	}// }}}
 	public getAllWorkersCount(){// {{{
 		return this.workerTeam.getNumWorkers();
 	}// }}}
 	public getPresentWorkersCount(){// {{{
 		return this.workerTeam.getPresentWorkersCount();
 	}// }}}
-
 	public getTeamMembers(){// {{{
 		return this.workerTeam.getMembers();
 	}// }}}
@@ -98,11 +101,9 @@ export class ConstructionsiteWorkersProvider {
 		}
 		return hours;
 	}// }}}
-
 	public getPresentWorkerCountByRole(role: string){// {{{
 		return this.workerTeam.getPresentWorkerCountByRole(role);
 	}// }}}
-
 	public getHourStartAvgByRole(role: string){// {{{
 		return this.workerTeam.getHourStartAvgByRole(role);
 	}// }}}

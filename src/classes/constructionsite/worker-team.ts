@@ -60,6 +60,9 @@ export class WorkerTeam {
 	public getHilfsarbeiterCount(){// {{{
 		return this.getRoleCount("4Hilfsarbeiter");
 	}// }}}
+	public getAzubiCount(){// {{{
+		return this.getRoleCount("5Azubi");
+	}// }}}
 
 	public getPresentPolierCount(){// {{{
 		return this.getPresentWorkerCountByRole("1Polier");
@@ -72,6 +75,9 @@ export class WorkerTeam {
 	}// }}}
 	public getPresentHilfsarbeiterCount(){// {{{
 		return this.getPresentWorkerCountByRole("4Hilfsarbeiter");
+	}// }}}
+	public getPresentAzubiCount(){// {{{
+		return this.getPresentWorkerCountByRole("5Azubi");
 	}// }}}
 
 	public getPresentWorkerCountByRole(role){// {{{
