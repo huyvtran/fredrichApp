@@ -35,6 +35,7 @@ import { ConstructionsiteContactsPage } from '../pages/constructionsite-contacts
 import { ConstructionsiteEventsPage } from '../pages/constructionsite-events/constructionsite-events';
 import { ConstructionsiteReportEventPage } from '../pages/constructionsite-report-event/constructionsite-report-event';
 import { ConstructionsiteReportDamagePage } from '../pages/constructionsite-report-damage/constructionsite-report-damage';
+import { ConstructionsiteShippingPage } from '../pages/constructionsite-shipping/constructionsite-shipping';
 import { ConstructionsiteMorePage } from '../pages/constructionsite-more/constructionsite-more';
 import { ConstructionsitePhotoPage } from '../pages/constructionsite-photo/constructionsite-photo';
 import { ConstructionsitePhotoEquipmentPage} from '../pages/constructionsite-photo-equipment/constructionsite-photo-equipment';
@@ -93,6 +94,7 @@ import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-w
 			ConstructionsiteSettingsPage,
 		ConstructionsiteEventsPage,
 			ConstructionsiteReportEventPage,
+		ConstructionsiteShippingPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
@@ -138,6 +140,7 @@ import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-w
 		ConstructionsiteEventsPage,
 			ConstructionsiteReportEventPage,
 			ConstructionsiteReportDamagePage,
+		ConstructionsiteShippingPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,

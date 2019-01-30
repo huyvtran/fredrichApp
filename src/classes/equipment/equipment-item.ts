@@ -9,7 +9,6 @@ export class EquipmentItem {
 
 	constructor(){
 		this.setDefaultValues();
-		this.addDummyDamageReport();
 	}
 	//PUBLIC 
 	setData(data){ //{{{
@@ -64,15 +63,21 @@ export class EquipmentItem {
 	}// }}}
 
 	addDamageReport(report: DamageReport){// {{{
+		console.log("Adding ID to damage Report: " + this.id);
 		report.parentItemId = this.id;
 		this.damageReports.push(report);
 	}// }}}
 	deleteDamageReport(report_id){// {{{
+		let report_found = false;
 		for (let i=0; i<this.getNumDamageReports(); i++){
 			if(this.damageReports[i].getId()==report_id){
+				console.log("deleting damage report with id:" + report_id);
+				console.log(this.damageReports[i]);
+				report_found = true;
 				this.damageReports.splice(i,1);
 			}
 		}
+		return report_found;
 	}// }}}
 
 	//PRIVATE

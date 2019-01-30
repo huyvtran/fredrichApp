@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { Observable} from 'rxjs/Observable';
 
 import { MediaCapture, MediaFile, CaptureError} from '@ionic-native/media-capture';
 import { Storage } from '@ionic/storage';
@@ -18,6 +19,8 @@ const MEDIA_FILES_KEY = 'mediaFiles';
 export class AudioProvider {
 
 	mediaFiles = [];
+	private recordingStatus:any;
+	private recordingStatusObserver:any;
 
 	constructor(public http: HttpClient,
 		private mediaCapture: MediaCapture, 
@@ -25,24 +28,31 @@ export class AudioProvider {
 		private file: File, 
 		private media: Media
 	) {
-    console.log('Hello AudioProvider Provider');
+		console.log('Hello AudioProvider Provider');
+		this.recordingStatus = Observable.create(observer => {
+			this.recordingStatusObserver = observer;
+		});
   }
+
+	recordingStatusUpdates(){
+		return this.recordingStatus;
+	}
 
 	captureAudio() {
 		this.mediaCapture.captureAudio()
 			.then(res => {
+				console.log("CAPTURING AUDIO: ");
+				console.log(JSON.stringify(res));
 				this.storeMediaFiles(res);
+				this.recordingStatusObserver.next(res);
 			}, 
 			(err: CaptureError) => console.error(err));
 	}
 
 	play(myFile) {
-		if (myFile.name.indexOf('.wav') > -1) {
-			const audioFile: MediaObject = this.media.create(myFile.localURL);
-			audioFile.play();
-		} else {
-			//warning, should not go here
-		}
+// 		let localURL = myFile.localURL.replace();
+		const audioFile: MediaObject = this.media.create(myFile.localURL);
+		audioFile.play();
 	}
 
 	storeMediaFiles(files) {

@@ -7,6 +7,7 @@ import { ConstructionsiteEventsPage} from '../constructionsite-events/constructi
 import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsitePhotoPage} from '../constructionsite-photo/constructionsite-photo';
 import { ConstructionsiteContactsPage} from '../constructionsite-contacts/constructionsite-contacts';
+import { ConstructionsiteShippingPage} from '../constructionsite-shipping/constructionsite-shipping';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -60,4 +61,8 @@ export class ConstructionsiteOverviewPage {
 	openEventsPage(){
 		this.navCtrl.push(ConstructionsiteEventsPage);
 	}
+	openShippingPage(){
+		this.navCtrl.push(ConstructionsiteShippingPage);
+	}
+
 }

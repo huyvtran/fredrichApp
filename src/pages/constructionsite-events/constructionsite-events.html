@@ -15,14 +15,6 @@
 
 <ion-content padding>
 
-	<button ion-button large (click)="openReportEventPage()">
-		Vorkommnis melden
-	</button>
-
-	<button ion-button large (click)="openReportDamagePage()">
-		Schaden melden
-	</button>
-
 	<ion-list>
 		<ion-list-header>
 			Vorkommnisse	
@@ -33,6 +25,15 @@
 		</button>  
 	</ion-list>
 
+	<button ion-button large (click)="openReportEventPage()">
+		Vorkommnis melden
+	</button>
+
+	<!---
+	<button ion-button large (click)="openReportDamagePage()">
+		Schaden melden
+	</button>
+
 	<ion-list>
 		<ion-list-header>
 			Schadensmeldungen	
@@ -41,7 +42,6 @@
 			<p> <b>{{report.item.name}}: {{report.description}}</b></p>
 		</button>  
 	</ion-list>
-
-
+	-->
 
 </ion-content>

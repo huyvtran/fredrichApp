@@ -72,6 +72,14 @@ export class EquipmentItemList {
 		return count;
 	}// }}}
 
+	//XXX
+	addDummyDamageReports(){
+		for (let item of this.items){
+			item.addDummyDamageReport();
+		}
+		console.log("DUMMY DAMAGE REPORTS ADDED");
+	}
+
 }
 
 

@@ -21,10 +21,7 @@
 			<ion-col>
 				<ion-card color="primary" class="card_header"> <!--CARD: HEADER{{{-->
 					<ion-card-header>
-						<p>Baustelle Nr. {{consiteProv.constructionsite.id}} in
-						{{consiteProv.location.town }}, {{consiteProv.location.country }}.
-						{{consiteProv.location.getLatStr()}}, {{consiteProv.location.getLonStr()}} </p>
-						<p> eingeloggt als: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
+						<p>Baustelle {{consiteProv.constructionsite.id}}; User: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
 						<!--
 						{{ consiteProv.constructionsite.description }}
 						-->
@@ -142,7 +139,7 @@
 								{{consiteProv.equipment.getOtherCount()}}
 							</ion-col>
 						</ion-row>
-
+						<p>Schadensmeldungen: {{consiteProv.getNumDamageReports()}}</p>
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
@@ -248,18 +245,26 @@
 					</ion-card> 
 					<!--}}}-->
 			</ion-col>
-
 			<ion-col>
-				<ion-card (click)="openEventsPage()"> <!--CARD: COMMENTS{{{-->
+				<ion-card (click)="openEventsPage()"> <!--CARD: BERICHTE{{{-->
 					<ion-card-header>
 						Berichte
 					</ion-card-header>
 					<ion-card-content>
 						<p>Vorkommnisse: {{consiteProv.getNumEvents()}}</p>
-						<p>Schadensmeldungen: {{consiteProv.getNumDamageReports()}}</p>
 					</ion-card-content>
 				</ion-card> <!--}}}-->
 			</ion-col>
+			<ion-col>
+				<ion-card (click)="openShippingPage()"> <!--CARD: VERSAND{{{-->
+					<ion-card-header>
+						Versand	
+					</ion-card-header>
+					<ion-card-content>
+					</ion-card-content>
+				</ion-card> <!--}}}-->
+			</ion-col>
+
 		</ion-row>
 	</ion-grid>
 

@@ -40,6 +40,6 @@ export class ConstructionsiteEventsPage {
 	}
 
 	openReportDamagePage(){
-		this.navCtrl.push(ConstructionsiteReportDamagePage);
+// 		this.navCtrl.push(ConstructionsiteReportDamagePage);
 	}
 }

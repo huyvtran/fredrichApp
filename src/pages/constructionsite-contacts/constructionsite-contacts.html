@@ -7,61 +7,57 @@
 <ion-header>
 
   <ion-navbar>
-	  <ion-title>Kontakte: {{ consiteProv.constructionsite.description }} </ion-title>
+	  <ion-title>Kontakte der Baustelle {{ consiteProv.getConstructionsiteId() }} </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding>
-	<ion-list>
-	<!-->
-		<ion-item-sliding>
-	-->
+<ion-content>
+	<ion-list class="accordeon-list">
+		<!-- First Level -->
+		<ion-list-header *ngFor="let category of consiteProv.contacts.categoryRoles; let i = index"
+			no-lines no-padding>
+			<button ion-item (click)="toggleCategory(i)" detail-none [ngClass]="{'section-active':
+				category.open, 'section': !category.open}">
+				<ion-icon item-left name="arrow-forward" *ngIf="!category.open"></ion-icon>
+				<ion-icon item-left name="arrow-down" *ngIf="category.open"></ion-icon>
+				{{category.name}}
+			</button>
 
-			<ion-item  *ngFor="let contact of consiteProv.getContacts()">
-				<ion-grid item-content>	
-					<ion-row nowrap>
-						<ion-col col-6>
-							<p> <b>{{contact.getRoleStr()}}</b> </p>
-							<p> {{ contact.companyName }} </p>
-							<p> {{ contact.name }}, {{ contact.surname }} </p>
-							<p> {{ contact.phoneNr }}</p>
-							<p> {{ contact.email}}</p>
-						</ion-col>
-						<ion-col>
-							<button ion-button full (click)="callContact(contact)">
-								<ion-icon name="call"></ion-icon>
-							</button>
-						</ion-col>
-						<ion-col>
-							<button ion-button full (click)="writeEmailToContact(contact)">
-								<ion-icon name="mail"></ion-icon>
-							</button>
-						</ion-col>
-					</ion-row>
-				</ion-grid>
-			</ion-item>
+			<!-- contactlist of category, that opens if clicked -->
+			<ion-list *ngIf="category.roles && category.open" no-lines>
+				<ion-list-header *ngFor="let contact of consiteProv.contacts.getContactsForCategory(i);
+					let j = index" no-lines no-padding>
+					<ion-item *ngIf="!contact.children" detail-none class="contact-item" text-wrap>
 
-			<!--
-			<ion-item-options side="left">
-				<button ion-button color="primary">
-					<ion-icon name="call"></ion-icon>
-					Anrufen	
-				</button>
-			</ion-item-options>
+						<ion-grid item-content>	
+							<ion-row nowrap>
+								<ion-col col-6>
+									<h2> {{contact.getRoleStr()}}</h2>
+									<p> {{ contact.companyName }} </p>
+									<p> {{ contact.name }}, {{ contact.surname }} </p>
+									<p> {{ contact.phoneNr }}</p>
+									<p> {{ contact.email}}</p>
+								</ion-col>
+								<ion-col>
+									<button ion-button full (click)="callContact(contact)">
+										<ion-icon name="call"></ion-icon>
+									</button>
+								</ion-col>
+								<ion-col>
+									<button ion-button full (click)="writeEmailToContact(contact)">
+										<ion-icon name="mail"></ion-icon>
+									</button>
+								</ion-col>
+							</ion-row>
+						</ion-grid>
 
-			<ion-item-options side="right">
-				<button ion-button color="primary">
-				<ion-icon name="mail"></ion-icon>
-				<div style="color:#000">Email</div>
-				</button>
-			</ion-item-options>
-			-->
+					</ion-item>
+				</ion-list-header>
+			</ion-list>
 
-			<!--
-		</ion-item-sliding>
-			-->
+		</ion-list-header>
 	</ion-list>
 
 </ion-content>

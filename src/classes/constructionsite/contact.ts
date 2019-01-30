@@ -60,6 +60,9 @@ export class Contact {
 		this.town = "";
 		this.country = "";
 	}// }}}
+	getRole(){
+		return this.role;
+	}
 	getRoleStr(){// {{{
 		let roleStr="";
 		switch (this.role) {

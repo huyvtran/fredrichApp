@@ -1,5 +1,6 @@
 import { EquipmentItem } from './equipment-item'
 
+
 export class DamageReport {
 
 	id: string;
@@ -38,10 +39,8 @@ export class DamageReport {
 	getNumAudioFiles(){// {{{
 		return this.audioFiles.length;
 	}// }}}
-	getParentItem(){
-		return new EquipmentItem(); //XXX
-		// 		return this.equipmentProvider.getItemById(this.parentItemId); //TODO: refactor with
-		// 		new equipmentprovider
+	getParentItemId(){
+		return this.parentItemId;
 	}
 
 	//PRIVATE

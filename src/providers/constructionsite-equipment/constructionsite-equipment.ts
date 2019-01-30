@@ -6,6 +6,7 @@ import { AuthServiceProvider } from '../auth-service/auth-service';
 import { GlobalsProvider } from '../globals/globals'
 
 import { EquipmentItemList } from '../../classes/equipment/equipment-item-list'
+import { DamageReport } from '../../classes/equipment/damage-report'
 
 /*
   Generated class for the ConstructionsiteEquipmentProvider provider.
@@ -46,6 +47,7 @@ export class ConstructionsiteEquipmentProvider {
 // 					item.setData(data_item);
 					this.equipmentItemList.addItem(data_item);
 				}
+				this.equipmentItemList.addDummyDamageReports(); //XXX
 			},
 			err => {this.loadingStatusObserver.next(false);},
 			() => {
@@ -84,6 +86,11 @@ export class ConstructionsiteEquipmentProvider {
 		}
 		return numDamageReports;
 	}// }}}
+	public getDamageReportParentItem(report: DamageReport){
+		let item_id = report.getParentItemId();
+		console.log("item id: " + item_id);
+		return this.equipmentItemList.getItemFromId(item_id);
+	}
 
 	//SETTERS
 	setEquipmentItemListData(data){// {{{

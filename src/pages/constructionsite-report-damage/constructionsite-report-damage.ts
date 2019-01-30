@@ -162,9 +162,22 @@ export class ConstructionsiteReportDamagePage {
 	recordAudio(){
 		console.log("RECORDING AUDIO");
 		this.audioProvider.captureAudio();
+		this.audioProvider.recordingStatusUpdates()
+			.subscribe(data => {
+				console.log("AUDIO RECEIVED");
+				console.log(data);
+				this.addAudioToReport(data);
+			});
 	}
 
 	playAudio(myFile){
+		console.log("PLAYING FILE");
+		console.log(JSON.stringify(myFile));
 		this.audioProvider.play(myFile);
+	}
+
+	addAudioToReport(audioFile){
+		console.log("ADDING AUDIO TO REPORT");
+		this.report.audioFiles.push(audioFile[0]);
 	}
 }

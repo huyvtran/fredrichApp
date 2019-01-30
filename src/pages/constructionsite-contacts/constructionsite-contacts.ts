@@ -39,6 +39,10 @@ export class ConstructionsiteContactsPage {
 
 	}
 
+	toggleCategory(i){
+		this.consiteProv.contacts.categoryRoles[i].open = !this.consiteProv.contacts.categoryRoles[i].open;
+	}
+
 	// calling a number
 	callContact(contact){
 		let params = {calleeStr: contact.name, phoneNr: contact.phoneNr};

@@ -17,7 +17,9 @@ import { Contact } from '../../classes/constructionsite/contact'
 export class ConstructionsiteContactsProvider {
 
 	contacts:any;
+	contactCategories: any;
 	contactTypes: any;
+	categoryRoles: any;
 
 	loadingStatus:any;
 	loadingStatusObserver:any;
@@ -27,6 +29,7 @@ export class ConstructionsiteContactsProvider {
 		this.loadingStatus = Observable.create(observer => {
 			this.loadingStatusObserver = observer;
 		});
+		this.contactCategories = [];
 		this.contactTypes = [
 			"Bauleitung",
 			"Bauherr",
@@ -54,13 +57,20 @@ export class ConstructionsiteContactsProvider {
 		let url = this.globals.serverPhpScriptsUrl + "get_consite_contacts.php?token=" + this.auth.getUserInfo().getToken();
 		this.http.get(url)
 			.subscribe(data => {
-				let contacts_raw = data["contacts_arr"];
-				for (let item of contacts_raw){
+// 				console.log("CONTACTS DATA:")
+// 				console.log(data);
+				let contactsRaw = data["contacts_arr"];
+				for (let item of contactsRaw){
 					let contact = new Contact();
 					contact.setData(item);
 					this.contacts.push(contact);
 				}
 				this.sortContacts();
+
+				this.categoryRoles = data["category_role_arr"];
+				for (let cat of this.categoryRoles){
+// 					cat.open = false;
+				}
 			},
 			err => {this.loadingStatusObserver.next(false);},
 			() => {
@@ -68,6 +78,18 @@ export class ConstructionsiteContactsProvider {
 				this.loadingStatusObserver.complete();
 			});
 	}// }}}
+
+	getContactsForCategory(index){
+		console.log("getting contacts for category: " + index + ": " + this.categoryRoles[index].name);
+		let roles = this.categoryRoles[index].roles;
+		let retval = [];
+		for (let contact of this.contacts) {
+			if(roles.indexOf(contact.getRole())>=0){
+				retval.push(contact);
+			}
+		}
+		return retval;
+	}
 
 	loadingUpdates(){// {{{
 		return this.loadingStatus;
