@@ -131,7 +131,6 @@ export class WorkerTeam {
 		return count;
 	}// }}}
 
-
 	//PRIVATE
 	private clearTeam(){// {{{
 		this.members = [];

@@ -7,7 +7,7 @@
 <ion-header>
 
   <ion-navbar>
-	  <ion-title>Bautagebericht: {{dailyReport.constructionsite.description}}</ion-title>
+	  <ion-title>Bautagebericht: {{ consiteProv.getConstructionsiteId() }}</ion-title>
   </ion-navbar>
 
 </ion-header>
@@ -70,22 +70,24 @@
 						Arbeitszeit	Belegschaft
 					</ion-card-header>
 					<ion-card-content>
+
+						<ion-list no-padding>
 							<ion-item>
-								<ion-grid>
+								<ion-grid class="grid-workers">
 									<ion-row nowrap>
-										<ion-col col-3>
+										<ion-col col-2 class="col-workers-1st">
 											Rolle:
 										</ion-col>
-										<ion-col>
+										<ion-col class="col-workers-more">
 											von:
 										</ion-col>
-										<ion-col>
+										<ion-col class="col-workers-more">
 											bis:
 										</ion-col>
-										<ion-col>
-											Anzahl:
+										<ion-col col-1 class="col-workers-more">
+											#:
 										</ion-col>
-										<ion-col>
+										<ion-col col-3 class="col-workers-more">
 											Std:
 										</ion-col>
 
@@ -93,47 +95,43 @@
 								</ion-grid>
 							</ion-item>
 
-
-						<ion-list>
 							<ion-item *ngFor="let roleReport of consiteProv.dailyReport.workersTimeReport">
-								<ion-grid>
+								<ion-grid class="grid-workers">
 									<ion-row nowrap>
-										<ion-col col-3>
-											{{roleReport.roleStr}}
+										<ion-col col-2 class="col-workers-1st">
+											<p>{{roleReport.roleStr[0]}}</p>
 										</ion-col>
-
-										<ion-col>
-											{{roleReport.hourStart}}
+										<ion-col class="col-workers-more">
+											<p>{{roleReport.hourStart}}</p>
 										</ion-col>
-										<ion-col>
-											{{roleReport.hourEnd}}
+										<ion-col class="col-workers-more">
+											<p>{{roleReport.hourEnd}}</p>
 										</ion-col>
-										<ion-col>
-											{{roleReport.count}}
+										<ion-col col-1 class="col-workers-more">
+											<p>{{roleReport.count}}</p>
 										</ion-col>
-										<ion-col>
-											{{roleReport.numHours}}
+										<ion-col col-3 class="col-workers-more">
+											<p>{{roleReport.numHours}}</p>
 										</ion-col>
-
 									</ion-row>
 								</ion-grid>
 							</ion-item>
 
 							<ion-item>
-								<ion-grid>
+								<ion-grid class="grid-workers">
 									<ion-row nowrap>
-										<ion-col col-3>
+										<ion-col col-3 class="col-workers-1st">
 											Gesamt
 										</ion-col>
 
-										<ion-col>
+										<ion-col class="col-workers-more">
 										</ion-col>
-										<ion-col>
+										<ion-col class="col-workers-more">
 										</ion-col>
-										<ion-col>
+										<ion-col col-1 class="col-workers-more">
 											{{consiteProv.dailyReport.workersTimeReportTotals.numWorkersPresent}}
 										</ion-col>
-										<ion-col>
+										<ion-col col-3 class="col-workers-more">
 											{{consiteProv.dailyReport.workersTimeReportTotals.numHours}}
 										</ion-col>
 									</ion-row>
@@ -153,48 +151,48 @@
 					</ion-card-header>
 					<ion-card-content>
 							<ion-item>
-								<ion-grid>
+								<ion-grid class="grid-workers">
+
 									<ion-row nowrap>
-										<ion-col col-3>
-											Firma / Arbeiten:
+										<ion-col col-2 class="col-workers-1st">
+											Firma:
 										</ion-col>
-										<ion-col>
+										<ion-col class="col-workers-more">
 											von:
 										</ion-col>
-										<ion-col>
+										<ion-col class="col-workers-more">
 											bis:
 										</ion-col>
-										<ion-col>
-											Anzahl:
+										<ion-col col-1 class="col-workers-more">
+											#:
 										</ion-col>
-										<ion-col>
+										<ion-col col-3 class="col-workers-more">
 											Std:
 										</ion-col>
-
 									</ion-row>
+
 								</ion-grid>
 							</ion-item>
 
 
 						<ion-list>
 							<ion-item>
-								<ion-grid>
+								<ion-grid class="grid-workers">
 									<ion-row nowrap>
-										<ion-col col-3>
-											Schmidt GmbH
+										<ion-col col-2 class="col-workers-1st">
+											<p>Schmidt GmbH</p>
 										</ion-col>
-
-										<ion-col>
-											07:00
+										<ion-col class="col-workers-more">
+											<p>07:00</p>
 										</ion-col>
-										<ion-col>
-											16:00
+										<ion-col class="col-workers-more">
+											<p>16:00</p>
 										</ion-col>
-										<ion-col>
-											2
+										<ion-col col-1 class="col-workers-more">
+											<p>2</p>
 										</ion-col>
-										<ion-col>
-											18
+										<ion-col col-3 class="col-workers-more">
+											<p>18</p>
 										</ion-col>
 
 									</ion-row>
@@ -202,9 +200,9 @@
 							</ion-item>
 
 							<ion-item>
-								<ion-grid>
+								<ion-grid class="grid-workers">
 									<ion-row nowrap>
-										<ion-col col-3>
+										<ion-col col-3 class="col-workers-1st">
 											Gesamt
 										</ion-col>
 
@@ -212,10 +210,10 @@
 										</ion-col>
 										<ion-col>
 										</ion-col>
-										<ion-col>
+										<ion-col col-1 class="col-workers-more">
 											2
 										</ion-col>
-										<ion-col>
+										<ion-col col-3 class="col-workers-more">
 											18
 										</ion-col>
 									</ion-row>
@@ -236,22 +234,34 @@
 					<ion-card-content>
 
 						<ion-list>
-							<ion-item *ngFor="let job of dailyReport.workDoneArr">
-								<ion-grid>
+							<ion-item>
+								<ion-grid class="grid-workers">
 									<ion-row nowrap>
-										<ion-col col-1>
-											{{job.id}}.
+										<ion-col col-2 class="col-workers-1st">
+											Id:
 										</ion-col>
-										<ion-col>
-											{{job.title}}
+										<ion-col class="col-workers-more">
+											Beschreibung:
 										</ion-col>
-										<ion-col>
+										<ion-col class="col-workers-more">
 											Kommentar:
 										</ion-col>
-										<ion-col>
-											{{job.commentary}}
-										</ion-col>
+									</ion-row>
+								</ion-grid>
+							</ion-item>
 
+							<ion-item *ngFor="let job of dailyReport.workDoneArr">
+								<ion-grid class="grid-workers">
+									<ion-row nowrap>
+										<ion-col col-2 class="col-workers-1st">
+											<p>{{job.id}}</p>
+										</ion-col>
+										<ion-col class="col-workers-more">
+											<p>{{job.title}}</p>
+										</ion-col>
+										<ion-col class="col-workers-more">
+											<p>{{job.commentary}}</p>
+										</ion-col>
 									</ion-row>
 								</ion-grid>
 							</ion-item>
@@ -273,7 +283,7 @@
 						<div *ngIf="dailyReport.eventArr.length">
 						<ion-list>
 							<ion-item *ngFor="let event of dailyReport.eventArr">
-								<ion-grid>
+								<ion-grid class="grid-workers">
 									<ion-row nowrap>
 										<ion-col col-1>
 											{{event.id}}.

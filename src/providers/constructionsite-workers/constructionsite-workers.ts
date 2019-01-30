@@ -85,11 +85,10 @@ export class ConstructionsiteWorkersProvider {
 		return this.workerTeam.getPresentWorkersCount();
 	}// }}}
 
-
 	public getTeamMembers(){// {{{
 		return this.workerTeam.getMembers();
 	}// }}}
-	public getTodaysWorkerHoursByRole(role:string):number{// {{{
+	public getTodaysWorkerHoursByRole(role: string):number{// {{{
 		let hours=0;
 		let workers = this.getTeamMembers();
 		for (let worker of workers) {
@@ -99,6 +98,21 @@ export class ConstructionsiteWorkersProvider {
 		}
 		return hours;
 	}// }}}
+
+	public getPresentWorkerCountByRole(role: string){// {{{
+		return this.workerTeam.getPresentWorkerCountByRole(role);
+	}// }}}
+
+	public getHourStartAvgByRole(role: string){// {{{
+		return this.workerTeam.getHourStartAvgByRole(role);
+	}// }}}
+	public getHourEndAvgByRole(role: string){// {{{
+		return this.workerTeam.getHourEndAvgByRole(role);
+	}// }}}
+	public getWorkerHoursByRoleToday(role: string){// {{{
+		return this.workerTeam.getWorkerHoursByRoleToday(role);
+	}// }}}
+
 
 
 }

@@ -1,3 +1,36 @@
 page-constructionsite-dailyreport {
+	.item {
+		height:20px;
+		padding: 0px;
+		margin-bottom: 0px;
+	}
+	.label {
+		margin: 0px;
+	}
+	.list{
+		margin: 0px 0px 0px 0px;
+	}
+
+	.col-workers-1st{
+		text-align: left;
+		white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+	}
+	.col-workers-1st:hover {
+      text-overflow: visible;
+	}
+	.col-workers-more{
+		text-align: right;
+		white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+	}
+	.grid-workers {
+		padding: 0px;
+	}
+	.grid-workers-totals {
+		padding-top: 10px;
+	}
 
 }

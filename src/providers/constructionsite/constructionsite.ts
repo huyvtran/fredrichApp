@@ -290,7 +290,7 @@ export class ConstructionsiteProvider {
 	//DAILY REPORT
 	public generateDailyReport(){// {{{
 		this.dailyReport = new DailyReport();
-		this.dailyReport.constructionsite.id= this.constructionsite.id;
+		this.dailyReport.constructionsite.id= this.getConstructionsiteId();
 		this.dailyReport.constructionsite.description = this.constructionsite.description;
 
 		this.dailyReport.timestamp.calendarWeek = this.time.getCurrentCalendarWeek();
@@ -319,13 +319,15 @@ export class ConstructionsiteProvider {
 		for (let role of roles){
 			let timeReportRole = {role: role, roleStr:"", count:0, hourStart:"", hourEnd:"", numHours:0};
 			timeReportRole.roleStr=this.getRoleStr(role);
-			timeReportRole.count = this.constructionsite.workerTeam.getPresentWorkerCountByRole(role);
-			timeReportRole.hourStart = this.timeNum2Str(this.constructionsite.workerTeam.getHourStartAvgByRole(role));
-			timeReportRole.hourEnd = this.timeNum2Str(this.constructionsite.workerTeam.getHourEndAvgByRole(role));
-			timeReportRole.numHours= this.constructionsite.workerTeam.getWorkerHoursByRoleToday(role);
+			timeReportRole.count = this.workers.getPresentWorkerCountByRole(role);
+			timeReportRole.hourStart = this.timeNum2Str(this.workers.getHourStartAvgByRole(role));
+			timeReportRole.hourEnd = this.timeNum2Str(this.workers.getHourEndAvgByRole(role));
+			timeReportRole.numHours= this.workers.getWorkerHoursByRoleToday(role);
 			timeReportArr.push(timeReportRole);
 		}
 		this.dailyReport.workersTimeReport = timeReportArr;
+		console.log("workers timereport:");
+		console.log(this.dailyReport.workersTimeReport);
 	}// }}}
 	private generateWorkersTimeReportTotals(){// {{{
 		let roles = this.getAvailableRoles();
@@ -333,8 +335,8 @@ export class ConstructionsiteProvider {
 			nwp=0, 
 			numHours=0;
 		for (let role of roles){
-			nwp = nwp + this.constructionsite.workerTeam.getPresentWorkerCountByRole(role);
-			numHours = numHours + this.constructionsite.workerTeam.getWorkerHoursByRoleToday(role);
+			nwp = nwp + this.workers.getPresentWorkerCountByRole(role);
+			numHours = numHours + this.workers.getWorkerHoursByRoleToday(role);
 		}
 		totals.numWorkersPresent = nwp;
 		totals.numHours = numHours;
