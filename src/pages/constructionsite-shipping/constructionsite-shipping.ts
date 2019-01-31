@@ -1,6 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
+import { ConstructionsiteEquipmentCheckInPage } from '../constructionsite-equipment-check-in/constructionsite-equipment-check-in';
+import { ConstructionsiteEquipmentCheckOutPage } from '../constructionsite-equipment-check-out/constructionsite-equipment-check-out';
+
 /**
  * Generated class for the ConstructionsiteShippingPage page.
  *
@@ -23,10 +26,10 @@ export class ConstructionsiteShippingPage {
   }
 
 	openEquipmentCheckinPage(){
-
+		this.navCtrl.push(ConstructionsiteEquipmentCheckInPage);
 	}
 
 	openEquipmentCheckoutPage(){
-
+		this.navCtrl.push(ConstructionsiteEquipmentCheckOutPage);
 	}
 }

@@ -30,6 +30,8 @@ import { ConstructionsiteTimerecordingPage } from '../pages/constructionsite-tim
 import { ConstructionsiteDailyreportPage } from '../pages/constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsiteEquipmentPage } from '../pages/constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteEquipmentDetailPage } from '../pages/constructionsite-equipment-detail/constructionsite-equipment-detail';
+import { ConstructionsiteEquipmentCheckInPage } from '../pages/constructionsite-equipment-check-in/constructionsite-equipment-check-in';
+import { ConstructionsiteEquipmentCheckOutPage } from '../pages/constructionsite-equipment-check-out/constructionsite-equipment-check-out';
 import { ConstructionsiteSettingsPage } from '../pages/constructionsite-settings/constructionsite-settings';
 import { ConstructionsiteContactsPage } from '../pages/constructionsite-contacts/constructionsite-contacts';
 import { ConstructionsiteEventsPage } from '../pages/constructionsite-events/constructionsite-events';
@@ -89,6 +91,8 @@ import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-w
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
 			ConstructionsiteEquipmentDetailPage,
+			ConstructionsiteEquipmentCheckInPage,
+			ConstructionsiteEquipmentCheckOutPage,
 		ConstructionsiteMorePage,
 			ConstructionsiteContactsPage,
 			ConstructionsiteSettingsPage,
@@ -133,7 +137,9 @@ import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-w
 		ConstructionsiteTimerecordingPage,
 		ConstructionsiteDailyreportPage,
 		ConstructionsiteEquipmentPage,
-		ConstructionsiteEquipmentDetailPage,
+			ConstructionsiteEquipmentDetailPage,
+			ConstructionsiteEquipmentCheckInPage,
+			ConstructionsiteEquipmentCheckOutPage,
 		ConstructionsiteMorePage,
 			ConstructionsiteContactsPage,
 			ConstructionsiteSettingsPage,
