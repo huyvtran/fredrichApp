@@ -16,7 +16,6 @@ import { GlobalsProvider } from '../globals/globals'
 
 export class User {
 
-	private id: string;
 	private token: string;
 
 	name: string;
@@ -101,6 +100,7 @@ export class AuthServiceProvider {
 			observer.next(access);
 			observer.complete();
 		}
+		return access;
 	}// }}}
 
 }

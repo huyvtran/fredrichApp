@@ -1,5 +1,3 @@
-import { EquipmentItem } from './equipment-item'
-
 
 export class DamageReport {
 

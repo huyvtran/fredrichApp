@@ -1,5 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { AlertController } from 'ionic-angular';
 import { BarcodeScanner } from '@ionic-native/barcode-scanner';
 // import { QRScanner, QRScannerStatus } from '@ionic-native/qr-scanner';
 //
@@ -16,7 +17,8 @@ export class QrScannerProvider {
 
 	constructor(
 		public http: HttpClient,
-		private barcodeScanner: BarcodeScanner
+		private barcodeScanner: BarcodeScanner,
+		private alertCtrl: AlertController
 	) {
     console.log('Hello QrScannerProvider Provider');
   }
@@ -40,6 +42,7 @@ export class QrScannerProvider {
 			this.barcodeScanner.scan(options).then(data => {
 				// this is called when a barcode is found
 				console.log(JSON.stringify(data));
+				this.presentAlert(data["text"]);
 				resolve(data["text"]);
 // 				return data["text"];
 			})
@@ -72,6 +75,13 @@ export class QrScannerProvider {
 		return item;
 	}
 
-
+	presentAlert(text) {
+		let alert = this.alertCtrl.create({
+		 title: 'QR-Scan',
+		 subTitle: 'Gescannter Text: ' + text,
+		 buttons: ['OK']
+	  });
+	  alert.present();
+  }
 
 }
