@@ -5,7 +5,7 @@ import { ConstructionsiteEquipmentCheckInPage } from '../constructionsite-equipm
 import { ConstructionsiteEquipmentCheckOutPage } from '../constructionsite-equipment-check-out/constructionsite-equipment-check-out';
 
 /**
- * Generated class for the ConstructionsiteShippingPage page.
+ * Generated class for the ConstructionsiteEquipmentShippingPage page.
  *
  * See https://ionicframework.com/docs/components/#navigation for more info on
  * Ionic pages and navigation.
@@ -13,16 +13,16 @@ import { ConstructionsiteEquipmentCheckOutPage } from '../constructionsite-equip
 
 @IonicPage()
 @Component({
-  selector: 'page-constructionsite-shipping',
-  templateUrl: 'constructionsite-shipping.html',
+  selector: 'page-constructionsite-equipment-shipping',
+  templateUrl: 'constructionsite-equipment-shipping.html',
 })
-export class ConstructionsiteShippingPage {
+export class ConstructionsiteEquipmentShippingPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams) {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad ConstructionsiteShippingPage');
+    console.log('ionViewDidLoad ConstructionsiteEquipmentShippingPage');
   }
 
 	openEquipmentCheckinPage(){
@@ -32,4 +32,5 @@ export class ConstructionsiteShippingPage {
 	openEquipmentCheckoutPage(){
 		this.navCtrl.push(ConstructionsiteEquipmentCheckOutPage);
 	}
+
 }
