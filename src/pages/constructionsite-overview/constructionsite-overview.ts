@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController, App } from 'ionic-angular';
 
 import { ConstructionsiteTimerecordingPage } from '../constructionsite-timerecording/constructionsite-timerecording';
 import { ConstructionsiteEquipmentPage} from '../constructionsite-equipment/constructionsite-equipment';
@@ -8,6 +8,7 @@ import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/
 import { ConstructionsitePhotoPage} from '../constructionsite-photo/constructionsite-photo';
 import { ConstructionsiteContactsPage} from '../constructionsite-contacts/constructionsite-contacts';
 import { ConstructionsiteEquipmentShippingPage } from '../constructionsite-equipment-shipping/constructionsite-equipment-shipping';
+import { LoginPage } from '../login/login';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
 import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
@@ -26,13 +27,18 @@ import { AuthServiceProvider } from '../../providers/auth-service/auth-service';
 })
 export class ConstructionsiteOverviewPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public consiteProv: ConstructionsiteProvider, private auth: AuthServiceProvider) {
-  }
+	constructor(public navCtrl: NavController, public navParams: NavParams, 
+		private actionSheetCtrl: ActionSheetController,
+		public app: App,
+		public consiteProv: ConstructionsiteProvider, 
+		private auth: AuthServiceProvider
+	) {
+	}
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConstructionsiteOverviewPage');
+	ionViewDidLoad() {
+		console.log('ionViewDidLoad ConstructionsiteOverviewPage');
 		console.log(this.consiteProv.getConstructionsite());
-  }
+	}
 
 	openWorkersPage(){
 		this.navCtrl.push(ConstructionsiteTimerecordingPage);
@@ -63,6 +69,33 @@ export class ConstructionsiteOverviewPage {
 	}
 	openShippingPage(){
 		this.navCtrl.push(ConstructionsiteEquipmentShippingPage);
+	}
+
+	presentLogoutActionSheet(){
+		let actionSheet = this.actionSheetCtrl.create({
+			title: 'Ausloggen?',
+			buttons: [
+				{
+					text: 'Ja',
+					handler: () => {
+						this.logout();
+					}
+				},
+				{
+					text: 'Nein',
+					role: 'cancel'
+				}
+			]
+		});
+		actionSheet.present();
+	}
+
+	logout() {
+		this.navCtrl.setRoot(LoginPage);
+		this.auth.logout().subscribe(succ => {
+			this.app.getRootNavs()[0].setRoot(LoginPage); // sets it to the very root of the app
+			console.log("LOGGED OUT");
+		});
 	}
 
 }

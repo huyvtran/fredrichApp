@@ -68,6 +68,14 @@ export class AuthServiceProvider {
 		return this.currentUser;
 	}// }}}
 
+	public isLoggedIn(){
+		if(this.currentUser == null){
+			return false;
+		} else {
+			return true;
+		}
+	}
+
 	public logout() {// {{{
 		return Observable.create(observer => {
 			this.currentUser = null;

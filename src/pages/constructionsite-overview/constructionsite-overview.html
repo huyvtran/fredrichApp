@@ -21,7 +21,18 @@
 			<ion-col>
 				<ion-card color="primary" class="card_header"> <!--CARD: HEADER{{{-->
 					<ion-card-header>
-						<p>Baustelle {{consiteProv.constructionsite.id}}; User: {{auth.getUserInfo().surname}} {{auth.getUserInfo().name}} </p>
+						<ion-grid>
+							<ion-row nowrap align-content-center>
+								<ion-col col-10 class="col_header">
+									<h2 *ngIf="auth.isLoggedIn()">Baustelle {{consiteProv.constructionsite.id}}; User: {{auth.getUserInfo().surname}}
+									{{auth.getUserInfo().name}} </h2>
+								</ion-col>
+								<ion-col class="col_header">
+									<button ion-button (click)="presentLogoutActionSheet()"><ion-icon name="log-out"></ion-icon></button>
+								</ion-col>
+							</ion-row>
+						</ion-grid>
+						
 						<!--
 						{{ consiteProv.constructionsite.description }}
 						-->
