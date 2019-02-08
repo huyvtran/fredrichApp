@@ -14,7 +14,7 @@
 
 
 <ion-content padding>
-	<button ion-button full (click)="scan()">QR-CODE SCANNEN</button>
+	<button ion-button large (click)="scan()" class="qr-scan-button">QR-CODE SCANNEN</button>
 
 	<ion-list>
 		<ion-item *ngFor="let item of consiteProv.equipment.getEquipmentItemListArray()" (click)="itemSelected(item)">
@@ -33,12 +33,4 @@
 
 
 </ion-content>
-
-<!--
-					<ion-col col-2>
-						<button full ion-button (click)="presentCameraActionSheet(item)">
-							<ion-icon name="camera"></ion-icon>
-						</button>
-					</ion-col>
--->
 

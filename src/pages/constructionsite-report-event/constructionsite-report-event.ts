@@ -9,6 +9,8 @@ import { FileHandlerProvider } from '../../providers/file-handler/file-handler';
 import { TimeProvider } from '../../providers/time/time';
 
 import { ConstructionsiteEvent } from '../../classes/constructionsite/constructionsite-event'
+import { ImageFile } from '../../classes/datatypes/image-file';
+
 
 /**
  * Generated class for the ConstructionsiteEventPage page.
@@ -40,7 +42,22 @@ export class ConstructionsiteReportEventPage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteReportEventPage');
+	  let imgData = {id:"0", path:'assets/imgs/', fileName:'FredrichLogo.png'};
+	  let imageFile = new ImageFile(imgData);
+		this.event.addImageFile(imageFile);
   }
+
+	submitEvent(){// {{{
+		this.event.author = this.getAuthorName();
+		this.event.id = this.consiteProv.getNumEvents(); //TODO get better ID
+		console.log(this.event);
+		this.consiteProv.addEvent(this.event);
+		this.navCtrl.pop();
+	}// }}}
+	getAuthorName(){// {{{
+		let user = this.auth.getUserInfo();
+		return user.surname[0] + ". " + user.name;
+	}// }}}
 
 	public presentCameraActionSheet() {// {{{
 		let actionSheet = this.actionSheetCtrl.create({
@@ -50,14 +67,14 @@ export class ConstructionsiteReportEventPage {
 					text: 'Aus Galerie laden',
 					handler: () => {
 						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.PHOTOLIBRARY);
-						this.handlePicture();
+						this.handleImage();
 					}
 				},
 				{
 					text: 'Kamera',
 					handler: () => {
 						this.cameraProvider.takePicture(this.cameraProvider.camera.PictureSourceType.CAMERA);
-						this.handlePicture();
+						this.handleImage();
 					}
 				},
 				{
@@ -68,38 +85,30 @@ export class ConstructionsiteReportEventPage {
 		});
 		actionSheet.present();
 	}// }}}
-
-	submitEvent(){// {{{
-		this.event.author = this.getAuthorName();
-		this.event.id = this.consiteProv.getNumEvents(); //TODO get better ID
-		console.log(this.event);
-		this.consiteProv.addEvent(this.event);
-		this.navCtrl.pop();
-	}// }}}
-
-	getAuthorName(){// {{{
-		let user = this.auth.getUserInfo();
-		return user.surname[0] + ". " + user.name;
-	}// }}}
-
-	handlePicture(){// {{{
-		this.copyPictureToLocal()
+	handleImage(){// {{{
+		this.copyImageToLocal()
 			.then(res => {
 				let nativeURL = res["nativeURL"];
 				let newPath = nativeURL.substring(0, nativeURL.lastIndexOf('/')+1);
 				let newFileName = nativeURL.substring(nativeURL.lastIndexOf('/')+1);
-// 				console.log("FULL PATH: " + nativeURL);
-// 				console.log("NEW PATH: " + newPath);
-// 				console.log("NEW FILENAME: " + newFileName);
-				this.addPictureToEvent(newPath, newFileName); 
+				this.file.readAsDataURL(newPath, newFileName)
+					.then(imagePathBase64 => {
+						let imgData = {id:"123", path:newPath, filename:newFileName, base64Path: imagePathBase64};
+						console.log("IMAGE FILE DATA:")
+						console.log(JSON.stringify(imgData));
+						let imageFile = new ImageFile(imgData);
+						this.event.addImageFile(imageFile);
+					})
+					.catch(err => {
+						console.log(JSON.stringify(err));
+					});
 			})
 			.catch(err => {
 				console.log(JSON.stringify(err));
 				//TODO: small toast: error copying file
 			});
 	}// }}}
-
-	copyPictureToLocal(){// {{{
+	copyImageToLocal(){// {{{
 		const promise = new Promise((resolve, reject) => {
 			let photoStream$ = this.cameraProvider.photoStream
 				.subscribe(imagePath => {
@@ -123,24 +132,18 @@ export class ConstructionsiteReportEventPage {
 		});
 		return promise;
 	}// }}}
-	addPictureToEvent(path:string, fileName:string){// {{{
-		// solution for image display found here: https://forum.ionicframework.com/t/unable-to-display-image-using-file-uri/84977/19
-		this.file.readAsDataURL(path, fileName)
-			.then(imagePathBase64 => {
-				this.event.imageFiles.push(imagePathBase64);
-				
-				//DEBUG
-				console.log("EVENT IMAGE FILES:");
-				for (let image of this.event.imageFiles) {console.log(image);}
-			})
-			.catch(err => {
-				console.log(JSON.stringify(err));
-			});
-	}// }}}
 	createNewFileName(){// {{{
 		let newFileName = "event_" + this.event.getId() + "_" + this.timeProvider.getDateStrForFilename();
 		return newFileName;
 	}// }}}
+	deleteImage(){
+		console.log("NOT IMPLEMENTED YET");
+// 		this.event.deleteImage(imageId);
+	}
+	viewImage(){
+		console.log("NOT IMPLEMENTED YET");
+// 		this.event.viewImage(imageId);
+	}
 
 
 }

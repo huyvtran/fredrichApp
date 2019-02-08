@@ -26,17 +26,6 @@
 				</ion-select>
 			</ion-item>
 
-			<!--
-					<ion-option value="planChange">Plan&auml;nderung</ion-option>
-					<ion-option value="visit">Besuch</ion-option>
-					<ion-option value="cAG">Anordnung des AG</ion-option>
-					<ion-option value="extraService">Zus&auml;tzliche Leistungen</ion-option>
-					<ion-option value="handicap">Behinderung</ion-option>
-					<ion-option value="hourlyWageWork">Stundenlohnarbeiten</ion-option>
-					<ion-option value="shipping">Versand</ion-option>
-					<ion-option value="other">Sonstiges</ion-option>
-			-->
-
 			<ion-item>
 				<ion-label color="tertiary" floating>Titel</ion-label>
 				<ion-input type="text" [(ngModel)]="event.title" name="title" required></ion-input>
@@ -54,12 +43,17 @@
 			Bild hinzuf&uuml;gen
 		</button>
 
-		<div *ngIf="event.imageFiles.length>0">
-			<p>Hinzugef&uuml;gte Bilder</p>
-			<ion-card *ngFor="let image of event.imageFiles" class="photo-card">
-				<img src={{image}} />
-			</ion-card>
-		</div>
+		<ion-list> <!-- *ngIf="report.imageFiles.length>0"-->
+			<ion-list-header>
+				Hinzugef&uuml;gte Bilder
+			</ion-list-header>
+			<ion-item *ngFor="let image of event.getImageFiles()" class="item-photo">
+				<img src={{image.getBase64Path()}} class="item-img"/>
+				<button ion-button type="button" large (click)="viewImage()" item-end><ion-icon name="eye"></ion-icon></button>
+				<button ion-button type="button" large (click)="deleteImage()" item-end><ion-icon name="trash"></ion-icon></button>
+			</ion-item>
+		</ion-list>
+
 
 		<button ion-button class="submit-btn" large type="submit" [disabled]="!registerForm.form.valid">
 			Vorkommnis melden

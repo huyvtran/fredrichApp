@@ -1,10 +1,12 @@
 page-constructionsite-report-event {
 	button {
+		min-width:100px;
 		border: 1px solid color($colors, tertiary);
 	}
 
-	.photo-card {
-		width: 300px;
+	.item-img{
+		max-width: 33%;
+		max-height:200px;
 	}
 
 }

@@ -52,6 +52,7 @@ export class ConstructionsiteReportDamagePage {
     console.log('ionViewDidLoad ConstructionsiteReportDamagePage');
   }
 
+	//PICTURES
 	public presentCameraActionSheet() {// {{{
 		let actionSheet = this.actionSheetCtrl.create({
 			title: 'Bildquelle auswaehlen:',
@@ -135,8 +136,8 @@ export class ConstructionsiteReportDamagePage {
 		let newFileName = "damagereport_" + this.report.id + "_" + this.timeProvider.getDateStrForFilename();
 		return newFileName;
 	}// }}}
-
-	getImageDataUrl(data){// {{{ //TODO move to some image handler etc
+	getImageDataUrl(data){// {{{ 
+		//TODO move to some image handler etc
 		this.file.readAsDataURL(data.path, data.fileName)
 			.then(imagePathBase64 => {
 				return imagePathBase64;
@@ -146,6 +147,28 @@ export class ConstructionsiteReportDamagePage {
 			});
 	}// }}}
 
+	//AUDIOFILES
+	recordAudio(){// {{{
+		console.log("RECORDING AUDIO");
+		this.audioProvider.captureAudio();
+		this.audioProvider.recordingStatusUpdates()
+			.subscribe(data => {
+				console.log("AUDIO RECEIVED");
+				console.log(data);
+				this.addAudioToReport(data);
+			});
+	}// }}}
+	playAudio(myFile){// {{{
+		console.log("PLAYING FILE");
+		console.log(JSON.stringify(myFile));
+		this.audioProvider.play(myFile);
+	}// }}}
+	addAudioToReport(audioFile){// {{{
+		console.log("ADDING AUDIO TO REPORT");
+		this.report.audioFiles.push(audioFile[0]);
+	}// }}}
+
+	//DAMAGEREPORT
 	submitDamageReport(){// {{{
 		this.report.author = this.getAuthorName();
 		this.report.id = String(this.consiteProv.getNumDamageReports()); //TODO get better ID
@@ -159,25 +182,4 @@ export class ConstructionsiteReportDamagePage {
 		return user.surname[0] + ". " + user.name;
 	}// }}}
 
-	recordAudio(){
-		console.log("RECORDING AUDIO");
-		this.audioProvider.captureAudio();
-		this.audioProvider.recordingStatusUpdates()
-			.subscribe(data => {
-				console.log("AUDIO RECEIVED");
-				console.log(data);
-				this.addAudioToReport(data);
-			});
-	}
-
-	playAudio(myFile){
-		console.log("PLAYING FILE");
-		console.log(JSON.stringify(myFile));
-		this.audioProvider.play(myFile);
-	}
-
-	addAudioToReport(audioFile){
-		console.log("ADDING AUDIO TO REPORT");
-		this.report.audioFiles.push(audioFile[0]);
-	}
 }
