@@ -28,7 +28,7 @@ export class ConstructionsiteReportEventPage {
 
 	event: ConstructionsiteEvent;
 
-	constructor(public navCtrl: NavController, public navParams: NavParams, 
+	constructor(public navCtrl: NavController, public navParams: NavParams, // {{{
 		private actionSheetCtrl: ActionSheetController, 
 		private auth: AuthServiceProvider, 
 		public consiteProv: ConstructionsiteProvider,
@@ -38,14 +38,16 @@ export class ConstructionsiteReportEventPage {
 		public timeProvider: TimeProvider
 	) {
 	  this.event = new ConstructionsiteEvent();// 
-  }
+  }// }}}
 
-  ionViewDidLoad() {
+  ionViewDidLoad() {// {{{
     console.log('ionViewDidLoad ConstructionsiteReportEventPage');
+
+	  //TESTING ONLY
 	  let imgData = {id:"0", path:'assets/imgs/', fileName:'FredrichLogo.png'};
 	  let imageFile = new ImageFile(imgData);
 		this.event.addImageFile(imageFile);
-  }
+  }// }}}
 
 	submitEvent(){// {{{
 		this.event.author = this.getAuthorName();
@@ -136,14 +138,13 @@ export class ConstructionsiteReportEventPage {
 		let newFileName = "event_" + this.event.getId() + "_" + this.timeProvider.getDateStrForFilename();
 		return newFileName;
 	}// }}}
-	deleteImage(){
+	deleteImage(){// {{{
 		console.log("NOT IMPLEMENTED YET");
 // 		this.event.deleteImage(imageId);
-	}
-	viewImage(){
+	}// }}}
+	viewImage(){// {{{
 		console.log("NOT IMPLEMENTED YET");
 // 		this.event.viewImage(imageId);
-	}
-
+	}// }}}
 
 }

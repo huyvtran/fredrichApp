@@ -72,4 +72,14 @@ export class EquipmentDamageReportDetailPage {
 		this.navCtrl.pop();
 	}// }}}
 
+	deleteImage(){// {{{
+		console.log("NOT IMPLEMENTED YET");
+// 		this.report.deleteImage(imageId);
+	}// }}}
+	viewImage(){// {{{
+		console.log("NOT IMPLEMENTED YET");
+// 		this.report.viewImage(imageId);
+	}// }}}
+
+
 }

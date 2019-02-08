@@ -11,7 +11,7 @@ import { AudioProvider } from '../../providers/audio/audio';
 
 import { DamageReport } from '../../classes/equipment/damage-report'
 import { EquipmentItem } from '../../classes/equipment/equipment-item'
-
+import { ImageFile } from '../../classes/datatypes/image-file';
 
 /**
  * Generated class for the ConstructionsiteReportDamagePage page.
@@ -50,6 +50,11 @@ export class ConstructionsiteReportDamagePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteReportDamagePage');
+
+	  //TESTING ONLY
+	  let imgData = {id:"0", path:'assets/imgs/', fileName:'FredrichLogo.png'};
+	  let imageFile = new ImageFile(imgData);
+		this.report.addImageFile(imageFile);
   }
 
 	//PICTURES
@@ -85,6 +90,7 @@ export class ConstructionsiteReportDamagePage {
 				let nativeURL = res["nativeURL"];
 				let newPath = nativeURL.substring(0, nativeURL.lastIndexOf('/')+1);
 				let newFileName = nativeURL.substring(nativeURL.lastIndexOf('/')+1);
+
 				this.addPictureToDamageReport(newPath, newFileName); 
 			})
 			.catch(err => {
@@ -117,8 +123,20 @@ export class ConstructionsiteReportDamagePage {
 		return promise;
 	}// }}}
 	addPictureToDamageReport(path:string, fileName:string){// {{{
-		let data = {path: path, fileName: fileName}; 
-		this.report.imageFiles.push(data);
+		this.file.readAsDataURL(path, fileName)
+			.then(imagePathBase64 => {
+				let imgData = {id:"123", path:path, filename:fileName, base64Path: imagePathBase64};
+// 					console.log("IMAGE FILE DATA:")
+// 					console.log(JSON.stringify(imgData));
+				let imageFile = new ImageFile(imgData);
+				this.report.addImageFile(imageFile);
+			})
+			.catch(err => {
+				console.log(JSON.stringify(err));
+			});
+
+// 		let data = {path: path, fileName: fileName}; 
+// 		this.report.imageFiles.push(data);
 // 		// solution for image display found here: https://forum.ionicframework.com/t/unable-to-display-image-using-file-uri/84977/19
 // 		this.file.readAsDataURL(path, fileName)
 // 			.then(imagePathBase64 => {
@@ -145,6 +163,14 @@ export class ConstructionsiteReportDamagePage {
 			.catch(err => {
 				console.log(JSON.stringify(err));
 			});
+	}// }}}
+	deleteImage(){// {{{
+		console.log("NOT IMPLEMENTED YET");
+// 		this.report.deleteImage(imageId);
+	}// }}}
+	viewImage(){// {{{
+		console.log("NOT IMPLEMENTED YET");
+// 		this.report.viewImage(imageId);
 	}// }}}
 
 	//AUDIOFILES

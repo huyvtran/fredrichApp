@@ -1,3 +1,4 @@
+import { ImageFile } from '../datatypes/image-file';
 
 export class DamageReport {
 
@@ -41,6 +42,9 @@ export class DamageReport {
 		return this.parentItemId;
 	}
 
+	addImageFile(imageFile: ImageFile){// {{{
+		this.imageFiles.push(imageFile);
+	}// }}}
 	//PRIVATE
 	private setDefaultValues(){// {{{
 		this.id = "";

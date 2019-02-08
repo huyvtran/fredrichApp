@@ -47,7 +47,7 @@
 			<ion-list-header>
 				Hinzugef&uuml;gte Bilder
 			</ion-list-header>
-			<ion-item *ngFor="let image of event.getImageFiles()" class="item-photo">
+			<ion-item *ngFor="let image of event.getImageFiles()">
 				<img src={{image.getBase64Path()}} class="item-img"/>
 				<button ion-button type="button" large (click)="viewImage()" item-end><ion-icon name="eye"></ion-icon></button>
 				<button ion-button type="button" large (click)="deleteImage()" item-end><ion-icon name="trash"></ion-icon></button>

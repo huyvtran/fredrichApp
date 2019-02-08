@@ -43,19 +43,25 @@
 
 		</ion-list>
 
+		<!--IMAGES-->
+		<button ion-button type="button" large (click)="presentCameraActionSheet()">
+			Bild hinzuf&uuml;gen
+		</button>
 		<ion-list> <!-- *ngIf="report.imageFiles.length>0"-->
 			<ion-list-header>
 				Hinzugef&uuml;gte Bilder
 			</ion-list-header>
-			<ion-item *ngFor="let image of report.imageFiles" class="item-photo">
-				<img src={{image}} />
-			</ion-item>
-			<ion-item>
-				<button ion-button type="button" large (click)="presentCameraActionSheet()">
-					Bild hinzuf&uuml;gen
-				</button>
+			<ion-item *ngFor="let image of report.getImageFiles()">
+				<img src={{image.getBase64Path()}} class="item-img"/>
+				<button ion-button type="button" large (click)="viewImage()" item-end><ion-icon name="eye"></ion-icon></button>
+				<button ion-button type="button" large (click)="deleteImage()" item-end><ion-icon name="trash"></ion-icon></button>
 			</ion-item>
 		</ion-list>
+
+		<!--AUDIO-->
+		<button ion-button type="button" large (click)="recordAudio()">
+			Sprachnachricht hinzuf&uuml;gen
+		</button>
 
 		<ion-list> <!-- *ngIf="report.imageFiles.length>0"-->
 			<ion-list-header>
@@ -70,13 +76,9 @@
 					<ion-icon name="trash"></ion-icon>
 				</button>
 			</ion-item>
-			<ion-item>
-				<button ion-button type="button" large (click)="recordAudio()">
-					Sprachnachricht hinzuf&uuml;gen
-				</button>
-			</ion-item>
 		</ion-list>
 
+		<!--SUBMIT-->
 		<ion-list> <!-- *ngIf="report.imageFiles.length>0"-->
 			<ion-list-header>
 				Aktionen
@@ -87,31 +89,6 @@
 				</button>
 			</ion-item>
 		</ion-list>
-
-
-
-
-
-		<!--
-		<div *ngIf="report.imageFiles.length>0">
-			<ion-card *ngFor="let image of report.imageFiles" class="photo-card">
-				<img src={{image}} />
-			</ion-card>
-		</div>
-		<button ion-button type="button" large (click)="presentCameraActionSheet()">
-			Bild hinzuf&uuml;gen
-		</button>
-
-		<div *ngIf="report.audioFiles.length>0">
-			<p>Hinzugef&uuml;gte Sprachnachrichten</p>
-			<ion-card *ngFor="let image of report.audioFiles" class="audio-card">
-				<img src={{image}} />
-			</ion-card>
-		</div>
-		<button ion-button type="button" large (click)="recordAudio()">
-		Sprachnachricht hinzuf&uuml;gen
-		</button>
-		-->
 
 	</form>
 
