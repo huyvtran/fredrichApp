@@ -3,6 +3,8 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 
 import { ConstructionsiteEquipmentCheckInPage } from '../constructionsite-equipment-check-in/constructionsite-equipment-check-in';
 import { ConstructionsiteEquipmentCheckOutPage } from '../constructionsite-equipment-check-out/constructionsite-equipment-check-out';
+import { ConstructionsiteShippingProjectsOverviewPage } from '../constructionsite-shipping-projects-overview/constructionsite-shipping-projects-overview';
+
 
 /**
  * Generated class for the ConstructionsiteEquipmentShippingPage page.
@@ -30,7 +32,7 @@ export class ConstructionsiteEquipmentShippingPage {
 	}
 
 	openEquipmentCheckoutPage(){
-		this.navCtrl.push(ConstructionsiteEquipmentCheckOutPage);
+		this.navCtrl.push(ConstructionsiteShippingProjectsOverviewPage);
 	}
 
 }

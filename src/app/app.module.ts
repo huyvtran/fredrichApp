@@ -38,6 +38,9 @@ import { ConstructionsiteEventsPage } from '../pages/constructionsite-events/con
 import { ConstructionsiteReportEventPage } from '../pages/constructionsite-report-event/constructionsite-report-event';
 import { ConstructionsiteReportDamagePage } from '../pages/constructionsite-report-damage/constructionsite-report-damage';
 import { ConstructionsiteEquipmentShippingPage } from '../pages/constructionsite-equipment-shipping/constructionsite-equipment-shipping';
+import { ConstructionsiteShippingProjectsOverviewPage } from '../pages/constructionsite-shipping-projects-overview/constructionsite-shipping-projects-overview';
+import { ConstructionsiteShippingProjectDetailPage } from '../pages/constructionsite-shipping-project-detail/constructionsite-shipping-project-detail';
+import { ConstructionsiteShippingProjectEditItemsPage } from '../pages/constructionsite-shipping-project-edit-items/constructionsite-shipping-project-edit-items';
 import { ConstructionsiteMorePage } from '../pages/constructionsite-more/constructionsite-more';
 import { ConstructionsitePhotoPage } from '../pages/constructionsite-photo/constructionsite-photo';
 import { ConstructionsitePhotoEquipmentPage} from '../pages/constructionsite-photo-equipment/constructionsite-photo-equipment';
@@ -77,6 +80,7 @@ import { AudioProvider } from '../providers/audio/audio';
 import { EquipmentProvider } from '../providers/equipment/equipment';
 import { ConstructionsiteEquipmentProvider } from '../providers/constructionsite-equipment/constructionsite-equipment';
 import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-workers/constructionsite-workers';
+import { ConstructionsiteShippingProvider } from '../providers/constructionsite-shipping/constructionsite-shipping';
 
 
 @NgModule({
@@ -99,6 +103,9 @@ import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-w
 		ConstructionsiteEventsPage,
 			ConstructionsiteReportEventPage,
 		ConstructionsiteEquipmentShippingPage,
+			ConstructionsiteShippingProjectsOverviewPage,
+			ConstructionsiteShippingProjectDetailPage,
+			ConstructionsiteShippingProjectEditItemsPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
@@ -147,6 +154,9 @@ import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-w
 			ConstructionsiteReportEventPage,
 			ConstructionsiteReportDamagePage,
 		ConstructionsiteEquipmentShippingPage,
+			ConstructionsiteShippingProjectsOverviewPage,
+			ConstructionsiteShippingProjectDetailPage,
+			ConstructionsiteShippingProjectEditItemsPage,
 		ConstructionsitePhotoPage,
 			ConstructionsitePhotoEquipmentPage,
 			ConstructionsitePhotoSitePage,
@@ -194,7 +204,8 @@ import { ConstructionsiteWorkersProvider } from '../providers/constructionsite-w
     AudioProvider,
     EquipmentProvider,
     ConstructionsiteEquipmentProvider,
-    ConstructionsiteWorkersProvider
+    ConstructionsiteWorkersProvider,
+    ConstructionsiteShippingProvider
   ]
 })
 export class AppModule {}
