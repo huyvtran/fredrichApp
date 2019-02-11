@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { ConstructionsiteShippingProvider } from '../../providers/constructionsite-shipping/constructionsite-shipping'
 import { ConstructionsiteShippingProjectDetailPage } from '../constructionsite-shipping-project-detail/constructionsite-shipping-project-detail';
 import { ShippingProject } from '../../classes/equipment/shipping-project';
 
@@ -18,7 +19,10 @@ import { ShippingProject } from '../../classes/equipment/shipping-project';
 })
 export class ConstructionsiteShippingProjectsOverviewPage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(
+		public navCtrl: NavController, public navParams: NavParams, 
+		public shippingProvider: ConstructionsiteShippingProvider
+	) {
   }
 
   ionViewDidLoad() {
@@ -26,11 +30,11 @@ export class ConstructionsiteShippingProjectsOverviewPage {
   }
 
 	startNewProject(){
-		let project = new ShippingProject();
+		let project = this.shippingProvider.createNewShippingProject();
 		this.navCtrl.push(ConstructionsiteShippingProjectDetailPage, {project: project});
 	}
 
-	editProject(project){
+	editProject(project: ShippingProject){
 		this.navCtrl.push(ConstructionsiteShippingProjectDetailPage, {project: project});
 	}
 

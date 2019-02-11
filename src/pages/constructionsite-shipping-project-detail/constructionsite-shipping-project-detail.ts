@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, ActionSheetController } from 'ionic-angular';
 
 import { ConstructionsiteShippingProjectEditItemsPage } from '../constructionsite-shipping-project-edit-items/constructionsite-shipping-project-edit-items';
+
+import { ConstructionsiteShippingProvider } from '../../providers/constructionsite-shipping/constructionsite-shipping'
 
 import { ShippingProject } from '../../classes/equipment/shipping-project';
 
@@ -21,9 +23,14 @@ import { ShippingProject } from '../../classes/equipment/shipping-project';
 export class ConstructionsiteShippingProjectDetailPage {
 
 	project: ShippingProject;
+	projData: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams) {
+	constructor(public navCtrl: NavController, public navParams: NavParams,
+		public shippingProvider: ConstructionsiteShippingProvider,
+		public actionSheetCtrl: ActionSheetController
+	) {
 	  this.project = this.navParams.get('project');
+	  this.setProjectData();
   }
 
   ionViewDidLoad() {
@@ -31,8 +38,39 @@ export class ConstructionsiteShippingProjectDetailPage {
   }
 
 
-	addItems(){
+	setItems(){
 		this.navCtrl.push(ConstructionsiteShippingProjectEditItemsPage, {project: this.project});
+	}
+	setProjectData(){
+		this.projData = {origin:this.project.getOriginName(), destination:this.project.getDestinationName()};
+	}
+
+	saveProject(){
+
+	}
+
+	presentActionSheet(){
+		let actionSheet = this.actionSheetCtrl.create({
+			title: 'Projekt beantragen?',
+			subTitle: 'Projektübersicht:',
+			buttons: [
+				{
+					text: 'OK',
+					handler: () => {
+						this.submitShippingProject();
+					}
+				},
+				{
+					text: 'Abbrechen',
+					role: 'cancel'
+				}
+			]
+		});
+		actionSheet.present();
+	}
+
+	submitShippingProject(){
+
 	}
 
 

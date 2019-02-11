@@ -7,12 +7,25 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>constructionsite-shipping-project-edit-items</ion-title>
+    <ion-title>Ger&auml;te zum Versand hinzuf&uuml;gen</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content padding>
+	<ion-list>
+		<ion-item *ngFor="let entry of shippableItems" (click)="toggleItem(entry)">
+			<ion-label><b>
+					{{ entry.item.getCategoryStr() }}</b> {{entry.item.name}}, ID:	{{entry.item.id}}
+			</ion-label>
+			<ion-toggle [checked]="entry.isSelected"></ion-toggle>
+		</ion-item>  
+
+		<ion-item>
+			<button ion-button full large (click)="setSelectedItems()">OK</button>
+		</ion-item>
+	</ion-list>
+
 
 </ion-content>

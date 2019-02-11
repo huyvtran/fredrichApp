@@ -7,13 +7,68 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>constructionsite-shipping-project-detail</ion-title>
+	  <ion-title>Versandprojekt {{project.getId()}}</ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
 <ion-content>
-	<!--TODO: Liste hinzufügen -->
-	<button ion-button full large (click)="addItems()">Geräte Hinzufügen</button>
+	<form (ngSubmit)="presentActionSheet()" #registerForm="ngForm">
+		<!--META -->
+		<ion-list>
+
+			<ion-item>
+				<ion-label>Von</ion-label>
+				<!--SELECT OWN CONSITE-->
+				<ion-select [(ngModel)]="projData.origin" multiple="false" name="origin" required>
+					<ion-option *ngFor="let location of shippingProvider.getShippingLocations()"
+						[value]="location.id">{{ location.id }}</ion-option>
+				</ion-select>
+			</ion-item>
+
+			<ion-item>
+				<ion-label>Nach</ion-label>
+				<!--SELECT OWN CONSITE-->
+				<ion-select [(ngModel)]="projData.destination" multiple="false" name="destination" required>
+					<ion-option *ngFor="let location of shippingProvider.getShippingLocations()"
+						[value]="location.id">{{ location.id }}</ion-option>
+				</ion-select>
+			</ion-item>
+
+		</ion-list>
+
+		<!--GERAETE-->
+		<button ion-button type="button" large (click)="setItems()">Geräte auswählen</button>
+
+		<ion-list> 
+			<ion-list-header>
+				Ger&auml;te: {{project.getNumProjectItems()}}
+			</ion-list-header>
+			<ion-item *ngFor="let item of project.getProjectItems()">
+				<p> <b>{{ item.getCategoryStr() }}</b></p>
+				<p>{{item.name}}, ID: {{item.id}} </p>
+			</ion-item>
+		</ion-list>
+
+		<!--SUBMIT-->
+		<ion-list> 
+			<ion-list-header>
+				Aktionen
+			</ion-list-header>
+			<ion-item>
+				<button ion-button class="button" large (click)="saveProject()">
+					Projekt speichern
+				</button>
+			</ion-item>
+
+			<ion-item>
+				<button ion-button class="submit-btn" large type="submit" [disabled]="!registerForm.form.valid">
+					Versand abschicken
+				</button>
+			</ion-item>
+		</ion-list>
+
+	</form>
+
 </ion-content>

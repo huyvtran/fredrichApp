@@ -14,6 +14,16 @@
 
 
 <ion-content>
-	<!--TODO: VERSANDPROJEKTLISTE-->
+	<ion-list> 
+		<ion-list-header>
+			Bestehende Versandprojekte
+		</ion-list-header>
+		<ion-item *ngFor="let project of shippingProvider.getShippingProjects()"
+			(click)="editProject(project)">
+			<div>Ger&auml;te: {{project.getNumProjectItems()}} von: {{project.getOriginName()}} nach:
+				{{project.getDestinationName()}}</div>
+		</ion-item>
+	</ion-list>
+
 	<button ion-button full large (click)="startNewProject()">Neues Versandprojekt</button>
 </ion-content>

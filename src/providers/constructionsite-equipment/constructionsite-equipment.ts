@@ -86,11 +86,11 @@ export class ConstructionsiteEquipmentProvider {
 		}
 		return numDamageReports;
 	}// }}}
-	public getDamageReportParentItem(report: DamageReport){
+	public getDamageReportParentItem(report: DamageReport){// {{{
 		let item_id = report.getParentItemId();
 		console.log("item id: " + item_id);
 		return this.equipmentItemList.getItemFromId(item_id);
-	}
+	}// }}}
 
 	//SETTERS
 	setEquipmentItemListData(data){// {{{

@@ -14,6 +14,14 @@ export class EquipmentItemList {
 	}// }}}
 
 	//PUBLIC
+	public containsItem(itemIn: EquipmentItem){// {{{
+		for(let item of this.items){
+			if(item.getId() === itemIn.getId()){
+				return true;
+			}
+		}
+		return false;
+	}// }}}
 	public getItemFromId(id) : EquipmentItem {// {{{
 		for (let item of this.items){
 			if(item.id==id){return item;}
@@ -46,6 +54,9 @@ export class EquipmentItemList {
 	}// }}}
 	public getItems(){// {{{
 		return this.items;
+	}// }}}
+	public getNumItems(){// {{{
+		return this.items.length;
 	}// }}}
 	public getRamCount(){// {{{
 		return this.getCategoryCount("1Ramme");
