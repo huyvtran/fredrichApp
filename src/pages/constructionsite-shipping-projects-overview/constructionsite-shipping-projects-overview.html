@@ -20,7 +20,7 @@
 		</ion-list-header>
 		<ion-item *ngFor="let project of shippingProvider.getShippingProjects()"
 			(click)="editProject(project)">
-			<div>Ger&auml;te: {{project.getNumProjectItems()}} von: {{project.getOriginName()}} nach:
+			<div><b>{{project.getId()}}:</b> {{project.getNumProjectItems()}} Ger&auml;te von {{project.getOriginName()}} nach
 				{{project.getDestinationName()}}</div>
 		</ion-item>
 	</ion-list>

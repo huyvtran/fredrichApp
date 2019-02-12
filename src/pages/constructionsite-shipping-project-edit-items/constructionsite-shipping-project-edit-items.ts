@@ -35,6 +35,9 @@ export class ConstructionsiteShippingProjectEditItemsPage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteShippingProjectEditItemsPage');
   }
+	ionViewWillLeave() {
+		this.setSelectedItems();
+	}
 	toggleItem(entry){
 		entry.isSelected = !entry.isSelected;
 	}
@@ -49,12 +52,16 @@ export class ConstructionsiteShippingProjectEditItemsPage {
 		console.log(this.shippableItems);
 	}// }}}
 
+	okButtonClicked(){
+		//leaving view will set selected items
+// 		this.setSelectedItems();
+		this.navCtrl.pop();
+	}
 	setSelectedItems(){// {{{
 		let selectedItems = this.getSelectedItems();
 		this.project.setItemList(selectedItems);
-		this.navCtrl.pop();
 
-		console.log(selectedItems);
+// 		console.log(selectedItems);
 	}// }}}
 	getSelectedItems(){// {{{
 		let itemList = new EquipmentItemList();
@@ -65,5 +72,17 @@ export class ConstructionsiteShippingProjectEditItemsPage {
 		}
 		return itemList;
 	}// }}}
+	isPartOfOtherShippingProject(entry){
+		let parentId = this.shipping.getParentProjectIdForItem(entry.item);
+		let isPart = false;
+		if(parentId && parentId != this.project.getId()){
+			isPart = true;
+// 			return true;
+		} else {
+			isPart = false;
+// 			return false;
+		}
+		return isPart;
+	}
 
 }

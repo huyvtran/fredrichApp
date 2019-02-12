@@ -60,6 +60,9 @@ export class ConstructionsiteEquipmentProvider {
 	}// }}}
 
 	//GETTERS
+	public getItemFromId(item_id){
+		return this.equipmentItemList.getItemFromId(item_id);
+	}
 	public getRamCount(){// {{{
 		return this.equipmentItemList.getRamCount();
 	}// }}}

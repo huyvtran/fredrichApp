@@ -30,8 +30,14 @@ export class ConstructionsiteShippingProjectsOverviewPage {
   }
 
 	startNewProject(){
-		let project = this.shippingProvider.createNewShippingProject();
-		this.navCtrl.push(ConstructionsiteShippingProjectDetailPage, {project: project});
+		this.shippingProvider.createNewShippingProject()
+			.then(project => {
+				console.log(project);
+				this.navCtrl.push(ConstructionsiteShippingProjectDetailPage, {project: project});
+			})
+			.catch(err => {
+				console.log(JSON.stringify(err));
+			})
 	}
 
 	editProject(project: ShippingProject){

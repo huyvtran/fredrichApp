@@ -4,7 +4,8 @@ import { EquipmentItemList } from './equipment-item-list';
 export class ShippingProject {
 
 	id: string;
-	timestamp: Date;
+	creationTime: Date;
+	lastEditTime: Date;
 	title: string;
 	origin: string;
 	destination: string;
@@ -17,7 +18,8 @@ export class ShippingProject {
 
 	setDefaultValues(){// {{{
 		this.id = "-1";
-		this.timestamp = new Date();
+		this.creationTime = new Date();
+		this.lastEditTime = new Date();
 		this.title = "";
 		this.origin = "";
 		this.destination = "";
@@ -25,6 +27,11 @@ export class ShippingProject {
 		this.itemList = new EquipmentItemList();
 	}// }}}
 	setValues(data){// {{{
+		console.log("SETTING VALUES FOR:");
+		console.log(data);
+		this.id = data.id;
+		this.creationTime.setTime(data.time_created*1000);
+		this.lastEditTime.setTime(data.time_last_edit*1000);
 		this.title = data.title;
 		this.origin = data.origin;
 		this.destination = data.destination;
@@ -44,10 +51,10 @@ export class ShippingProject {
 		return this.itemList.getNumItems();
 	}// }}}
 	getOriginName(){// {{{
-		return "originName";
+		return this.origin;
 	}// }}}
 	getDestinationName(){// {{{
-		return "destinationName";
+		return this.destination;
 	}// }}}
 	setItemList(itemList: EquipmentItemList){// {{{
 		this.itemList = itemList;
@@ -62,6 +69,5 @@ export class ShippingProject {
 			this.itemList.addItem(item);
 		}
 	}// }}}
-
 
 }

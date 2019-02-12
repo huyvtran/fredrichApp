@@ -46,7 +46,7 @@ export class ConstructionsiteShippingProjectDetailPage {
 	}
 
 	saveProject(){
-
+		this.navCtrl.pop();
 	}
 
 	presentActionSheet(){

@@ -52,6 +52,26 @@
 		</ion-list>
 
 		<!--SUBMIT-->
+		<ion-grid>
+			<ion-row nowrap>
+
+				<ion-col>
+					<button ion-button class="button" full large (click)="saveProject()">
+						Projekt speichern
+					</button>
+				</ion-col>
+
+				<ion-col>
+					<button ion-button class="submit-btn" full large type="submit" [disabled]="!registerForm.form.valid">
+						Versand abschicken
+					</button>
+				</ion-col>
+
+			</ion-row>
+		</ion-grid>
+
+
+		<!--
 		<ion-list> 
 			<ion-list-header>
 				Aktionen
@@ -62,12 +82,14 @@
 				</button>
 			</ion-item>
 
+
 			<ion-item>
 				<button ion-button class="submit-btn" large type="submit" [disabled]="!registerForm.form.valid">
 					Versand abschicken
 				</button>
 			</ion-item>
 		</ion-list>
+		-->
 
 	</form>
 

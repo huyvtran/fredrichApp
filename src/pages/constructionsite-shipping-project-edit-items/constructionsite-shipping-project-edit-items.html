@@ -16,6 +16,9 @@
 <ion-content padding>
 	<ion-list>
 		<ion-item *ngFor="let entry of shippableItems" (click)="toggleItem(entry)">
+			<!--
+			<disabled={{isPartOfOtherShippingProject(entry)}}>
+			-->
 			<ion-label><b>
 					{{ entry.item.getCategoryStr() }}</b> {{entry.item.name}}, ID:	{{entry.item.id}}
 			</ion-label>
@@ -23,7 +26,7 @@
 		</ion-item>  
 
 		<ion-item>
-			<button ion-button full large (click)="setSelectedItems()">OK</button>
+			<button ion-button full large (click)="okButtonClicked()">OK</button>
 		</ion-item>
 	</ion-list>
 
