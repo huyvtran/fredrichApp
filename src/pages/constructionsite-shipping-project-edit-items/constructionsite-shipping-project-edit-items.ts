@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, AlertController } from 'ionic-angular';
 
 import { EquipmentItem } from '../../classes/equipment/equipment-item'
 import { EquipmentItemList } from '../../classes/equipment/equipment-item-list'
@@ -26,22 +26,28 @@ export class ConstructionsiteShippingProjectEditItemsPage {
 	constructor(
 		public navCtrl: NavController, 
 		public navParams: NavParams,
+		private alertCtrl: AlertController,
 		public shipping: ConstructionsiteShippingProvider
 	) {
 		this.project = this.navParams.get('project');
+	}
+
+	ionViewDidLoad() {// {{{
+		console.log('ionViewDidLoad ConstructionsiteShippingProjectEditItemsPage');
 		this.prepareShippableItems();
-	}
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad ConstructionsiteShippingProjectEditItemsPage');
-  }
-	ionViewWillLeave() {
+	}// }}}
+	ionViewWillLeave() {// {{{
 		this.setSelectedItems();
-	}
-	toggleItem(entry){
-		entry.isSelected = !entry.isSelected;
-	}
-
+	}// }}}
+	toggleItem(entry){// {{{
+// 		console.log("toggling entry to: ", !entry.isSelected);
+		if(this.isPartOfOtherShippingProject(entry)){
+			console.log(entry.item.getName() + " is part of other shipping project, doing nothing");
+			//do nothing
+		} else {
+			entry.isSelected = !entry.isSelected;
+		}
+	}// }}}
 	prepareShippableItems(){// {{{
 		this.shippableItems = [];
 		let itemList = this.shipping.getShippableItems();
@@ -49,19 +55,20 @@ export class ConstructionsiteShippingProjectEditItemsPage {
 			let entry = {isSelected:this.project.containsItem(item), item:item}
 			this.shippableItems.push(entry);
 		}
+		console.log("prepared shippable items:");
 		console.log(this.shippableItems);
 	}// }}}
-
-	okButtonClicked(){
+	okButtonClicked(){// {{{
 		//leaving view will set selected items
 // 		this.setSelectedItems();
 		this.navCtrl.pop();
-	}
+	}// }}}
 	setSelectedItems(){// {{{
 		let selectedItems = this.getSelectedItems();
 		this.project.setItemList(selectedItems);
 
-// 		console.log(selectedItems);
+		console.log("selected items:");
+		console.log(selectedItems);
 	}// }}}
 	getSelectedItems(){// {{{
 		let itemList = new EquipmentItemList();
@@ -72,7 +79,7 @@ export class ConstructionsiteShippingProjectEditItemsPage {
 		}
 		return itemList;
 	}// }}}
-	isPartOfOtherShippingProject(entry){
+	isPartOfOtherShippingProject(entry){// {{{
 		let parentId = this.shipping.getParentProjectIdForItem(entry.item);
 		let isPart = false;
 		if(parentId && parentId != this.project.getId()){
@@ -83,6 +90,40 @@ export class ConstructionsiteShippingProjectEditItemsPage {
 // 			return false;
 		}
 		return isPart;
-	}
+	}// }}}
+	presentPromptUserInputItemNumber(){// {{{
+		let alert = this.alertCtrl.create({
+			title: 'Gerät hinzufügen',
+			inputs: [
+				{
+					name: 'itemNumber',
+					placeholder: 'Gerätenummer',
+					type: 'text'
+				}
+			],
+			buttons: [
+				{
+					text: 'Abbrechen',
+					role: 'cancel',
+					handler: data => {
+						console.log('Cancel clicked');
+					}
+				},
+				{
+					text: 'OK',
+					handler: data => {
+						this.addEquipmentItemFromUserInput(data.itemNumber);
+					}
+				}
+			]
+		});
+		alert.present();
+	}// }}}
+	addEquipmentItemFromUserInput(itemNumber){// {{{
+		//add equipment item to shippable items, and show as selected
+		// present prompt if no item found
+		console.log("NOT IMPLEMENTED YET");
+		console.log("INPUT:" + itemNumber);
+	}// }}}
 
 }

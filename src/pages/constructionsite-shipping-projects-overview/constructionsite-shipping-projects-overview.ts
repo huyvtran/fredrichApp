@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, LoadingController, Loading } from 'ionic-angular';
 import { ConstructionsiteShippingProvider } from '../../providers/constructionsite-shipping/constructionsite-shipping'
 import { ConstructionsiteShippingProjectDetailPage } from '../constructionsite-shipping-project-detail/constructionsite-shipping-project-detail';
 import { ShippingProject } from '../../classes/equipment/shipping-project';
@@ -19,14 +19,19 @@ import { ShippingProject } from '../../classes/equipment/shipping-project';
 })
 export class ConstructionsiteShippingProjectsOverviewPage {
 
+	loading: Loading;
+	shippingProjects: any;
 	constructor(
 		public navCtrl: NavController, public navParams: NavParams, 
+		public loadingCtrl: LoadingController,
 		public shippingProvider: ConstructionsiteShippingProvider
 	) {
   }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad ConstructionsiteShippingProjectsOverviewPage');
+	  this.shippingProjects = this.shippingProvider.getShippingProjects();
+	  this.showLoading();
   }
 
 	startNewProject(){
@@ -43,5 +48,14 @@ export class ConstructionsiteShippingProjectsOverviewPage {
 	editProject(project: ShippingProject){
 		this.navCtrl.push(ConstructionsiteShippingProjectDetailPage, {project: project});
 	}
+
+	showLoading() {// {{{
+		this.loading = this.loadingCtrl.create({
+			content: 'Bitte warten...',
+			dismissOnPageChange: true
+		});
+		this.loading.present();
+	}// }}}
+
 
 }

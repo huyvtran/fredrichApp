@@ -32,7 +32,7 @@ export class LoginPage {
 // 		this.nav.push('RegisterPage');
 // 	}
 
-	public login() {
+	public login() {// {{{
 		this.showLoading();
 		if(1){ // auto login XXX
 // 			this.registerCredentials.email = "email";
@@ -62,17 +62,15 @@ export class LoginPage {
 			error => {
 				this.showError(error);
 		});
-	}
-
-	showLoading() {
+	}// }}}
+	showLoading() {// {{{
 		this.loading = this.loadingCtrl.create({
 			content: 'Bitte warten...',
 			dismissOnPageChange: true
 		});
 		this.loading.present();
-	}
-
-	showError(text) {
+	}// }}}
+	showError(text) {// {{{
 		this.loading.dismiss();
 
 		let alert = this.alertCtrl.create({
@@ -82,6 +80,6 @@ export class LoginPage {
 		});
 // 		alert.present(prompt);
 		alert.present();
-	}
+	}// }}}
 
 }

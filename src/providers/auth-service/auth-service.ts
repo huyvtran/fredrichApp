@@ -63,19 +63,16 @@ export class AuthServiceProvider {
 			});
 		}
 	}// }}}
-
 	public getUserInfo() : User {// {{{
 		return this.currentUser;
 	}// }}}
-
-	public isLoggedIn(){
+	public isLoggedIn(){// {{{
 		if(this.currentUser == null){
 			return false;
 		} else {
 			return true;
 		}
-	}
-
+	}// }}}
 	public logout() {// {{{
 		return Observable.create(observer => {
 			this.currentUser = null;
@@ -83,7 +80,6 @@ export class AuthServiceProvider {
 			observer.complete();
 		});
 	}// }}}
-
 	private hasTokenAccess(token, observer: any) {// {{{
 		let url = this.globals.serverPhpScriptsUrl + "login.php?token=" + token;
 		let access = false;

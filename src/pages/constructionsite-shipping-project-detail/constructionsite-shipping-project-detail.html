@@ -39,7 +39,7 @@
 		</ion-list>
 
 		<!--GERAETE-->
-		<button ion-button type="button" large (click)="setItems()">Geräte auswählen</button>
+		<button ion-button type="button" full large (click)="setItems()">Geräte</button>
 
 		<ion-list> 
 			<ion-list-header>
@@ -56,14 +56,14 @@
 			<ion-row nowrap>
 
 				<ion-col>
-					<button ion-button class="button" full large (click)="saveProject()">
-						Projekt speichern
+					<button ion-button type="button" full large (click)="saveProject()">
+						Speichern
 					</button>
 				</ion-col>
 
 				<ion-col>
 					<button ion-button class="submit-btn" full large type="submit" [disabled]="!registerForm.form.valid">
-						Versand abschicken
+						Versenden
 					</button>
 				</ion-col>
 

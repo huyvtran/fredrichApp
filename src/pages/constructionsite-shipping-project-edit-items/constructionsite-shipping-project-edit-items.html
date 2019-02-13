@@ -14,16 +14,37 @@
 
 
 <ion-content padding>
+
 	<ion-list>
-		<ion-item *ngFor="let entry of shippableItems" (click)="toggleItem(entry)">
+		<ion-item>
+			<button ion-button full large (click)="scanEquipment()">Gerät Scannen</button>
+		</ion-item>
+		<ion-item>
+			<button ion-button full large (click)="presentPromptUserInputItemNumber()">Gerätenummer Manuell
+				eingeben</button>
 			<!--
-			<disabled={{isPartOfOtherShippingProject(entry)}}>
+			<ion-grid item-content>
+				<ion-row nowrap>
+					<ion-col col-10>
+						<ion-label color="primary">Gerätenummer</ion-label>
+						<ion-input placeholder="Höhne Gerätenummer eingeben" type="text"
+							[(ngModel)]="input.itemNumber"></ion-input>
+					</ion-col>
+					<ion-col>
+						<button ion-button large (click)="addEquipmentItemFromUserInput()">Hinzufügen</button>
+					</ion-col>
+				</ion-row>
+			</ion-grid>
 			-->
+		</ion-item>
+
+		<!--use button here, as ion-item does not deal with click-event well-->
+		<button ion-item *ngFor="let entry of shippableItems" (click)="toggleItem(entry)">
 			<ion-label><b>
 					{{ entry.item.getCategoryStr() }}</b> {{entry.item.name}}, ID:	{{entry.item.id}}
 			</ion-label>
-			<ion-toggle [checked]="entry.isSelected"></ion-toggle>
-		</ion-item>  
+			<ion-toggle [checked]="entry.isSelected" [disabled]="isPartOfOtherShippingProject(entry)"></ion-toggle>
+		</button>  
 
 		<ion-item>
 			<button ion-button full large (click)="okButtonClicked()">OK</button>

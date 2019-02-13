@@ -44,15 +44,20 @@ export class ConstructionsiteShippingProjectDetailPage {
 	setProjectData(){
 		this.projData = {origin:this.project.getOriginName(), destination:this.project.getDestinationName()};
 	}
+	updateProject(){
+		this.project.setOrigin(this.projData.origin);
+		this.project.setDestination(this.projData.destination);
+	}
 
 	saveProject(){
+		this.updateProject();
 		this.navCtrl.pop();
 	}
 
 	presentActionSheet(){
 		let actionSheet = this.actionSheetCtrl.create({
 			title: 'Projekt beantragen?',
-			subTitle: 'Projektübersicht:',
+// 			subTitle: 'Projektübersicht:',
 			buttons: [
 				{
 					text: 'OK',
@@ -70,6 +75,7 @@ export class ConstructionsiteShippingProjectDetailPage {
 	}
 
 	submitShippingProject(){
+		this.updateProject();
 
 	}
 

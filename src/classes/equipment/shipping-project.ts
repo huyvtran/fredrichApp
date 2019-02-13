@@ -59,6 +59,13 @@ export class ShippingProject {
 	setItemList(itemList: EquipmentItemList){// {{{
 		this.itemList = itemList;
 	}// }}}
+	setOrigin(origin){
+		this.origin=origin;
+	}
+	setDestination(destination){
+		this.destination=destination;
+	}
+
 
 	addShippingItem(item: EquipmentItem){// {{{
 		this.itemList.addItem(item);
