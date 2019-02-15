@@ -20,7 +20,9 @@ import { ShippingProject } from '../../classes/equipment/shipping-project';
 export class ConstructionsiteShippingProjectsOverviewPage {
 
 	loading: Loading;
-	shippingProjects: any;
+	incomingShippingProjects: any;
+	outgoingShippingProjects: any;
+
 	constructor(
 		public navCtrl: NavController, public navParams: NavParams, 
 		public loadingCtrl: LoadingController,
@@ -28,13 +30,26 @@ export class ConstructionsiteShippingProjectsOverviewPage {
 	) {
   }
 
-  ionViewDidLoad() {
+  ionViewDidLoad() {// {{{
     console.log('ionViewDidLoad ConstructionsiteShippingProjectsOverviewPage');
-	  this.shippingProjects = this.shippingProvider.getShippingProjects();
+	  this.shippingProvider.initialize();
+	  this.shippingProvider.loadingStatusUpdates()
+		  .subscribe((hasFinished) => {
+// 			  if(hasFinished){
+// 				  this.incomingShippingProjects = this.shippingProvider.getIncomingShippingProjects();
+// 				  this.outgoingShippingProjects = this.shippingProvider.getOutgoingShippingProjects();
+// 			  }
+// 			  console.log(this.outgoingShippingProjects);
+		  },
+		  (err) => {},
+		  () => {
+			  this.incomingShippingProjects = this.shippingProvider.getIncomingShippingProjects();
+			  this.outgoingShippingProjects = this.shippingProvider.getOutgoingShippingProjects();
+		  });
 	  this.showLoading();
-  }
+  }// }}}
 
-	startNewProject(){
+	startNewOutgoingProject(){// {{{
 		this.shippingProvider.createNewShippingProject()
 			.then(project => {
 				console.log(project);
@@ -43,10 +58,13 @@ export class ConstructionsiteShippingProjectsOverviewPage {
 			.catch(err => {
 				console.log(JSON.stringify(err));
 			})
-	}
-
-	editProject(project: ShippingProject){
+	}// }}}
+	editOutgoingProject(project: ShippingProject){// {{{
 		this.navCtrl.push(ConstructionsiteShippingProjectDetailPage, {project: project});
+	}// }}}
+
+	openIncomingProject(project: ShippingProject){
+
 	}
 
 	showLoading() {// {{{
@@ -56,6 +74,5 @@ export class ConstructionsiteShippingProjectsOverviewPage {
 		});
 		this.loading.present();
 	}// }}}
-
 
 }

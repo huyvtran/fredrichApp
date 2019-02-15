@@ -40,7 +40,7 @@ export class ConstructionsiteShippingProjectEditItemsPage {
 		this.setSelectedItems();
 	}// }}}
 	toggleItem(entry){// {{{
-// 		console.log("toggling entry to: ", !entry.isSelected);
+		console.log("toggling entry to: ", !entry.isSelected);
 		if(this.isPartOfOtherShippingProject(entry)){
 			console.log(entry.item.getName() + " is part of other shipping project, doing nothing");
 			//do nothing

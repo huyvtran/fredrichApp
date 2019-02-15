@@ -27,8 +27,8 @@ export class ShippingProject {
 		this.itemList = new EquipmentItemList();
 	}// }}}
 	setValues(data){// {{{
-		console.log("SETTING VALUES FOR:");
-		console.log(data);
+// 		console.log("SETTING VALUES FOR:");
+// 		console.log(data);
 		this.id = data.id;
 		this.creationTime.setTime(data.time_created*1000);
 		this.lastEditTime.setTime(data.time_last_edit*1000);
@@ -59,13 +59,12 @@ export class ShippingProject {
 	setItemList(itemList: EquipmentItemList){// {{{
 		this.itemList = itemList;
 	}// }}}
-	setOrigin(origin){
+	setOrigin(origin){// {{{
 		this.origin=origin;
-	}
-	setDestination(destination){
+	}// }}}
+	setDestination(destination){// {{{
 		this.destination=destination;
-	}
-
+	}// }}}
 
 	addShippingItem(item: EquipmentItem){// {{{
 		this.itemList.addItem(item);

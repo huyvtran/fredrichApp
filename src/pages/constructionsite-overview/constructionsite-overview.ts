@@ -7,7 +7,8 @@ import { ConstructionsiteEventsPage} from '../constructionsite-events/constructi
 import { ConstructionsiteDailyreportPage} from '../constructionsite-dailyreport/constructionsite-dailyreport';
 import { ConstructionsitePhotoPage} from '../constructionsite-photo/constructionsite-photo';
 import { ConstructionsiteContactsPage} from '../constructionsite-contacts/constructionsite-contacts';
-import { ConstructionsiteEquipmentShippingPage } from '../constructionsite-equipment-shipping/constructionsite-equipment-shipping';
+// import { ConstructionsiteEquipmentShippingPage } from '../constructionsite-equipment-shipping/constructionsite-equipment-shipping';
+import { ConstructionsiteShippingProjectsOverviewPage } from '../constructionsite-shipping-projects-overview/constructionsite-shipping-projects-overview';
 import { LoginPage } from '../login/login';
 
 import { ConstructionsiteProvider } from '../../providers/constructionsite/constructionsite';
@@ -68,7 +69,7 @@ export class ConstructionsiteOverviewPage {
 		this.navCtrl.push(ConstructionsiteEventsPage);
 	}
 	openShippingPage(){
-		this.navCtrl.push(ConstructionsiteEquipmentShippingPage);
+		this.navCtrl.push(ConstructionsiteShippingProjectsOverviewPage);
 	}
 
 	presentLogoutActionSheet(){

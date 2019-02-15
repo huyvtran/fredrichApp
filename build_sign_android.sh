@@ -1,6 +1,6 @@
 #!/bin/bash
 appName="fredrichApp"
-buildNr="0.0.7"
+buildNr="0.0.8"
 rootDir="/Users/johannes/GoogleDrive/Projects/FredrichSpezialtiefbau/Verwaltungssoftware/FredrichApp/fredrichApp"
 buildDir="$rootDir/build/$buildNr"
 unsignedApkPath="./platforms/android/app/build/outputs/apk/release/app-release-unsigned.apk"

@@ -14,16 +14,32 @@
 
 
 <ion-content>
+	<!-- INCOMING PROJECTS -->
+	<div>
+		<h1>Eingehende Versandprojekte</h1>
+	</div>
 	<ion-list> 
-		<ion-list-header>
-			Bestehende Versandprojekte
-		</ion-list-header>
-		<ion-item *ngFor="let project of shippingProjects"
-			(click)="editProject(project)">
+		<ion-item *ngFor="let project of incomingShippingProjects" (click)="openIncomingProject(project)">
 			<div><b>{{project.getId()}}:</b> {{project.getNumProjectItems()}} Ger&auml;te von {{project.getOriginName()}} nach
 				{{project.getDestinationName()}}</div>
 		</ion-item>
 	</ion-list>
 
-	<button ion-button full large (click)="startNewProject()">Neues Versandprojekt</button>
+	<!-- OUTGOING PROJECTS -->
+	<div>
+		<h1>Abgehende Versandprojekte</h1>
+	</div>
+	<ion-list> 
+		<!--
+		<ion-list-header>
+		</ion-list-header>
+		-->
+		<ion-item *ngFor="let project of outgoingShippingProjects"
+			(click)="editOutgoingProject(project)">
+			<div><b>{{project.getId()}}:</b> {{project.getNumProjectItems()}} Ger&auml;te von {{project.getOriginName()}} nach
+				{{project.getDestinationName()}}</div>
+		</ion-item>
+	</ion-list>
+
+	<button ion-button full large (click)="startNewOutgoingProject()">Neues Versandprojekt</button>
 </ion-content>

@@ -27,9 +27,10 @@ export class EquipmentItemList {
 			if(item.id==id){return item;}
 			else {continue;}
 		}
-		console.log("WARNING: No item with id: " + id + " found!");
-// 		assert(1);
 		return null;
+// 		throw new Error("No item with id: " + id + " found!")
+// 		console.log("WARNING: No item with id: " + id + " found!");
+// 		assert(1);
 	}// }}}
 	public isEquipmentItemOnSite(id) : boolean {// {{{
 		for (let item of this.items){

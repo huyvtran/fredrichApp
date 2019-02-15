@@ -91,7 +91,7 @@ export class ConstructionsiteEquipmentProvider {
 	}// }}}
 	public getDamageReportParentItem(report: DamageReport){// {{{
 		let item_id = report.getParentItemId();
-		console.log("item id: " + item_id);
+// 		console.log("item id: " + item_id);
 		return this.equipmentItemList.getItemFromId(item_id);
 	}// }}}
 
